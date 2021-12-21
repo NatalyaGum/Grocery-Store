@@ -18,7 +18,7 @@ import java.util.concurrent.Executor;
 
     @Override
     public void close() throws SQLException {
-       // ConnectionPool.INSTANCE.ReleaseConnection();
+        ConnectionPool.getInstance().releaseConnection(this);
     }
 
     @Override
