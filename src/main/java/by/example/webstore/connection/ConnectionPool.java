@@ -9,6 +9,7 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Enumeration;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -44,6 +45,10 @@ public class ConnectionPool {
             DATABASE_USER_NAME = bundle.getString(DB_USER);
             DATABASE_PASSWORD = bundle.getString(DB_PASSWORD);
             Class.forName(driverName);
+
+        } catch (MissingResourceException e) {
+            logger.fatal("Property file not found or has incorrect data " + BUNDLE_NAME, e);
+            throw new RuntimeException("Property file not found or has incorrect data " + BUNDLE_NAME, e);
         } catch (ClassNotFoundException e) {
             logger.fatal("Driver don't found" + BUNDLE_NAME, e);
             throw new RuntimeException("Driver don't found" + BUNDLE_NAME, e);
@@ -61,7 +66,7 @@ public class ConnectionPool {
             } catch (SQLException e) {
                 logger.error("Database access error, connection not received", e);
             }
-            if (freeConnections.isEmpty()) {
+            if (freeConnections.isEmpty()|| freeConnections.size()<DEFAULT_POOL_SIZE) {
                 logger.fatal("Error: no connections were created");
                 throw new RuntimeException("Error: no connections were created");
             }
@@ -133,7 +138,7 @@ public class ConnectionPool {
         }
     }
 
-    static Connection createConnection() throws SQLException {
+   private static Connection createConnection() throws SQLException {
         return DriverManager.getConnection(DATABASE_URL, DATABASE_USER_NAME, DATABASE_PASSWORD);
     }
 }
