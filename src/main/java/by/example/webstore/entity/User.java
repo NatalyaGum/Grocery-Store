@@ -27,6 +27,9 @@ public class User extends AbstractEntity{
         this.status = status;
     }
 
+    public User() {
+    }
+
        public long getIdUser() {
         return idUser;
     }
