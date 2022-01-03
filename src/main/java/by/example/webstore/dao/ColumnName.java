@@ -10,13 +10,13 @@ public class ColumnName {
     public static final String USER_PHONE_NUMBER = "phone_number";
     public static final String USER_ROLE = "role";
     public static final String USER_STATUS = "status";
-    public static final String USER_BLOCKED = "blocked";
+
     /* address table */
-    private static final String ADDRESS_ID = "addresses.id_address";
-    private static final String ADDRESS_STREET = "addresses.street";
-    private static final String ADDRESS_BUILDING_NUMBER = "addresses.build_number";
-    private static final String ADDRESS_APARTMENT = "addresses.apartment";
-    private static final String ADDRESS_COMMENT = "addresses.comment";
+    public static final String ADDRESS_ID = "addresses.id_address";
+    public static final String ADDRESS_STREET = "addresses.street";
+    public static final String ADDRESS_BUILDING_NUMBER = "addresses.build_number";
+    public static final String ADDRESS_APARTMENT = "addresses.apartment";
+    public static final String ADDRESS_COMMENT = "addresses.comment";
     /* products table */
     public static final String PRODUCTS_ID = "products.id_product";
     public static final String PRODUCTS_TITLE = "products.title";

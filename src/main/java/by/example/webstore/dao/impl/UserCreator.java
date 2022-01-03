@@ -8,14 +8,19 @@ import java.util.Locale;
 
 import static by.example.webstore.dao.ColumnName.*;
 
-public class UserCreator {
+class UserCreator {
+    private static UserCreator instance;
 
-    private UserCreator() {
+    public static UserCreator getInstance() {
+        if (instance == null) {
+            instance = new UserCreator();
+        }
+        return instance;
     }
 
-    static User createUser(ResultSet resultSet) throws SQLException {
+     User createUser(ResultSet resultSet) throws SQLException {
         User user = new User();
-        user.setIdUser(resultSet.getLong(USER_ID));
+        user.setUserId(resultSet.getLong(USER_ID));
         user.setName(resultSet.getString(USER_NAME));
         user.setSurname(resultSet.getString(USER_SURNAME));
         user.setEmail(resultSet.getString(USER_EMAIL));
