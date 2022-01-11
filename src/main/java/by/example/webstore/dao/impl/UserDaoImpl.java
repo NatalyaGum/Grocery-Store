@@ -66,7 +66,7 @@ public class UserDaoImpl implements UserDao {
     public List<User> findAllEntities() throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(FIND_ALL_USERS)) {
+        ResultSet resultSet = statement.executeQuery(FIND_ALL_USERS)){
             List<User> users = new ArrayList<>();
             while (resultSet.next()) {
                 User user = UserCreator.getInstance().createUser(resultSet);
@@ -93,14 +93,14 @@ public class UserDaoImpl implements UserDao {
             statement.setString(6, user.getRole().name());
             statement.setString(7, user.getStatus().name());
             statement.executeUpdate();
-            ResultSet resultSet = statement.getGeneratedKeys();
+            try ( ResultSet resultSet = statement.getGeneratedKeys()){
             long userId = 0;
             if (resultSet.next()) {
                 userId = resultSet.getLong(1);
                 logger.info("insertNewEntity method was completed successfully. User with id " + userId + " was added");
             }
             return userId;
-        } catch (SQLException | ConnectionPoolException e) {
+        }} catch (SQLException | ConnectionPoolException e) {
             logger.error( "Impossible to insert new user into database. Database access error:", e);
             throw new DaoException("Impossible to insert new user into database. Database access error:", e);
         }
@@ -204,11 +204,11 @@ public class UserDaoImpl implements UserDao {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_EMAIL)) {
             statement.setString(1, email);
-            ResultSet resultSet = statement.executeQuery();
+            try (  ResultSet resultSet = statement.executeQuery()){
             boolean result = resultSet.isBeforeFirst();
             logger.debug( "isEmailExist method was completed successfully. Result: " + result);
             return result;
-        } catch (SQLException | ConnectionPoolException e) {
+        }} catch (SQLException | ConnectionPoolException e) {
             logger.error( "Impossible to check existence of user email. Database access error:", e);
             throw new DaoException("Impossible to check existence of user email. Database access error:", e);
         }
@@ -219,11 +219,11 @@ public class UserDaoImpl implements UserDao {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_PHONE)) {
             statement.setString(1, mobileNumber);
-            ResultSet resultSet = statement.executeQuery();
+            try (ResultSet resultSet = statement.executeQuery()){
             boolean result = resultSet.isBeforeFirst();
             logger.debug("isMobileNumberExist method was completed successfully. Result: " + result);
             return result;
-        } catch (SQLException | ConnectionPoolException e) {
+        }} catch (SQLException | ConnectionPoolException e) {
             logger.error( "Impossible to check existence of user mobile number. Database access error:", e);
             throw new DaoException("Impossible to check existence of user mobile number. Database access error:", e);
         }
@@ -235,11 +235,11 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_ID_AND_PASSWORD)) {
             statement.setLong(1, userId);
             statement.setString(2, passwordHash);
-            ResultSet resultSet = statement.executeQuery();
+            try (  ResultSet resultSet = statement.executeQuery()){
             boolean result = resultSet.isBeforeFirst();
             logger.debug( "isUserExist method was completed successfully. Result: " + result);
             return result;
-        } catch (SQLException | ConnectionPoolException e) {
+        }} catch (SQLException | ConnectionPoolException e) {
             logger.error( "Impossible to check existence of user. Database access error:", e);
             throw new DaoException("Impossible to check existence of user. Database access error:", e);
         }
@@ -252,11 +252,11 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_EMAIL_AND_PASSWORD)) {
             statement.setString(1, email);
             statement.setString(2, password);
-            ResultSet resultSet = statement.executeQuery();
+            try (ResultSet resultSet = statement.executeQuery()){
             if (resultSet.next()) {
                 User user = UserCreator.getInstance().createUser(resultSet);
                 userOptional = Optional.of(user);
-            }
+            }}
             logger.debug("findUserByLoginAndPassword method was completed successfully." +
                     (userOptional.map(user -> " User with id " + user.getUserId() + " was found").orElse(" User with these email and password don't exist")));
             return userOptional;
