@@ -1,7 +1,7 @@
 package by.example.webstore.entity;
 
 
-public class User extends AbstractEntity{
+public class User extends AbstractEntity {
     public enum Role {ADMIN, USER}
 
     public enum Status {ACTIVE, BLOCKED}
@@ -22,7 +22,17 @@ public class User extends AbstractEntity{
         this.password = password;
         this.name = name;
         this.surname = surname;
-        this.phone=phone;
+        this.phone = phone;
+        this.role = role;
+        this.status = status;
+    }
+
+    public User(String email, String password, String name, String surname, String phone, Role role, Status status) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.phone = phone;
         this.role = role;
         this.status = status;
     }
@@ -30,7 +40,7 @@ public class User extends AbstractEntity{
     public User() {
     }
 
-       public long getUserId() {
+    public long getUserId() {
         return UserId;
     }
 
@@ -124,7 +134,7 @@ public class User extends AbstractEntity{
     }
 
     @Override
-    public String toString () {
+    public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("User{ ");
         builder.append("userId=").append(UserId);

@@ -1,0 +1,2 @@
+2022-01-13 20:26:10 [main] [main] [15] INFO  by.example.webstore._MAIN_.main - text: 
+2022-01-13 20:26:11 [main] [<init>] [70] FATAL by.example.webstore.connection.ConnectionPool - Error: no connections were created

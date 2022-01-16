@@ -65,14 +65,14 @@ public class ConnectionPool {
                 freeConnections.add(proxyConnection);
             } catch (SQLException e) {
                 logger.error("Database access error, connection not received", e);
-            }
+            }}
             if (freeConnections.isEmpty()|| freeConnections.size()<DEFAULT_POOL_SIZE) {
                 logger.fatal("Error: no connections were created");
                 throw new RuntimeException("Error: no connections were created");
             }
             logger.info( "Connection pool was created");
         }
-    }
+
 
     public static ConnectionPool getInstance() {
         if (!instanceIsExist.get()) {

@@ -26,8 +26,8 @@ class UserCreator {
         user.setEmail(resultSet.getString(USER_EMAIL));
         user.setPassword(resultSet.getString(USER_PASSWORD));
         user.setPhone(resultSet.getString(USER_PHONE_NUMBER));
-        User.Role role = User.Role.valueOf(resultSet.getString(USER_ROLE).toUpperCase(Locale.ROOT));
-        User.Status status = User.Status.valueOf(resultSet.getString(USER_STATUS));
+        User.Role role = User.Role.valueOf(resultSet.getString(USER_ROLE).toUpperCase());
+        User.Status status = User.Status.valueOf(resultSet.getString(USER_STATUS).toUpperCase());
         return user;
     }
 }

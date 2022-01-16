@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 
@@ -90,8 +91,8 @@ public class UserDaoImpl implements UserDao {
             statement.setString(3, user.getEmail());
             statement.setString(4, user.getPassword());
             statement.setString(5, user.getPhone());
-            statement.setString(6, user.getRole().name());
-            statement.setString(7, user.getStatus().name());
+            statement.setString(6, user.getRole().name().toLowerCase());
+            statement.setString(7, user.getStatus().name().toLowerCase());
             statement.executeUpdate();
             try ( ResultSet resultSet = statement.getGeneratedKeys()){
             long userId = 0;
