@@ -2,7 +2,7 @@ package by.example.webstore.entity;
 
 
 public class User extends AbstractEntity {
-    public enum Role {ADMIN, USER}
+    public enum Role {ADMIN, USER, GUEST}
 
     public enum Status {ACTIVE, BLOCKED}
 

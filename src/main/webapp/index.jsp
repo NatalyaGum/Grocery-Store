@@ -6,7 +6,7 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<jsp:forward page="controller?command=go_to_main_page"></jsp:forward>
+<jsp:forward page="jsp/main.jsp"></jsp:forward>
 
 <h1>"Hello World!"
 </h1>

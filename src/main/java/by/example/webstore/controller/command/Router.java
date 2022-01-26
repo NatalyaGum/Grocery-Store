@@ -1,15 +1,15 @@
 package by.example.webstore.controller.command;
 
 public final class Router {
-    public enum RouteType {
+    public enum RouterType {
         FORWARD, REDIRECT
     }
 
     private final String pagePath;
-    private final RouteType routeType;
+    private final RouterType routeType;
 
 
-    public Router(String pagePath, RouteType routeType) {
+    public Router(String pagePath, RouterType routeType) {
         this.pagePath = pagePath;
         this.routeType = routeType;
     }
@@ -18,7 +18,7 @@ public final class Router {
         return pagePath;
     }
 
-    public RouteType getRouteType() {
+    public RouterType getRouteType() {
         return routeType;
     }
 

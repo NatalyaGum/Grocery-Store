@@ -1,0 +1,3 @@
+2022-01-17 11:16:06 [main] [main] [15] INFO  by.example.webstore._MAIN_.main - text: 
+2022-01-17 11:16:06 [main] [<init>] [73] INFO  by.example.webstore.connection.ConnectionPool - Connection pool was created
+2022-01-17 11:16:06 [main] [findAllEntities] [75] DEBUG example.webstore.dao.impl.UserDaoImpl - findAllEntities method was completed successfully. 2 were found

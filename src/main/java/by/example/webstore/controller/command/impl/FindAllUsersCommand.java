@@ -18,7 +18,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-import static by.example.webstore.controller.command.Router.RouteType.FORWARD;
+import static by.example.webstore.controller.command.Router.RouterType.FORWARD;
 
 public class FindAllUsersCommand implements Command {
     static Logger logger = LogManager.getLogger();

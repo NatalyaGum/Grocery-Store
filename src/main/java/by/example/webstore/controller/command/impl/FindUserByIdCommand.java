@@ -42,10 +42,10 @@ public class FindUserByIdCommand implements Command {
                     session.setAttribute(ParameterAndAttribute.INFO_MESSAGE, MessageKey.INFO_NOTHING_FOUND_MESSAGE);
                 }*/
                 session.setAttribute(ParameterAndAttribute.CURRENT_PAGE, PagePath.FIND_USER_BY_ID + userId);
-                router = new Router(PagePath.CLIENTS, Router.RouteType.FORWARD);
+                router = new Router(PagePath.SHOW_USERS_PAGE, Router.RouterType.FORWARD);
             } catch (ServiceException e) {
                 logger.error("user search error", e);
-                router = new Router(PagePath.ERROR, Router.RouteType.REDIRECT);
+                router = new Router(PagePath.ERROR, Router.RouterType.REDIRECT);
             }
             return router;
         }

@@ -1,7 +1,6 @@
 package by.example.webstore.controller.command;
 
-import by.example.webstore.controller.command.impl.FindAllUsersCommand;
-import by.example.webstore.controller.command.impl.GoToMainPageCommand;
+import by.example.webstore.controller.command.impl.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,6 +14,9 @@ public class CommandProvider {
     static {
         commands.put(CommandType.FIND_ALL_USERS, new FindAllUsersCommand());
         commands.put(CommandType.GO_TO_MAIN_PAGE, new GoToMainPageCommand());
+        commands.put(CommandType.GO_TO_REGISTRATION, new GoToRegistrationPageCommand());
+        commands.put(CommandType.CHANGE_LOCALE, new ChangeLocaleCommand());
+        commands.put(CommandType.SIGN_UP, new SignUpCommand());
     }
     private CommandProvider() {
     }

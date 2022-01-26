@@ -5,15 +5,14 @@ import by.example.webstore.controller.command.PagePath;
 import by.example.webstore.controller.command.ParameterAndAttribute;
 import by.example.webstore.controller.command.Router;
 import by.example.webstore.util.CurrentPageExtractor;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
-public class GoToMainPageCommand  implements Command {
+public class GoToRegistrationPageCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.setAttribute(ParameterAndAttribute.CURRENT_PAGE, CurrentPageExtractor.extract(request));
-        return new Router(PagePath.MAIN_PAGE, Router.RouterType.FORWARD);
+        return new Router(PagePath.REGISTRATION_PAGE, Router.RouterType.FORWARD);
     }
 }
