@@ -4,7 +4,6 @@
 <html>
 <head>
     <title>WebShop</title>
-    <%@ include file="/jsp/header.jsp" %>
 
 </head>
 <body>
@@ -42,6 +41,20 @@
             Найти
         </a>
     </h4>
+</div>
+
+<div >
+    <label for="type">type</label>
+    <input type="text" id="type"  list="list" name="type">
+    <datalist id="list">
+        <option value="roll"></option>
+        <option value="nigiri"></option>
+        <option value="sashimi"></option>
+        <option value="soup"></option>
+        <option value="main_dish"></option>
+        <option value="salad"></option>
+        <option value="appetizer"></option>
+    </datalist>
 </div>
 
     <a  href="${pageContext.request.contextPath}/jsp/registration.jsp">

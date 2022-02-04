@@ -1,20 +1,21 @@
 package by.example.webstore.util.validator;
 
 import java.util.Map;
-import by.example.webstore.controller.command.ParameterAndAttribute.*;
 
 import static by.example.webstore.controller.command.ParameterAndAttribute.*;
 
 public class UserValidator {
-    private static final String INCORRECT_VALUE_PARAMETER = "incorrect";
-    private static final String EMAIL_REGEX = "(([\\p{Alpha}\\d._]+){5,25}@([\\p{Lower}]+){3,7}\\.([\\p{Lower}]+){2,3})";
-    private static final String PASSPORT_REGEX = "[\\d\\p{Alpha}\\p{Punct}]+";
-    private static final String NAME_REGEX = "[A-Za-zА-Я-а-я-]{2,20}";
-    private static final String MOBILE_NUMBER_REGEX = "\\+375\\(25|29|33|44)\\d{7}";
+    private static final String INCORRECT_VALUE_PARAMETER = " incorrect";
+    private static final String EMAIL_REGEX = "(([\\p{Alpha}\\d._]+){5,25}@([\\p{Lower}]+){3,10}\\.([\\p{Lower}]+){2,3})";
+    private static final String PASSPORT_REGEX = "\\S{6,20}";
+    private static final String NAME_REGEX = "[a-zA-Zа-яА-Я-\\s]{1,45}";
+    private static final String NUMBER_REGEX = "^\\+375\\d{9}$";
 
     private static final UserValidator instance = new UserValidator();
+
     private UserValidator() {
     }
+
     public static UserValidator getInstance() {
         return instance;
     }
@@ -23,24 +24,20 @@ public class UserValidator {
         return password != null && password.matches(PASSPORT_REGEX);
     }
 
-
     public boolean checkSurname(String surname) {
         return surname != null && surname.matches(NAME_REGEX);
     }
-
 
     public boolean checkName(String name) {
         return name != null && name.matches(NAME_REGEX);
     }
 
-
     public boolean checkEmail(String email) {
         return email != null && email.matches(EMAIL_REGEX);
     }
 
-
     public boolean checkNumber(String number) {
-        return number != null && number.matches(MOBILE_NUMBER_REGEX);
+        return number != null && number.matches(NUMBER_REGEX);
     }
 
 
@@ -84,8 +81,8 @@ public class UserValidator {
             userData.put(REPEATED_PASSWORD, userData.get(REPEATED_PASSWORD) + INCORRECT_VALUE_PARAMETER);
             isValid = false;
         }
-        if (userData.get(REPEATED_PASSWORD)==userData.get(PASSWORD)) {
-            userData.put(PASSWORD, userData.get(PASSWORD) + INCORRECT_VALUE_PARAMETER);
+        if (!userData.get(PASSWORD).equals(userData.get(REPEATED_PASSWORD))) {
+            userData.put(REPEATED_PASSWORD, userData.get(REPEATED_PASSWORD) + INCORRECT_VALUE_PARAMETER);
             isValid = false;
         }
         return isValid;

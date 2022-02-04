@@ -22,7 +22,7 @@ public class ChangeLocaleCommand implements Command {
             case LANGUAGE_RUSSIAN -> session.setAttribute(ParameterAndAttribute.LOCALE, LOCALE_RUSSIAN);
         }
         session.setAttribute(ParameterAndAttribute.LANGUAGE, language);
-        return new Router(currentPage, Router.RouterType.REDIRECT);
+        return new Router(currentPage, Router.RouterType.FORWARD);
     }
 
 

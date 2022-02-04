@@ -34,13 +34,32 @@
 
 <main>
 
+  <div class="py-5 text-center container">
+
+          <div class="card shadow-sm">
+            <h1 class="fw-light">Регистрация</h1>
+            <fieldset>
+              <form action="${pageContext.request.contextPath}/controller" method="post">
+                <input type="hidden" name="command" value="sign_up"/><br>
+                <input type="text" name="userName" required placeholder="${name}" pattern="[a-zA-Zа-яА-Я-\s]{1,45}"/><br><br>
+                <input type="tel" name="phone" required placeholder="${phone} +375*********" pattern="\+375\d{9}"/><br><br>
+                <input type="email" name="login" required placeholder="${email}" maxlength="45"/><br><br>
+                <input type="password" name="password" required placeholder="${password} ${password_rules}" pattern="[A-Za-z\d]{5,15}"/><br><br>
+                <input type="submit"  value="Sing-up"/>
+              </form>
+            </fieldset>
+
+      </div>
+
+  </div>
+
   <div>
     Request from ${pageContext.errorData.requestURI} is failed<br/>
     Servlet name: ${pageContext.errorData.servletName}<br/>
     Status code: ${pageContext.errorData.statusCode}<br/>
     Exception: ${pageContext.exception}<br/>
     Message from exception: ${pageContext.exception.message}<br/>
-    stack trace: ${pageContext.exception.stackTrace.toString}<br/>
+    stack trace: ${pageContext.exception.stackTrace}<br/>
 
     </div>
 </main>

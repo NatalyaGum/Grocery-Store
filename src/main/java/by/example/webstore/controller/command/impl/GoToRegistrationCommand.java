@@ -8,11 +8,11 @@ import by.example.webstore.util.CurrentPageExtractor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
-public class GoToRegistrationPageCommand implements Command {
+public class GoToRegistrationCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        session.setAttribute(ParameterAndAttribute.CURRENT_PAGE, CurrentPageExtractor.extract(request));
-        return new Router(PagePath.REGISTRATION_PAGE, Router.RouterType.FORWARD);
+       // HttpSession session = request.getSession();
+        //session.setAttribute(ParameterAndAttribute.CURRENT_PAGE, CurrentPageExtractor.extract(request));
+        return new Router(PagePath.PRODUCT_MANAGEMENT, Router.RouterType.FORWARD);
     }
 }

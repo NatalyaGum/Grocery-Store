@@ -12,4 +12,5 @@ public interface UserService {
     List<User> findAllEntities() throws ServiceException;
     boolean registerUser(Map<String, String> userData) throws ServiceException;
     boolean isEmailAvailable(Map<String, String> userData) throws ServiceException;
+    Optional<User> findUser(String email, String password) throws ServiceException;
 }

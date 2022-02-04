@@ -6,6 +6,15 @@ public class ProductType extends AbstractEntity{
     private long productTypeId;
     private String productTypeName;
 
+    public ProductType(String productTypeName) {
+        this.productTypeName = productTypeName;
+    }
+
+    public ProductType(long productTypeId, String productTypeName) {
+        this.productTypeId = productTypeId;
+        this.productTypeName = productTypeName;
+    }
+
     public long getProductTypeId() {
         return productTypeId;
     }
@@ -42,10 +51,6 @@ public class ProductType extends AbstractEntity{
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("ProductType{ ");
-        builder.append("productTypeId=").append(productTypeId);
-        builder.append(", productTypeName=").append(productTypeName);
-        return builder.toString();
+       return productTypeName;
     }
 }

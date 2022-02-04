@@ -1,7 +1,7 @@
 package by.example.webstore.service.impl;
 
+import by.example.webstore.dao.DaoProvider;
 import by.example.webstore.dao.UserDao;
-import by.example.webstore.dao.impl.UserDaoImpl;
 import by.example.webstore.entity.User;
 import by.example.webstore.exception.ConnectionPoolException;
 import by.example.webstore.exception.DaoException;
@@ -22,7 +22,7 @@ import static by.example.webstore.controller.command.ParameterAndAttribute.*;
 public class UserServiceImpl implements UserService {
     static Logger logger = LogManager.getLogger();
     private static final String INCORRECT_VALUE_PARAMETER = "incorrect";
-    private UserDao userDao = new UserDaoImpl();
+    private static final UserDao userDao = DaoProvider.getInstance().getUserDao();
 
     public List<User> findAllEntities() throws ServiceException {
         List<User> users = new ArrayList();
@@ -56,7 +56,8 @@ public class UserServiceImpl implements UserService {
     public boolean registerUser(Map<String, String> userData) throws ServiceException {
         if (UserValidator.getInstance().checkUserPersonalData(userData)){
             String password = PasswordEncoder.pasEncode(userData.get(PASSWORD));
-            User user=new User(userData.get(EMAIL), password, userData.get(NAME),userData.get(SURNAME),userData.get(PHONE_NUMBER), User.Role.USER,User.Status.ACTIVE);
+            User user=new User(userData.get(EMAIL), password, userData.get(NAME),userData.get(SURNAME),
+                                    userData.get(PHONE_NUMBER), User.Role.USER,User.Status.ACTIVE);
             try {
                 userDao.insertNewEntity(user);
                 return true;
@@ -77,5 +78,22 @@ public class UserServiceImpl implements UserService {
             logger.error("Error has occurred while checking email availability: " + exception);
             throw new ServiceException("Error has occurred while checking email availability: " + exception);
         }
+    }
+
+    public Optional<User> findUser(String email, String password) throws ServiceException {
+
+        try {
+            if (UserValidator.getInstance().checkEmail(email) && UserValidator.getInstance().checkPassword(password)) {
+                Optional<User> user = userDao.findUserByEmailAndPassword(email,PasswordEncoder.pasEncode(password));
+               // String encodedPassword = PasswordEncoder.pasEncode(password);
+
+                    return user;
+
+            }
+        } catch (DaoException exception) {
+            logger.error("Error has occurred while searching for user with email \"{}\": {}", email, exception);
+            throw new ServiceException("Error has occurred while searching for user with login \"" + email + "\": ", exception);
+        }
+        return Optional.empty();
     }
 }

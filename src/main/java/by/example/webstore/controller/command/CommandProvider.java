@@ -14,9 +14,13 @@ public class CommandProvider {
     static {
         commands.put(CommandType.FIND_ALL_USERS, new FindAllUsersCommand());
         commands.put(CommandType.GO_TO_MAIN_PAGE, new GoToMainPageCommand());
-        commands.put(CommandType.GO_TO_REGISTRATION, new GoToRegistrationPageCommand());
+        commands.put(CommandType.GO_TO_REGISTRATION, new GoToRegistrationCommand());
         commands.put(CommandType.CHANGE_LOCALE, new ChangeLocaleCommand());
         commands.put(CommandType.SIGN_UP, new SignUpCommand());
+        commands.put(CommandType.SIGN_IN, new SignInCommand());
+        commands.put(CommandType.UPLOAD, new UploadCommand());
+        commands.put(CommandType.ADD_PRODUCT, new ProductAddCommand());
+        commands.put(CommandType.GO_TO_PRODUCT_ADD, new GoToProductAddCommand());
     }
     private CommandProvider() {
     }

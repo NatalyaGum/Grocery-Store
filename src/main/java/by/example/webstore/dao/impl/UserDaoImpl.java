@@ -30,7 +30,7 @@ public class UserDaoImpl implements UserDao {
     private static final String FIND_USER_BY_PHONE = "SELECT id_user FROM users WHERE phone=?";
     private static final String FIND_USER_BY_ID_AND_PASSWORD = "SELECT id_user FROM users WHERE id=? AND password=?";
     private static final String FIND_USER_BY_EMAIL_AND_PASSWORD = """
-            SELECT id_user, name, surname, email, password, phone, role, FROM users status WHERE email=? AND password=?""";
+            SELECT id_user, name, surname, email, password, phone, role, status FROM users status WHERE email=? AND password=?""";
     private static final String FIND_ALL_USERS = """
             SELECT id_user, name, surname, email, password, phone, role, status FROM users""";
 
@@ -261,8 +261,8 @@ public class UserDaoImpl implements UserDao {
                     (userOptional.map(user -> " User with id " + user.getUserId() + " was found").orElse(" User with these email and password don't exist")));
             return userOptional;
         } catch (SQLException | ConnectionPoolException e) {
-            logger.error( "Impossible to find user in database. Database access error:", e);
-            throw new DaoException("Impossible to find user in database. Database access error:", e);
+            logger.error( "Impossible to find user in database.", e);
+            throw new DaoException("Impossible to find user in database. ", e);
         }
     }
 

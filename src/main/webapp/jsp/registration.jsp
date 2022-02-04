@@ -38,12 +38,17 @@
 
   <div class="navbar navbar-dark bg-dark shadow-sm">
     <div class="container">
-      <a href="${pageContext.request.contextPath}/jsp/main.jsp" class="navbar-brand d-flex align-items-center">
+      <a href="${pageContext.request.contextPath}/controller?command=go_to_main_page" class="navbar-brand d-flex align-items-center">
         <strong>&divonx;WebStore</strong>
       </a>
       <div class="col-sm-8 col-md-7 py-4">
-        <h6 class="text-white">Служба поддерки круглосуточно. </h6>
+        <h6 class="text-white"><fmt:message key="help"/></h6>
         <p class="text-muted">+375170000000</p>
+      </div>
+      <div>
+        <p><a href="${pageContext.request.contextPath}/controller?command=change_locale&language=EN">EN</a>
+        </p><p>
+        <a href="${pageContext.request.contextPath}/controller?command=change_locale&language=RU">RU</a></p>
       </div>
     </div>
   </div>
@@ -59,12 +64,13 @@
             <fieldset>
               <form action="${pageContext.request.contextPath}/controller?command=sign_up" method="post">
                 <input type="hidden" name="command" value="sign_up"/><br>
-                <input type="text" name="name" required placeholder=<fmt:message key="sign_up.name.placeholder"/> pattern="[a-zA-Zа-яА-Я-\s]{1,45}"/><br><br>
-                <input type="text" name="surname" required placeholder=<fmt:message key="sign_up.surname.placeholder"/> pattern="[a-zA-Zа-яА-Я-\s]{1,45}"/><br><br>
-                <input type="tel" name="phone-number" required placeholder="<fmt:message key="sign_up.number.placeholder"/> +375*********" pattern="\+375\d{9}"/><br><br>
-                <input type="email" name="email" required placeholder=<fmt:message key="sign_up.email.placeholder"/> maxlength="45"/><br><br>
-                <input type="password" name="password" required placeholder=<fmt:message key="sign_in.password.title"/> pattern="[A-Za-z\d]{5,15}"/><br><br>
-                <input type="password" name=repeated_password" required placeholder=<fmt:message key="sign_up.repeat_password.placeholder"/> pattern="[A-Za-z\d]{5,15}"/><br><br>
+                <input type="text" name="name" value="<c:out value="${requestScope.user.name}"/>" required placeholder=<fmt:message key="sign_up.name.placeholder"/> pattern="[a-zA-Zа-яА-Я-\s]{1,45}"/><br><br>
+                <input type="text" name="surname" value="<c:out value="${requestScope.user.surname}"/>" required placeholder=<fmt:message key="sign_up.surname.placeholder"/> pattern="[a-zA-Zа-яА-Я-\s]{1,45}"/><br><br>
+                <input type="tel" name="phone" value="<c:out value="${requestScope.user.number}"/>" required placeholder="+375*********" pattern="^\+375\d{9}$"/><br><br>
+                <input type="email" name="email" value="<c:out value="${requestScope.user.email}"/>" required placeholder=<fmt:message key="sign_up.email.placeholder"/> pattern="(([A-Za-z\d._]+){5,25}@([A-Za-z]+){3,10}\.([a-z]+){2,3})"/><br><br>
+                <input type="password" name="password" value="<c:out value="${requestScope.user.password}"/>" required placeholder=<fmt:message key="sign_in.password.title"/> pattern="\S{6,20}"/><br><br>
+                <input type="password" name="repeated_password" value="<c:out value="${requestScope.user.repeated_password}"/>" required placeholder=<fmt:message key="sign_up.repeat_password.placeholder"/> pattern="\S{6,20}"/><br><br>
+                <c:if test="${not empty message}"> <p><fmt:message key="${message}"/></p>  </c:if>
                 <input type="submit"  value=<fmt:message key="sign_up.submit"/> >
               </form>
             </fieldset>
@@ -78,16 +84,12 @@
 <footer class="text-muted py-5">
   <div class="container">
     <p class="float-end mb-1">
-      <a href="#">Вернуться наверх</a>
+      <a href="#"><fmt:message key="top"/></a>
     </p>
-    <p class="mb-1"> &copy; WebShop</p>
+    <p class="mb-1"> &copy; WebStore</p>
 
   </div>
 </footer>
-
-
-<script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-
 
 </body>
 </html>

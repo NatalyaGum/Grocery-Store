@@ -4,28 +4,46 @@ import java.math.BigDecimal;
 
 public class Product extends AbstractEntity {
     private long productId;
-    private String name;
-    private String country;
+    private String title;
     private String manufacture;
     private String description;
     private BigDecimal price;
     private String picturePath;
-    private long productType;
-    private int raiting;
+    private ProductType productType;
+    private boolean active;
 
     public Product() {
     }
-    public Product(long productId, String name, String country, String manufacture, String description,
-                   BigDecimal price, String picturePath, long productType, int raiting) {
-        this.productId = productId;
-        this.name = name;
-        this.country = country;
+
+    public Product( String title,  String description, BigDecimal price,
+                    String manufacture, ProductType productType) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
         this.manufacture = manufacture;
+        this.productType = productType;
+    }
+
+    public Product( String title,  String description, BigDecimal price,
+                    String picturePath,String manufacture, ProductType productType) {
+        this.title = title;
         this.description = description;
         this.price = price;
         this.picturePath = picturePath;
+        this.manufacture = manufacture;
         this.productType = productType;
-        this.raiting = raiting;
+    }
+
+    public Product(long productId, String title,  String manufacture, String description,
+                   BigDecimal price, String picturePath, ProductType productType, boolean active) {
+        this.productId = productId;
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.picturePath = picturePath;
+        this.manufacture = manufacture;
+        this.productType = productType;
+        this.active = active;
     }
 
     public long getProductId() {
@@ -36,20 +54,12 @@ public class Product extends AbstractEntity {
         this.productId = productId;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getManufacture() {
@@ -84,20 +94,21 @@ public class Product extends AbstractEntity {
         this.picturePath = picturePath;
     }
 
-    public long getProductType() {
+    public ProductType getProductType() {
         return productType;
     }
 
-    public void setProductType(long productType) {
+    public void setProductType(ProductType productType) {
         this.productType = productType;
     }
 
-    public int getRaiting() {
-        return raiting;
+
+    public boolean getActive() {
+        return active;
     }
 
-    public void setRaiting(int raiting) {
-        this.raiting = raiting;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override
@@ -106,8 +117,7 @@ public class Product extends AbstractEntity {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
         return productId == product.productId && productType == product.productType &&
-                (name != null ? name.equals(product.name) : product.name == null) &&
-                (country != null ? country.equals(product.country) : product.country == null) &&
+                (title != null ? title.equals(product.title) : product.title == null) &&
                 (manufacture != null ? manufacture.equals(product.manufacture) : product.manufacture == null) &&
                 (description != null ? description.equals(product.description) : product.description == null) &&
                 (price != null ? price.equals(product.price) : product.price == null) &&
@@ -119,13 +129,11 @@ public class Product extends AbstractEntity {
         StringBuilder builder = new StringBuilder();
         builder.append("Product{ ");
         builder.append("productId=").append(productId);
-        builder.append(", name=").append(name);
-        builder.append(", country='").append(country);
+        builder.append(", title=").append(title);
         builder.append(", manufacture=").append(manufacture);
         builder.append(", price=").append(price);
         builder.append(", productType=").append(productType);
         builder.append(", picturePath=").append(picturePath);
-        builder.append(", raiting=").append(raiting);
         builder.append(", description=").append(description);
         builder.append("}");
         return builder.toString();
@@ -136,13 +144,12 @@ public class Product extends AbstractEntity {
         int first = 31;
         int result = 1;
         result = result * first + (productId != 0 ? (int) productId : 0);
-        result = result * first + (name != null ? name.hashCode() : 0);
-        result = result * first + (country != null ? country.hashCode() : 0);
+        result = result * first + (title != null ? title.hashCode() : 0);
         result = result * first + (manufacture != null ? manufacture.hashCode() : 0);
         result = result * first + (description != null ? description.hashCode() : 0);
         result = result * first + (price != null ? price.hashCode() : 0);
         result = result * first + (picturePath != null ? picturePath.hashCode() : 0);
-        result = result * first + (productType != 0 ? (int) productType : 0);
+        result = result * first + (productType.hashCode() != 0 ? productType.hashCode() : 0);
         return result;
 
     }

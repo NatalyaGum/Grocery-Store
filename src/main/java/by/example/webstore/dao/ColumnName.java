@@ -18,19 +18,18 @@ public class ColumnName {
     public static final String ADDRESS_APARTMENT = "addresses.apartment";
     public static final String ADDRESS_COMMENT = "addresses.comment";
     /* products table */
-    public static final String PRODUCTS_ID = "products.id_product";
-    public static final String PRODUCTS_TITLE = "products.title";
-    public static final String PRODUCTS_COUNTRY = "products.country";
-    public static final String PRODUCTS_manufacture = "products.manufacture";
-    public static final String PRODUCTS_DESCRIPTION = "products.description";
-    public static final String PRODUCTS_PRICE = "products.price";
-    public static final String PRODUCTS_IMAGE = "products.picture_path";
-    public static final String PRODUCTS_TYPE_ID = "products.product_type_id";
+    public static final String PRODUCTS_ID = "id_product";
+    public static final String PRODUCTS_TITLE = "title";
+    public static final String PRODUCTS_MANUFACTURE = "manufacture";
+    public static final String PRODUCTS_DESCRIPTION = "description";
+    public static final String PRODUCTS_PRICE = "price";
+    public static final String PRODUCTS_IMAGE = "picture";
+    public static final String PRODUCT_TYPE_ID = "product_type.product_type_id";
     public static final String PRODUCTS_QUANTITY = "products.quantity";
     public static final String PRODUCTS_RATING = "products.rating";
     /* product_types table */
-    public static final String PRODUCT_ID = "product_type.id_product_type";
-    public static final String PRODUCT_TYPE = "product_type.type";
+    public static final String ID_PRODUCT_TYPE = "product_type.id_product_type";
+    public static final String PRODUCT_TYPE = "product_type.product_type";
     /* orders table */
     public static final String ORDER_ID = "orders.id_order";
     public static final String ORDER_COST = "orders.cost";
