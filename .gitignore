@@ -28,4 +28,4 @@ out/
 target/
 pom.xml
 .gitignore
-src/main/java/by/example/webstore/_MAIN_
+src/main/java/by/edu/webstore/_MAIN_

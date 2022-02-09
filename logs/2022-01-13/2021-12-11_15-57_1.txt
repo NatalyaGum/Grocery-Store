@@ -1,2 +1,2 @@
-2021-12-11 15:57:14 [main] [main] [10] INFO  by.example.webstore._MAIN_.main - text:
-2021-12-11 15:57:57 [main] [main] [10] INFO  by.example.webstore._MAIN_.main - text:
+2021-12-11 15:57:14 [main] [main] [10] INFO  main - text:
+2021-12-11 15:57:57 [main] [main] [10] INFO  main - text:

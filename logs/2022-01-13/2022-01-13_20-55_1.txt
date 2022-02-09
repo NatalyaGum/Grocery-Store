@@ -1,5 +1,5 @@
-2022-01-13 20:55:46 [main] [main] [15] INFO  by.example.webstore._MAIN_.main - text: 
-2022-01-13 20:55:47 [main] [<init>] [73] INFO  by.example.webstore.connection.ConnectionPool - Connection pool was created
+2022-01-13 20:55:46 [main] [main] [15] INFO  main - text:
+2022-01-13 20:55:47 [main] [<init>] [73] INFO  ConnectionPool - Connection pool was created
 2022-01-13 20:55:47 [main] [insertNewEntity] [105] ERROR example.webstore.dao.impl.UserDaoImpl - Impossible to insert new user into database. Database access error:
 java.sql.SQLException: Data truncated for column 'status' at row 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.26.jar:8.0.26]
@@ -9,5 +9,5 @@ java.sql.SQLException: Data truncated for column 'status' at row 1
 	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1040) ~[mysql-connector-java-8.0.26.jar:8.0.26]
 	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1350) ~[mysql-connector-java-8.0.26.jar:8.0.26]
 	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:1025) ~[mysql-connector-java-8.0.26.jar:8.0.26]
-	at by.example.webstore.dao.impl.UserDaoImpl.insertNewEntity(UserDaoImpl.java:96) [classes/:?]
-	at by.example.webstore._MAIN_.main.main(main.java:19) [classes/:?]
+	at UserDaoImpl.insertNewEntity(UserDaoImpl.java:96) [classes/:?]
+	at main.main(main.java:19) [classes/:?]

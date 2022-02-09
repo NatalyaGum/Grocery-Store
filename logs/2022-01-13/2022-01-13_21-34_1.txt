@@ -1,5 +1,5 @@
-2022-01-13 21:34:12 [main] [main] [15] INFO  by.example.webstore._MAIN_.main - text: 
-2022-01-13 21:34:12 [main] [<init>] [73] INFO  by.example.webstore.connection.ConnectionPool - Connection pool was created
+2022-01-13 21:34:12 [main] [main] [15] INFO  main - text:
+2022-01-13 21:34:12 [main] [<init>] [73] INFO  ConnectionPool - Connection pool was created
 2022-01-13 21:34:12 [main] [findAllEntities] [79] ERROR example.webstore.dao.impl.UserDaoImpl - Impossible to find users. Database access error:
 java.sql.SQLException: Column 'phone_number' not found.
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.26.jar:8.0.26]
@@ -8,6 +8,6 @@ java.sql.SQLException: Column 'phone_number' not found.
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63) ~[mysql-connector-java-8.0.26.jar:8.0.26]
 	at com.mysql.cj.jdbc.result.ResultSetImpl.findColumn(ResultSetImpl.java:581) ~[mysql-connector-java-8.0.26.jar:8.0.26]
 	at com.mysql.cj.jdbc.result.ResultSetImpl.getString(ResultSetImpl.java:888) ~[mysql-connector-java-8.0.26.jar:8.0.26]
-	at by.example.webstore.dao.impl.UserCreator.createUser(UserCreator.java:28) ~[classes/:?]
-	at by.example.webstore.dao.impl.UserDaoImpl.findAllEntities(UserDaoImpl.java:73) [classes/:?]
-	at by.example.webstore._MAIN_.main.main(main.java:20) [classes/:?]
+	at UserCreator.createUser(UserCreator.java:28) ~[classes/:?]
+	at UserDaoImpl.findAllEntities(UserDaoImpl.java:73) [classes/:?]
+	at main.main(main.java:20) [classes/:?]
