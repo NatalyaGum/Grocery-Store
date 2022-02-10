@@ -27,3 +27,5 @@
 + can add new admins
 + can block and unblock users
 + can log out
+
+![databaseScheme](db.JPG)
