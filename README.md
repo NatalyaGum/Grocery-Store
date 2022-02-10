@@ -17,13 +17,13 @@
 +can log out
 
 #Admin
-can view the catalog
-can change the language
-can create a product 
-can add product type
-can edit and delete the product
-can process orders made by customer
-can register payments that customers made in cash
-can add new admins
-can block and unblock users
-can log out
++can view the catalog
++can change the language
++can create a product 
++can add product type
++can edit and delete the product
++can process orders made by customer
++can register payments that customers made in cash
++can add new admins
++can block and unblock users
++can log out
