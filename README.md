@@ -28,4 +28,4 @@
 + can block and unblock users
 + can log out
 
-![databaseScheme](db.JPG)
+![databaseScheme](https://github.com/NatalyaGum/GroceryStoreWebProject/blob/main/bd.JPG)
