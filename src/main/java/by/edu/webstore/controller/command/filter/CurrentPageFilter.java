@@ -9,7 +9,7 @@ import java.io.IOException;
 @WebFilter(urlPatterns = {"/*"})
 public class CurrentPageFilter implements Filter {
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         String currentPage = httpRequest.getRequestURL().toString();
@@ -26,6 +26,6 @@ public class CurrentPageFilter implements Filter {
             currentPage = currentPage.substring(index) + "?" + httpRequest.getQueryString();
             httpRequest.getSession().setAttribute(ParameterAndAttribute.CURRENT_PAGE, currentPage);
         }
-        chain.doFilter(httpRequest, servletResponse);
+        filterChain.doFilter(httpRequest, servletResponse);
     }
 }

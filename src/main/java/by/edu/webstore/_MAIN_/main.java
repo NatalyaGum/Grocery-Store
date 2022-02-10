@@ -6,6 +6,8 @@ import by.edu.webstore.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Optional;
+
 public class main {
 
     static Logger logger = LogManager.getLogger();
@@ -14,9 +16,11 @@ public class main {
         logger.info("text: ");
       // ConnectionPool.getInstance();
         UserDaoImpl userDao=new UserDaoImpl();
-        User user=new User("natalyagum@yandex.ru", "qwerty", "Natalya","Gum","+37525", User.Role.CLIENT,User.Status.ACTIVE);
+       // User user=new User("natalyagum@yandex.ru", "qwerty", "Natalya","Gum","+37525", User.Role.CLIENT,User.Status.ACTIVE);
        // userDao.insertNewEntity(user);
-        userDao.findAllEntities();
+        Optional<User> optionalUser= userDao.findEntityById(3);
+        User.Role role=optionalUser.get().getRole();
+        System.out.println(optionalUser.get());
     }
 
 }

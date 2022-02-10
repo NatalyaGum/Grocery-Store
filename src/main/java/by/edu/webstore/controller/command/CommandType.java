@@ -13,6 +13,7 @@ public enum CommandType {
     ADD_PRODUCT ("product_add"),
     GO_TO_PRODUCT_ADD("go_to_product_add"),
     MODIFY_PRODUCT_TYPE("modify_product_type"),
+    GO_TO_CATALOG("go_to_catalog"),
     ADD_PRODUCT_TYPE ("add_product_type");
     private String webCommandName;
 

@@ -91,9 +91,9 @@
               <option value="${element.productTypeName}">${element.productTypeName}</option>
             </c:forEach>
           </select><br>
-          <input type="text" name="modify_type_name" value="<c:out value="${requestScope.product_type.product_type}"/>" placeholder=<fmt:message key="modify_product_type.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?""%()\s]{3,75}" class="form-control input-lg"/>
+          <input type="text" name="modify_type_name" value="<c:out value="${requestScope.product_type.product_type}"/>" placeholder=<fmt:message key="product_type.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?""%()\s]{3,75}" class="form-control input-lg"/>
           <c:if test="${not empty message_type_product}"> <p><fmt:message key="${message_type_product}"/></p>  </c:if><br>
-          <input type="submit"  value=<fmt:message key="product.modify"/> >
+          <input type="submit"  value=<fmt:message key="product_type.modify"/> >
         </form>
       </fieldset>
 

@@ -1,3 +1,6 @@
+
+
+
 package by.edu.webstore.controller.command.filter;
 
 import by.edu.webstore.controller.command.CommandType;
@@ -11,10 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import static by.edu.webstore.controller.command.ParameterAndAttribute.*;
 
 import java.io.IOException;
-import java.util.EnumMap;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static by.edu.webstore.controller.command.CommandType.*;
 import static by.edu.webstore.entity.User.Role.*;
@@ -22,7 +22,9 @@ import static by.edu.webstore.entity.User.Role.*;
 
 @WebFilter(urlPatterns = {"/controller"})
 public class SecurityFilter implements Filter {
-    private static final String DEFAULT_COMMAND = "go_to_main_page";
+
+
+   /* private static final String DEFAULT_COMMAND = "go_to_main_page";
     private EnumMap<User.Role, List<CommandType>> accessibleCommands;
     @Override
     public void init(FilterConfig filterConfig) {
@@ -47,11 +49,12 @@ public class SecurityFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession();
-        User.Role role=(User.Role)session.getAttribute(ROLE);
-       // User.Role role=User.Role.valueOf(String.valueOf(session.getAttribute(ROLE)).toUpperCase());
-       /* User.Role role = session.getAttribute(ROLE) == null
+       // User.Role role=(User.Role)session.getAttribute(ROLE);
+           User.Role role= User.Role.valueOf(session.getAttribute(ROLE).toString().toUpperCase());
+        // User.Role role=User.Role.valueOf(String.valueOf(session.getAttribute(ROLE)).toUpperCase());
+       *//* User.Role role = session.getAttribute(ROLE) == null
                 ? User.Role.GUEST
-                : (User.Role)session.getAttribute(ROLE);*/
+                : (User.Role)session.getAttribute(ROLE);*//*
         String command = request.getParameter(COMMAND);
         if (command == null) {
             command = DEFAULT_COMMAND;
@@ -68,11 +71,12 @@ public class SecurityFilter implements Filter {
         }
         chain.doFilter(request, response);
 
-    }
-   /* private static final String DEFAULT_COMMAND = "go_to_main_page";
+    }*/
+   private static final String DEFAULT_COMMAND = "go_to_main_page";
     private final EnumMap<User.Role, EnumSet<CommandType>> roleMap = new EnumMap<>(User.Role.class);
     private final EnumSet<CommandType> guestCommands = EnumSet.of(
             CHANGE_LOCALE,
+            GO_TO_CATALOG,
             GO_TO_MAIN_PAGE,
             GO_TO_REGISTRATION,
             SIGN_IN,
@@ -81,6 +85,7 @@ public class SecurityFilter implements Filter {
     private final EnumSet<CommandType> adminCommands = EnumSet.of(
             CHANGE_LOCALE,
             GO_TO_MAIN_PAGE,
+            GO_TO_CATALOG,
             ADD_PRODUCT,
             MODIFY_PRODUCT_TYPE,
             ADD_PRODUCT_TYPE,
@@ -88,6 +93,7 @@ public class SecurityFilter implements Filter {
 
     private final EnumSet<CommandType> userCommands = EnumSet.of(
             CHANGE_LOCALE,
+            GO_TO_CATALOG,
             GO_TO_MAIN_PAGE);
 
     public void init(FilterConfig config) throws ServletException {
@@ -102,7 +108,8 @@ public class SecurityFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
-        User.Role role=(User.Role)session.getAttribute(ROLE);
+        User.Role role= User.Role.valueOf(session.getAttribute(ROLE).toString().toUpperCase());
+        //User.Role role=(User.Role)session.getAttribute(ROLE);
         String command = request.getParameter(COMMAND);
         if (command == null) {
             command = DEFAULT_COMMAND;
@@ -117,7 +124,6 @@ public class SecurityFilter implements Filter {
             response.sendRedirect(request.getContextPath() + "/" + PagePath.MAIN_PAGE);
         } else {
             filterChain.doFilter(request, response);
-        }*/
+        }
 
-    }
-
+}}

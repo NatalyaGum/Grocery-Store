@@ -1,0 +1,3 @@
+2022-02-09 20:40:39 [main] [main] [16] INFO  by.edu.webstore._MAIN_.main - text: 
+2022-02-09 20:40:39 [main] [<init>] [73] INFO  by.edu.webstore.connection.ConnectionPool - Connection pool was created
+2022-02-09 20:40:39 [main] [findEntityById] [57] ERROR edu.webstore.dao.impl.UserDaoImpl - findEntityById method was completed successfully. User with id 3 was found

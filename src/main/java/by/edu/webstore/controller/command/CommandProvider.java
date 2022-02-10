@@ -22,6 +22,7 @@ public class CommandProvider {
         commands.put(CommandType.GO_TO_PRODUCT_ADD, new GoToProductAddCommand());
         commands.put(CommandType.ADD_PRODUCT_TYPE, new AddProductTypeCommand());
         commands.put(CommandType.MODIFY_PRODUCT_TYPE, new ModifyProductTypeCommand());
+        commands.put(CommandType.GO_TO_CATALOG, new GoToCatalogCommand());
     }
     private CommandProvider() {
     }

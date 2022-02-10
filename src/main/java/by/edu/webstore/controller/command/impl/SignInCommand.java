@@ -32,7 +32,7 @@ public class SignInCommand implements Command {
             Optional<User> optionalUser = service.findUser(email, password);
             if (optionalUser.isPresent()&& optionalUser.get().getStatus() != User.Status.BLOCKED) {
                     session.setAttribute(USER, optionalUser.get());
-                    session.setAttribute(ROLE, optionalUser.get().getRole().toString().toLowerCase());
+                    session.setAttribute(ROLE, optionalUser.get().getRole().toString());
                     return new Router(PagePath.MAIN_PAGE, Router.RouterType.REDIRECT);
                 } else {
                 request.setAttribute(USER_EMAIL, email);

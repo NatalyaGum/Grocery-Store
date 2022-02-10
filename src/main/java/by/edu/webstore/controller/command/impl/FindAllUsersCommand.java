@@ -27,16 +27,16 @@ public class FindAllUsersCommand implements Command {
         HttpSession session = request.getSession();
         UserService service = ServiceProvider.getInstance().getUserService();
 
-        Router commandResult = null;
+        Router router = null;
         try {
             List<User> users = service.findAllEntities();
             request.setAttribute(ParameterAndAttribute.USERS_LIST, users);
            // session.setAttribute(ParameterAndAttribute.CURRENT_PAGE, CurrentPageExtractor.extract(request));
-            commandResult = new Router(PagePath.SHOW_USERS_PAGE, FORWARD);
+            router = new Router(PagePath.SHOW_USERS_PAGE, FORWARD);
         } catch (ServiceException e) {
             logger.error("Try to execute FindAllRoomsCommand was failed " + e);
-            commandResult = new Router(PagePath.ERROR, FORWARD);
+            router = new Router(PagePath.ERROR, FORWARD);
         }
-        return commandResult;
+        return router;
     }
     }

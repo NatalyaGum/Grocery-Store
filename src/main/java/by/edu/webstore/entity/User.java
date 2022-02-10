@@ -2,7 +2,18 @@ package by.edu.webstore.entity;
 
 
 public class User extends AbstractEntity {
-    public enum Role {ADMIN, CLIENT, GUEST}
+    public enum Role {
+        ADMIN("admin"), CLIENT("client"), GUEST("guest");
+        private String role;
+
+        Role(String role) {
+            this.role = role;
+        }
+
+        public String toString() {
+        return role;
+        }
+    }
 
     public enum Status {ACTIVE, BLOCKED}
 

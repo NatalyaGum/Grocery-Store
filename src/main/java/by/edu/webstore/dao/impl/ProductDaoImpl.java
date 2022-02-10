@@ -30,7 +30,7 @@ public class ProductDaoImpl implements ProductDao {
     private static final String FIND_PRODUCT_IN_ANY_ORDER = "SELECT id_order FROM orders WHERE id_product=? LIMIT 1";
     private static final String FIND_PRODUCT_BY_TITLE = "SELECT id_product FROM products WHERE name=?";
     private static final String FIND_ALL_PRODUCTS = """
-            SELECT id_product, title, product_type.product_type, price, picture, manufacture FROM products
+            SELECT id_product, title, product_type.product_type, price, picture, manufacture, description, active FROM products
             JOIN product_type ON products.product_type_id=product_type.id_product_type""";
     private static final String FIND_ALL_PRODUCTS_BY_TYPE = """
             SELECT id_product, title, product_type.product_type, price, picture, description, manufacture FROM products

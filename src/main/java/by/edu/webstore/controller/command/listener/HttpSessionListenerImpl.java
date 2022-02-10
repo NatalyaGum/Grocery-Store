@@ -18,6 +18,6 @@ public class HttpSessionListenerImpl implements HttpSessionListener {
         session.setAttribute(CURRENT_PAGE, PagePath.MAIN_PAGE);
         session.setAttribute(LOCALE, DEFAULT_LOCALE);
         session.setAttribute(LANGUAGE, DEFAULT_LANGUAGE);
-        session.setAttribute(ROLE, User.Role.GUEST.toString().toLowerCase());
+        session.setAttribute(ROLE, User.Role.GUEST.toString());
     }
 }

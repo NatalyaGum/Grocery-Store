@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao {
     private static final String FIND_USER_BY_ID = """
             SELECT id_user, name, surname, email, password, phone, role, status
             FROM users         
-            WHERE users.id=?""";
+            WHERE users.id_user=?""";
     private static final String FIND_USER_BY_EMAIL = "SELECT id_user FROM users WHERE email=?";
     private static final String FIND_USER_BY_PHONE = "SELECT id_user FROM users WHERE phone=?";
     private static final String FIND_USER_BY_ID_AND_PASSWORD = "SELECT id_user FROM users WHERE id=? AND password=?";

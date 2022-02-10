@@ -1,0 +1,10 @@
+2022-02-09 20:25:44 [main] [main] [16] INFO  by.edu.webstore._MAIN_.main - text: 
+2022-02-09 20:25:45 [main] [<init>] [73] INFO  by.edu.webstore.connection.ConnectionPool - Connection pool was created
+2022-02-09 20:25:45 [main] [findEntityById] [61] ERROR edu.webstore.dao.impl.UserDaoImpl - Impossible to find user by id. Database access error:
+java.sql.SQLSyntaxErrorException: Unknown column 'users.id' in 'where clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1003) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at by.edu.webstore.dao.impl.UserDaoImpl.findEntityById(UserDaoImpl.java:52) [classes/:?]
+	at by.edu.webstore._MAIN_.main.main(main.java:21) [classes/:?]

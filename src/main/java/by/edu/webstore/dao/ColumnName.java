@@ -27,6 +27,7 @@ public class ColumnName {
     public static final String PRODUCT_TYPE_ID = "product_type.product_type_id";
     public static final String PRODUCTS_QUANTITY = "products.quantity";
     public static final String PRODUCTS_RATING = "products.rating";
+    public static final String PRODUCTS_ACTIVE="active";
     /* product_types table */
     public static final String ID_PRODUCT_TYPE = "product_type.id_product_type";
     public static final String PRODUCT_TYPE = "product_type.product_type";

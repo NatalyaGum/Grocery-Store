@@ -22,6 +22,7 @@ public final class ParameterAndAttribute {
     public static final String PRODUCTS = "products";
     public static final String PRODUCT = "product";
     public static final String PRODUCT_TYPES_LIST="product_types_list";
+    public static final String PRODUCTS_LIST="products_list";
 // Parameters
     public static final String ROLE = "role";
     public static final String LANGUAGE = "language";
