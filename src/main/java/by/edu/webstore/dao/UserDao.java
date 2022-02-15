@@ -26,5 +26,7 @@ public interface UserDao extends BaseDao<User> {
     boolean isUserExist(long userId, String passwordHash) throws  DaoException;
 
     Optional<User> findUserByEmailAndPassword(String email, String password) throws  DaoException;
+    Optional<User> findUserById(long id) throws DaoException;
+    long insertNewUser(User user) throws DaoException;
 
 }

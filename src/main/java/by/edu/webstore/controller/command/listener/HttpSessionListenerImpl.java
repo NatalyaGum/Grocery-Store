@@ -6,6 +6,8 @@ import by.edu.webstore.entity.User;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.WebListener;
 
+import java.time.LocalDate;
+
 @WebListener
 public class HttpSessionListenerImpl implements HttpSessionListener {
 
@@ -19,5 +21,7 @@ public class HttpSessionListenerImpl implements HttpSessionListener {
         session.setAttribute(LOCALE, DEFAULT_LOCALE);
         session.setAttribute(LANGUAGE, DEFAULT_LANGUAGE);
         session.setAttribute(ROLE, User.Role.GUEST.toString());
+        LocalDate today = LocalDate.now();
+        session.setAttribute(TODAY, today.toString());
     }
 }

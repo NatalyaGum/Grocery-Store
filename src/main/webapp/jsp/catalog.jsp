@@ -18,62 +18,49 @@
 <header>
 
     <div class="navbar navbar-dark bg-dark shadow-sm">
-
         <div class="container">
             <br>
-            <a href="${pageContext.request.contextPath}/controller?command=go_to_main_page"
-               class="navbar-brand d-flex align-items-center">
-
+            <a href="${pageContext.request.contextPath}/controller?command=go_to_main_page" class="navbar-brand d-flex align-items-center">
                 <H1><strong>&divonx;WebStore</strong></H1>
             </a>
 
 
             <c:if test="${sessionScope.role eq 'guest'}">
-                <div >
-                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="post"
-                          action="${pageContext.request.contextPath}/controller?command=sign_in">
-                        <input class="form-control form-control-dark" type="email" name="email"
-                               value="<c:out value="${requestScope.user.email}"/>" required placeholder=
-                                   <fmt:message
-                                           key="sign_up.email.placeholder"/> pattern="(([A-Za-z\d._]+){5,25}@([A-Za-z]+){3,10}\.([a-z]+){2,3})"/>
+            <div >
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="post"
+                      action="${pageContext.request.contextPath}/controller?command=sign_in">
+                    <input class="form-control form-control-dark" type="email" name="email"
+                           value="<c:out value="${requestScope.user_email}"/>" required placeholder=
+                               <fmt:message key="sign_up.email.placeholder"/> pattern="(([A-Za-z\d._]+){5,25}@([A-Za-z]+){3,10}\.([a-z]+){2,3})"/>
+                    <input class="form-control form-control-dark" type="password" name="password"
+                           value="<c:out value="${requestScope.user.password}"/>" required placeholder=
+                               <fmt:message key="sign_in.password.title"/> pattern="\S{6,20}"/>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-outline-light me-2"><fmt:message key="sign_in.title"/></button>
 
-                        <input class="form-control form-control-dark" type="password" name="password"
-                               value="<c:out value="${requestScope.user.password}"/>" required placeholder=
-                                   <fmt:message key="sign_in.password.title"/> pattern="\S{6,20}"/>
+                        <a href="${pageContext.request.contextPath}/controller?command=go_to_registration">
+                            <button type="button" class="btn btn-outline-light me-2"><fmt:message key="sign_up.submit"/></button>
+                        </a>
+                    </div>
+                </form>
 
-                        <div class="text-end">
-
-                            <button type="submit" class="btn btn-outline-light me-2"><fmt:message
-                                    key="sign_in.title"/></button>
-
-                            <a href="${pageContext.request.contextPath}/controller?command=go_to_registration">
-                                <button type="button" class="btn btn-outline-light me-2"><fmt:message
-                                        key="sign_up.submit"/></button>
-                            </a>
-                            </div>
-
-                    </form></div>
-
-                </div>
-            </c:if>
-
-
-            <div>
-                <p><a href="${pageContext.request.contextPath}/controller?command=change_locale&language=EN">EN</a>
-                </p>
-                <p>
-                    <a href="${pageContext.request.contextPath}/controller?command=change_locale&language=RU">RU</a></p>
             </div>
         </div>
-    </div>
-
-    <c:if test="${not empty message}"><p ><fmt:message key="${message}"/></p></c:if>
-
-    <div >
-        <c:if test="${not empty sessionScope.user}">
-            <c:out value="${sessionScope.user.role}: ${sessionScope.user.email} "/>
         </c:if>
-    </div >
+
+        <c:if test="${not empty sessionScope.user}">
+            <div class="text-white"><b><c:out value="${sessionScope.user.role}: ${sessionScope.user.email} "/></b><br>
+                <fmt:message key="user.edit"/>
+                <p> <a href="${pageContext.request.contextPath}/controller?command=sign_out" class="text-muted"><fmt:message key="user.logout"/></a></p></div>
+        </c:if>
+
+        <div>
+            <p><a href="${pageContext.request.contextPath}/controller?command=change_locale&language=EN" class="text-muted">EN</a>&nbsp; </p>
+            <p><a href="${pageContext.request.contextPath}/controller?command=change_locale&language=RU" class="text-muted">RU</a>&nbsp;</p>
+        </div>
+        <c:if test="${not empty message}"><p class="text-muted"><fmt:message key="${message}"/></p></c:if>
+    </div>
+    </div>
 
     <div class="container">
         <div class="row">
@@ -102,7 +89,7 @@
                 <div class="col">
                     <div class="card shadow-sm">
 
-                        <img class="bd-placeholder-img card-img-top" src="${product.picture}" class="img-thumbnail" alt="${product.title}" height="225" width="153px"/>
+                        <img class="bd-placeholder-img card-img-top" src="${product.picture}" class="img-thumbnail" alt="${product.title}"  width="98%"/>
 
 
                         <div class="card-body">
@@ -118,138 +105,42 @@
                     </div>
                 </div>
 </c:forEach>
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Эскиз" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Эскиз</text></svg>
 
-                        <div class="card-body">
-                            <p class="card-text">Это более широкая карточка с вспомогательным текстом ниже как естественный ввод к дополнительному контенту. Этот контент немного длиннее.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Смотреть</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Редактировать</button>
-                                </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Эскиз" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Эскиз</text></svg>
 
-                        <div class="card-body">
-                            <p class="card-text">Это более широкая карточка с вспомогательным текстом ниже как естественный ввод к дополнительному контенту. Этот контент немного длиннее.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Смотреть</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Редактировать</button>
-                                </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Эскиз" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Эскиз</text></svg>
-
-                        <div class="card-body">
-                            <p class="card-text">Это более широкая карточка с вспомогательным текстом ниже как естественный ввод к дополнительному контенту. Этот контент немного длиннее.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Смотреть</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Редактировать</button>
-                                </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Эскиз" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Эскиз</text></svg>
-
-                        <div class="card-body">
-                            <p class="card-text">Это более широкая карточка с вспомогательным текстом ниже как естественный ввод к дополнительному контенту. Этот контент немного длиннее.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Смотреть</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Редактировать</button>
-                                </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Эскиз" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Эскиз</text></svg>
-
-                        <div class="card-body">
-                            <p class="card-text">Это более широкая карточка с вспомогательным текстом ниже как естественный ввод к дополнительному контенту. Этот контент немного длиннее.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Смотреть</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Редактировать</button>
-                                </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Эскиз" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Эскиз</text></svg>
-
-                        <div class="card-body">
-                            <p class="card-text">Это более широкая карточка с вспомогательным текстом ниже как естественный ввод к дополнительному контенту. Этот контент немного длиннее.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Смотреть</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Редактировать</button>
-                                </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Эскиз" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Эскиз</text></svg>
-
-                        <div class="card-body">
-                            <p class="card-text">Это более широкая карточка с вспомогательным текстом ниже как естественный ввод к дополнительному контенту. Этот контент немного длиннее.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Смотреть</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Редактировать</button>
-                                </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Эскиз" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Эскиз</text></svg>
-
-                        <div class="card-body">
-                            <p class="card-text">Это более широкая карточка с вспомогательным текстом ниже как естественный ввод к дополнительному контенту. Этот контент немного длиннее.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Смотреть</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Редактировать</button>
-                                </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
+
+            <%--For displaying Previous link except for the 1st page --%>
+            <c:if test="${page_number != 1}">
+                <a href="?command=go_to_catalog&page=${page_number - 1}" class="text-muted"> <fmt:message key="previous_page" > </fmt:message></a>&nbsp;
+            </c:if>
+
+            <%--For displaying Page numbers.
+            The when condition does not display a link for the current page--%>
+            <c:choose>
+                <c:when test="${products_list.size() != 0}">
+
+                            <c:forEach begin="1" end="${pages_number}" var="i">
+                                <c:choose>
+                                    <c:when test="${page_number eq i}">
+                                        <td>${i}</td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        &nbsp; <a href="?command=go_to_catalog&page=${i}" class="text-muted"> ${i} </a>&nbsp;
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+
+                </c:when>
+            </c:choose>
+
+            <%--For displaying Next link --%>
+            <c:if test="${page_number < pages_number}">
+                &nbsp;<a href="?command=go_to_catalog&page=${page_number + 1}" class="text-muted"> <fmt:message key="next_page"></fmt:message></a>
+            </c:if>
         </div>
+
+
     </div>
 
 </main>

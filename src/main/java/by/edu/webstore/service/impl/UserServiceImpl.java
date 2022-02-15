@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         }*/
         Optional<User> userOptional;
         try {
-            userOptional = userDao.findEntityById(userId);
+            userOptional = userDao.findUserById(userId);
         } catch (DaoException e) {
             throw new ServiceException("user search error", e);
         }
@@ -59,9 +59,9 @@ public class UserServiceImpl implements UserService {
             User user=new User(userData.get(EMAIL), password, userData.get(NAME),userData.get(SURNAME),
                                     userData.get(PHONE_NUMBER), User.Role.CLIENT,User.Status.ACTIVE);
             try {
-                userDao.insertNewEntity(user);
+                userDao.insertNewUser(user);
                 return true;
-            } catch (DaoException |ConnectionPoolException e) {
+            } catch (DaoException e) {
                 logger.error("Error has occurred while registering user: " + e);
                 throw new ServiceException("Error has occurred while registering user: ", e);
         }

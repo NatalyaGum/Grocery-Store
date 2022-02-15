@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ProductServiceImpl implements ProductService {
     private static final Logger logger = LogManager.getLogger();
@@ -43,9 +44,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    public List<Product> findAllProducts() throws ServiceException {
+    public List<Product> findAllProducts(int offset, int limit) throws ServiceException {
         try {
-            return productDao.findAllEntities();
+            return productDao.findAllEntities(offset, limit);
         } catch (DaoException e) {
             logger.error("product cannot be found:", e);
             throw new ServiceException("Products cannot be found:", e);
@@ -106,5 +107,74 @@ public class ProductServiceImpl implements ProductService {
         return result;
     }
 
+
+    public int  getTotalProductNumber () throws ServiceException{
+        try {
+            return productDao.findTotalProductsNumber();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public Optional<Product> getProductById (long id) throws ServiceException{
+        try {
+            return productDao.findProductById(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+
+    public boolean  updateProduct(Map<String, String> productData, InputStream image) throws ServiceException {
+        boolean result = false;
+        if (ProductValidator.getInstance().checkProductData(productData, image)) {
+            BigDecimal price = BigDecimal.valueOf(Double.parseDouble(productData.get(ParameterAndAttribute.PRICE)));
+            long id=Long.parseLong(productData.get(ParameterAndAttribute.PRODUCT_ID));
+            boolean status=Boolean.valueOf(productData.get(ParameterAndAttribute.ACTIVE));
+            Product product = new Product(id,productData.get(ParameterAndAttribute.TITLE),
+                    productData.get(ParameterAndAttribute.MANUFACTURE),
+                    productData.get(ParameterAndAttribute.DESCRIPTION),
+                    price,
+                    new ProductType(productData.get(ParameterAndAttribute.TYPE)),
+                    status);
+            try {
+                result = productDao.updateProduct(product, image) ;
+            } catch (DaoException e) {
+                logger.error("Product cannot be added:", e);
+                throw new ServiceException("Product cannot be added:", e);
+            } catch (NumberFormatException e) {
+                logger.warn("Price parameter doesn't contain number");
+            } catch (IllegalArgumentException e) {
+                logger.warn("This enum type has no constant with the specified name");
+            }
+        }
+        return result;
+    }
+
+    public boolean  updateProduct(Map<String, String> productData) throws ServiceException {
+        boolean result = false;
+        if (ProductValidator.getInstance().checkProductData(productData)) {
+            BigDecimal price = BigDecimal.valueOf(Double.parseDouble(productData.get(ParameterAndAttribute.PRICE)));
+            long id=Long.parseLong(productData.get(ParameterAndAttribute.PRODUCT_ID));
+            boolean status=Boolean.valueOf(productData.get(ParameterAndAttribute.ACTIVE));
+            Product product = new Product(id,productData.get(ParameterAndAttribute.TITLE),
+                    productData.get(ParameterAndAttribute.MANUFACTURE),
+                    productData.get(ParameterAndAttribute.DESCRIPTION),
+                    price,
+                    new ProductType(productData.get(ParameterAndAttribute.TYPE)),
+                    status);
+            try {
+                result = productDao.updateProduct(product) ;
+            } catch (DaoException e) {
+                logger.error("Product cannot be added:", e);
+                throw new ServiceException("Product cannot be added:", e);
+            } catch (NumberFormatException e) {
+                logger.warn("Price parameter doesn't contain number");
+            } catch (IllegalArgumentException e) {
+                logger.warn("This enum type has no constant with the specified name");
+            }
+        }
+        return result;
+    }
 
 }

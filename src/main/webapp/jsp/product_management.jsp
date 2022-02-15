@@ -50,17 +50,17 @@
             <fieldset>
               <form action="${pageContext.request.contextPath}/controller?command=add_product" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="command" value="add_product"/><br>
-                <input type="text" name="title" value="<c:out value="${requestScope.product.title}"/>" required placeholder=<fmt:message key="add_product.title.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?""%()\s]{2,75}" class="form-control input-lg"/><br>
-                <TEXTAREA name="description" value="<c:out value="${requestScope.product.description}"/>" required placeholder=<fmt:message key="add_product.description.placeholder"/> pattern=".{10,500}" class="form-control input-lg"/><fmt:message key="add_product.description.placeholder"/></TEXTAREA><br>
-                <input type="text" name="manufacture" value="<c:out value="${requestScope.product.manufacture}"/>" required placeholder=<fmt:message key="add_product.manufacture.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?""%()\s]{3,100}" class="form-control input-lg"/><br>
+                <input type="text" name="title" title=<fmt:message key="add_product.title.placeholder"/> value="<c:out value="${requestScope.product.title}"/>" required placeholder=<fmt:message key="add_product.title.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?""%()\s]{2,75}" class="form-control input-lg"/><br>
+                <TEXTAREA name="description" value="<c:out value="${requestScope.product.description}"/>" required title=<fmt:message key="add_product.description.placeholder"/> pattern=".{10,500}" class="form-control input-lg"/><fmt:message key="add_product.description.placeholder"/></TEXTAREA><br>
+                <input type="text" name="manufacture" value="<c:out value="${requestScope.product.manufacture}"/>" required title=<fmt:message key="add_product.manufacture.placeholder"/> placeholder=<fmt:message key="add_product.manufacture.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?""%()\s]{3,100}" class="form-control input-lg"/><br>
                 <fmt:message key="add_product.type.placeholder"/><br>
                 <select name="type"  class="form-select" required placeholder=<fmt:message key="add_product.type.placeholder"/>>
                   <c:forEach var="element" items="${product_types_list}">
                     <option value="${element.productTypeName}">${element.productTypeName}</option>
                   </c:forEach>
                 </select><br><br>
-                <input type="text" name="price" value="<c:out value="${requestScope.product.price}"/>" required placeholder="<fmt:message key="add_product.price.placeholder"/>" pattern="\d{1,5}\.\d{1,2}" class="form-control input-lg"/><br>
-                <input type="file" name="image" value="<c:out value="${requestScope.product.image}"/>" required placeholder=<fmt:message key="add_product.image.placeholder"/> pattern="([^s]+(.(?i)(jpg|png|gif|bmp))$)" class="form-control input-lg"/><br>
+                <input type="text" name="price" title="<fmt:message key="add_product.price.placeholder"/>" value="<c:out value="${requestScope.product.price}"/>" required placeholder="<fmt:message key="add_product.price.placeholder"/>" pattern="\d{1,5}\.\d{1,2}" class="form-control input-lg"/><br>
+                <input type="file" name="image" title=<fmt:message key="add_product.image.placeholder"/> value="<c:out value="${requestScope.product.image}"/>" required placeholder=<fmt:message key="add_product.image.placeholder"/> pattern="([^s]+(.(?i)(jpg|png|gif|bmp))$)" class="form-control input-lg"/><br>
                 <c:if test="${not empty message}"> <p><fmt:message key="${message}"/></p>  </c:if>
                 <input type="submit"  value=<fmt:message key="add_product.add"/> >
               </form>

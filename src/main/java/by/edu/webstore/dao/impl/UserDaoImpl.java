@@ -43,8 +43,8 @@ public class UserDaoImpl implements UserDao {
     private static final String UPDATE_USER_PASSWORD = "UPDATE users SET password=? WHERE id_user=?";
 
 
-    @Override
-    public Optional<User> findEntityById(long id) throws DaoException {
+
+    public Optional<User> findUserById(long id) throws DaoException {
         Optional<User> userOptional = Optional.empty();
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_ID)) {
@@ -82,8 +82,8 @@ public class UserDaoImpl implements UserDao {
     }
 
 
-    @Override
-    public long insertNewEntity(User user) throws DaoException {
+
+    public long insertNewUser(User user) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_NEW_USER, RETURN_GENERATED_KEYS)) {
             statement.setString(1, user.getName());

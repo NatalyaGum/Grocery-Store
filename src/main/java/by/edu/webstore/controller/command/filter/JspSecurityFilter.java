@@ -29,6 +29,7 @@ public class JspSecurityFilter implements Filter {
     public void init(FilterConfig config) throws ServletException {
         guestPages = Set.of(
                 MAIN_PAGE,
+                AUTHORIZATION,
                 CATALOG,
                 REGISTRATION_PAGE,
                 ERROR,
@@ -44,6 +45,8 @@ public class JspSecurityFilter implements Filter {
                 MAIN_PAGE,
                 CATALOG,
                 PRODUCT_MANAGEMENT,
+                PRODUCT_MAINTENANCE,
+                PRODUCT_EDIT,
                 ERROR,
                 ERROR_404);
 
@@ -67,11 +70,11 @@ public class JspSecurityFilter implements Filter {
 
         if (isPageExist) {
             HttpSession session = request.getSession();
-            User.Role role= User.Role.valueOf(session.getAttribute(ROLE).toString().toUpperCase());
-          /*  User.Role role = session.getAttribute(ROLE) == null
+            //User.Role role= User.Role.valueOf(session.getAttribute(ROLE).toString().toUpperCase());
+           User.Role role = session.getAttribute(ROLE) == null
                     ? User.Role.GUEST
-                    : User.Role.valueOf(session.getAttribute(ROLE).toString());
-*/
+                    : User.Role.valueOf(session.getAttribute(ROLE).toString().toUpperCase());
+
             boolean isAccept =
                     switch (role) {
                         case CLIENT -> clientPages.stream().anyMatch(requestURI::contains);

@@ -12,7 +12,13 @@
   <meta charset="utf-8">
 
   <title>WebShop</title>
+  <script type="text/javascript">
+    window.history.forward();
 
+    function noBack() {
+      window.history.forward();
+    }
+  </script>
 
   <style>
     .bd-placeholder-img {
@@ -64,12 +70,12 @@
             <fieldset>
               <form action="${pageContext.request.contextPath}/controller?command=sign_up" method="post">
                 <input type="hidden" name="command" value="sign_up"/><br>
-                <input type="text" name="name" value="<c:out value="${requestScope.user.name}"/>" required placeholder=<fmt:message key="sign_up.name.placeholder"/> pattern="[a-zA-Zа-яА-Я-\s]{1,45}"/><br><br>
-                <input type="text" name="surname" value="<c:out value="${requestScope.user.surname}"/>" required placeholder=<fmt:message key="sign_up.surname.placeholder"/> pattern="[a-zA-Zа-яА-Я-\s]{1,45}"/><br><br>
-                <input type="tel" name="phone" value="<c:out value="${requestScope.user.number}"/>" required placeholder="+375*********" pattern="^\+375\d{9}$"/><br><br>
-                <input type="email" name="email" value="<c:out value="${requestScope.user.email}"/>" required placeholder=<fmt:message key="sign_up.email.placeholder"/> pattern="(([A-Za-z\d._]+){5,25}@([A-Za-z]+){3,10}\.([a-z]+){2,3})"/><br><br>
-                <input type="password" name="password" value="<c:out value="${requestScope.user.password}"/>" required placeholder=<fmt:message key="sign_in.password.title"/> pattern="\S{6,20}"/><br><br>
-                <input type="password" name="repeated_password" value="<c:out value="${requestScope.user.repeated_password}"/>" required placeholder=<fmt:message key="sign_up.repeat_password.placeholder"/> pattern="\S{6,20}"/><br><br>
+                <input type="text" name="name" value="<c:out value="${requestScope.user.name}"/>" required title="<fmt:message key="sign_up.name.title"/>" placeholder=<fmt:message key="sign_up.name.placeholder"/> pattern="[a-zA-Zа-яА-Я-\s]{1,45}"/><br><br>
+                <input type="text" name="surname" value="<c:out value="${requestScope.user.surname}"/>" title="<fmt:message key="sign_up.surname.title"/>" required placeholder=<fmt:message key="sign_up.surname.placeholder"/> pattern="[a-zA-Zа-яА-Я-\s]{1,45}"/><br><br>
+                <input type="tel" name="phone" value="<c:out value="${requestScope.user.number}"/>" required title="<fmt:message key="sign_up.number.placeholder"/>: +375xxxxxxxxx" placeholder="+375*********" pattern="^\+375\d{9}$"/><br><br>
+                <input type="email" name="email" value="<c:out value="${requestScope.user.email}"/>" required  title="<fmt:message key="sign_up.email.title"/>: *****@***.**" placeholder=<fmt:message key="sign_up.email.placeholder"/> pattern="(([A-Za-z\d._]+){5,25}@([A-Za-z]+){3,10}\.([a-z]+){2,3})"/><br><br>
+                <input type="password" name="password" value="<c:out value="${requestScope.user.password}"/>" required placeholder=<fmt:message key="sign_in.password.title" /> title="<fmt:message key="sign_in.password.title"/>" pattern="\S{6,20}"/><br><br>
+                <input type="password" name="repeated_password" value="<c:out value="${requestScope.user.repeated_password}"/>" required placeholder=<fmt:message key="sign_up.repeat_password.placeholder"/> title="<fmt:message key="sign_in.password.title"/>" pattern="\S{6,20}"/><br><br>
                 <c:if test="${not empty message}"> <p><fmt:message key="${message}"/></p>  </c:if>
                 <input type="submit"  value=<fmt:message key="sign_up.submit"/> >
               </form>

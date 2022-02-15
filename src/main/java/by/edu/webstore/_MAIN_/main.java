@@ -18,9 +18,11 @@ public class main {
         UserDaoImpl userDao=new UserDaoImpl();
        // User user=new User("natalyagum@yandex.ru", "qwerty", "Natalya","Gum","+37525", User.Role.CLIENT,User.Status.ACTIVE);
        // userDao.insertNewEntity(user);
-        Optional<User> optionalUser= userDao.findEntityById(3);
+        Optional<User> optionalUser= userDao.findUserById(3);
         User.Role role=optionalUser.get().getRole();
+
         System.out.println(optionalUser.get());
+
     }
 
 }

@@ -46,6 +46,17 @@ public class Product extends AbstractEntity {
         this.active = active;
     }
 
+    public Product(long productId, String title,  String manufacture, String description,
+                   BigDecimal price, ProductType productType, boolean active) {
+        this.productId = productId;
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.manufacture = manufacture;
+        this.productType = productType;
+        this.active = active;
+    }
+
     public long getProductId() {
         return productId;
     }

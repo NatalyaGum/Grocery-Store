@@ -12,7 +12,7 @@ import java.util.Optional;
 
 
 public interface ProductDao extends BaseDao<Product> {
-    Optional<Product> findEntityById(long id) throws DaoException;
+    Optional<Product> findProductById(long id) throws DaoException;
 
     List<Product> findAllEntities() throws DaoException;
 
@@ -30,6 +30,10 @@ public interface ProductDao extends BaseDao<Product> {
     boolean modifyProductType(String oldProductType, String newProductType) throws DaoException;
     boolean deleteProductType(String oldProductType) throws DaoException;
     boolean isEmptyType(String oldProductType) throws DaoException;
+    int findTotalProductsNumber () throws DaoException;
+    List<Product> findAllEntities(int offset, int limit) throws DaoException;
+    boolean updateProduct(Product product, InputStream image) throws DaoException;
+    boolean updateProduct(Product product) throws DaoException;
 }
 
 

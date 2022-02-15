@@ -9,7 +9,6 @@ import by.edu.webstore.exception.ServiceException;
 import by.edu.webstore.service.ProductService;
 import by.edu.webstore.service.ServiceProvider;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,7 +16,7 @@ import java.util.List;
 
 import static by.edu.webstore.controller.command.ParameterAndAttribute.*;
 
-public class GoToCatalogCommand implements Command {
+public class ProductMaintenanceCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
     private static final ProductService productService = ServiceProvider.getInstance().getProductService();
@@ -38,7 +37,7 @@ public class GoToCatalogCommand implements Command {
             request.setAttribute(PAGES_NUMBER, pagesNumber);
             request.setAttribute(PAGE_NUMBER, page);
             request.setAttribute(PRODUCTS_LIST, products);
-            return new Router(PagePath.CATALOG, Router.RouterType.FORWARD);
+            return new Router(PagePath.PRODUCT_MAINTENANCE, Router.RouterType.FORWARD);
         } catch (ServiceException e) {
             logger.error( "Impossible to find products:", e);
             throw new CommandException("Impossible to find products:", e);

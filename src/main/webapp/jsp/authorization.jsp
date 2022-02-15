@@ -33,8 +33,7 @@
                       action="${pageContext.request.contextPath}/controller?command=sign_in">
                     <input class="form-control form-control-dark" type="email" name="email"
                            value="<c:out value="${requestScope.user_email}"/>" required placeholder=
-                               <fmt:message
-                                       key="sign_up.email.placeholder"/> pattern="(([A-Za-z\d._]+){5,25}@([A-Za-z]+){3,10}\.([a-z]+){2,3})"/>
+                               <fmt:message key="sign_up.email.placeholder"/> title="<fmt:message key="sign_up.email.title"/>:*****@***.**" pattern="(([A-Za-z\d._]+){5,25}@([A-Za-z]+){3,10}\.([a-z]+){2,3})"/>
                     <input class="form-control form-control-dark" type="password" name="password"
                            value="<c:out value="${requestScope.user.password}"/>" required placeholder=
                                <fmt:message key="sign_in.password.title"/> title="<fmt:message key="sign_in.password.title"/>" pattern="\S{6,20}"/>
@@ -53,13 +52,6 @@
         </div>
         </c:if>
 
-        <c:if test="${not empty sessionScope.user}">
-            <div class="text-white"><b><c:out value="${sessionScope.user.role}: ${sessionScope.user.email} "/></b><br>
-                <a href="${pageContext.request.contextPath}/controller?command=edit_profile"
-                   class="text-muted">  <fmt:message key="user.edit"/></a>
-                <p><a href="${pageContext.request.contextPath}/controller?command=sign_out"
-                      class="text-muted"><fmt:message key="user.logout"/></a></p></div>
-        </c:if>
 
         <div>
             <p><a href="${pageContext.request.contextPath}/controller?command=change_locale&language=EN"
@@ -81,14 +73,39 @@
                 <jsp:include page="${sessionScope.role}.jsp"/>
             </td>
             <td>
+
                 <section class="py-5 text-center container">
-                    <h1 class="fw-light"><fmt:message key="title2"/></h1>
-                    <p class="lead text-muted"><fmt:message key="title3"/></p>
-                    <p>
-                        <a href="${pageContext.request.contextPath}/controller?command=go_to_catalog"
-                           class="btn btn-primary my-2"><fmt:message key="catalog.open"/></a>
-                    </p>
-                </section>
+                    <h1 class="fw-light"><fmt:message key="sign_in.title2"/></h1>
+                    <p class="lead text-muted"><fmt:message key="sign_in.title3"/></p>
+
+                    <c:if test="${sessionScope.role eq 'guest'}">
+                        <div>
+                            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="post"
+                                  action="${pageContext.request.contextPath}/controller?command=sign_in">
+                                <input class="form-control form-control-dark" type="email" name="email"
+                                       value="<c:out value="${requestScope.user_email}"/>" required placeholder=
+                                           <fmt:message key="sign_up.email.placeholder"/> title="<fmt:message key="sign_up.email.title"/>:*****@***.**"  pattern="(([A-Za-z\d._]+){5,25}@([A-Za-z]+){3,10}\.([a-z]+){2,3})"/>
+                               <br>
+                                <input class="form-control form-control-dark" type="password" name="password"
+                                       value="<c:out value="${requestScope.user.password}"/>" required  placeholder=
+                                           <fmt:message key="sign_in.password.title"/> title="<fmt:message key="sign_in.password.title"/>" pattern="\S{6,20}"/>
+
+                                    <div class="text-muted"><fmt:message key="sign_in.password.title"/></div>
+                                    <div>
+                                    <button type="submit" class="btn btn-secondary my-2"><fmt:message
+                                            key="sign_in.title"/></button>
+
+                                    <a href="${pageContext.request.contextPath}/controller?command=go_to_registration">
+                                        <button type="button" class="btn btn-secondary my-2"><fmt:message
+                                                key="sign_up.submit"/></button>
+                                    </a>
+                                </div>
+                            </form>
+
+                        </div>
+                        </div>
+                    </c:if>
+
             </td>
         </tr>
     </table>

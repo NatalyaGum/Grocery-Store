@@ -47,6 +47,26 @@ public class ProductValidator {
         return isValid;
     }
 
+    public boolean checkProductData(Map<String, String> productData) {
+        boolean isValid = true;
+        if (!productData.get(ParameterAndAttribute.TITLE).matches(TITLE_REGEX)) {
+            productData.put(ParameterAndAttribute.TITLE, productData.get(ParameterAndAttribute.TITLE) + INCORRECT_VALUE_PARAMETER);
+            isValid = false;
+        }
+        if (!productData.get(ParameterAndAttribute.DESCRIPTION).matches(DESCRIPTION_REGEX)) {
+            productData.put(ParameterAndAttribute.DESCRIPTION, productData.get(ParameterAndAttribute.DESCRIPTION) + INCORRECT_VALUE_PARAMETER);
+            isValid = false;
+        }
+        if (!productData.get(ParameterAndAttribute.PRICE).matches(PRICE_REGEX)) {
+            productData.put(ParameterAndAttribute.PRICE, productData.get(ParameterAndAttribute.PRICE) + INCORRECT_VALUE_PARAMETER);
+            isValid = false;
+        }
+        if (!productData.get(ParameterAndAttribute.MANUFACTURE).matches(MANUFACTURE_REGEX)) {
+            productData.put(ParameterAndAttribute.MANUFACTURE, productData.get(ParameterAndAttribute.MANUFACTURE) + INCORRECT_VALUE_PARAMETER);
+            isValid = false;
+        }
+        return isValid;
+    }
 
     public boolean checkProductType(String productType) {
         return productType.matches(PRODUCT_TYPE_REGEX);

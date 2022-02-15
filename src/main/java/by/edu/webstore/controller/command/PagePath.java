@@ -11,6 +11,9 @@ public class PagePath {
     public static final String ERROR_404="jsp/error404.jsp";
     public static final String PRODUCT_MANAGEMENT="jsp/product_management.jsp";
     public static final String CATALOG="jsp/catalog.jsp";
+    public static final String AUTHORIZATION ="jsp/authorization.jsp";
+    public static final String PRODUCT_MAINTENANCE ="jsp/product_maintenance.jsp";
+    public static final String PRODUCT_EDIT = "jsp/product_edit.jsp";
   //  public static final String GO_TO_MAIN_PAGE = "controller?command=go_to_main_page";
 
     private PagePath() {

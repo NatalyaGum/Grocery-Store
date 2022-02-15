@@ -3,6 +3,7 @@ package by.edu.webstore.controller.command.impl;
 
 import by.edu.webstore.controller.command.Command;
 import by.edu.webstore.controller.command.PagePath;
+import by.edu.webstore.controller.command.ParameterAndAttribute;
 import by.edu.webstore.controller.command.Router;
 import by.edu.webstore.entity.User;
 import by.edu.webstore.exception.ServiceException;
@@ -28,15 +29,17 @@ public class SignInCommand implements Command {
         HttpSession session = request.getSession();
         String email = request.getParameter(EMAIL);
         String password = request.getParameter(PASSWORD);
+        String currentPage = (String) session.getAttribute(ParameterAndAttribute.CURRENT_PAGE);
         try {
             Optional<User> optionalUser = service.findUser(email, password);
             if (optionalUser.isPresent()&& optionalUser.get().getStatus() != User.Status.BLOCKED) {
                     session.setAttribute(USER, optionalUser.get());
                     session.setAttribute(ROLE, optionalUser.get().getRole().toString());
+                    session.removeAttribute(MESSAGE);
                     return new Router(PagePath.MAIN_PAGE, Router.RouterType.REDIRECT);
                 } else {
                 request.setAttribute(USER_EMAIL, email);
-                request.setAttribute(USER_PASSWORD, password);
+                //request.setAttribute(USER_PASSWORD, password);
                 request.setAttribute(MESSAGE, SIGN_IN_ERROR_MESSAGE_KEY);
                 return new Router(PagePath.MAIN_PAGE, Router.RouterType.FORWARD);
             }

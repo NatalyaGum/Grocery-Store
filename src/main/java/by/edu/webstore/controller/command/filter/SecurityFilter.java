@@ -79,6 +79,7 @@ public class SecurityFilter implements Filter {
             GO_TO_CATALOG,
             GO_TO_MAIN_PAGE,
             GO_TO_REGISTRATION,
+            GO_TO_AUTHORIZATION,
             SIGN_IN,
             SIGN_UP);
 
@@ -87,6 +88,9 @@ public class SecurityFilter implements Filter {
             GO_TO_MAIN_PAGE,
             GO_TO_CATALOG,
             ADD_PRODUCT,
+            PRODUCT_MAINTENANCE,
+            GO_TO_EDIT_PRODUCT,
+            EDIT_PRODUCT,
             MODIFY_PRODUCT_TYPE,
             ADD_PRODUCT_TYPE,
             GO_TO_PRODUCT_ADD);
@@ -108,8 +112,10 @@ public class SecurityFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
-        User.Role role= User.Role.valueOf(session.getAttribute(ROLE).toString().toUpperCase());
-        //User.Role role=(User.Role)session.getAttribute(ROLE);
+       // User.Role role= User.Role.valueOf(session.getAttribute(ROLE).toString().toUpperCase());
+        User.Role role = session.getAttribute(ROLE) == null
+                ? User.Role.GUEST
+                : User.Role.valueOf(session.getAttribute(ROLE).toString().toUpperCase());
         String command = request.getParameter(COMMAND);
         if (command == null) {
             command = DEFAULT_COMMAND;

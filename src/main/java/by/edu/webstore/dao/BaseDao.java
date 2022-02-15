@@ -17,11 +17,11 @@ import java.util.Optional;
 public interface BaseDao<T extends AbstractEntity> {
     static Logger logger = LogManager.getLogger();
 
-    Optional<T> findEntityById(long id) throws DaoException;
+    //Optional<T> findEntityById(long id) throws DaoException;
 
     List<T> findAllEntities() throws DaoException, ConnectionPoolException;
 
-    long insertNewEntity(T entity) throws DaoException, ConnectionPoolException;
+   // long insertNewEntity(T entity) throws DaoException, ConnectionPoolException;
 
 
     default void close(Statement statement) {

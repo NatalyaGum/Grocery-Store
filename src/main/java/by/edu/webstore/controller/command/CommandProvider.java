@@ -23,6 +23,11 @@ public class CommandProvider {
         commands.put(CommandType.ADD_PRODUCT_TYPE, new AddProductTypeCommand());
         commands.put(CommandType.MODIFY_PRODUCT_TYPE, new ModifyProductTypeCommand());
         commands.put(CommandType.GO_TO_CATALOG, new GoToCatalogCommand());
+        commands.put(CommandType.SIGN_OUT, new SignOutCommand());
+        commands.put(CommandType.GO_TO_AUTHORIZATION, new GoToAuthorizationPageCommand());
+        commands.put(CommandType.PRODUCT_MAINTENANCE, new ProductMaintenanceCommand());
+        commands.put(CommandType.EDIT_PRODUCT, new UpdateProductCommand());
+        commands.put(CommandType.GO_TO_EDIT_PRODUCT, new GoToEditCommand());
     }
     private CommandProvider() {
     }
