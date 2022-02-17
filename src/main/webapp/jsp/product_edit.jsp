@@ -44,11 +44,17 @@
 <main>
 
   <div class="py-5 text-center container">
+
           <div class="card shadow-sm">
+            <p class="float-end mb-1">
+              <a href="${pageContext.request.contextPath}/controller?command=product_maintenance" class="text-muted"><fmt:message key="back_to_list_of_products"/></a>
+            </p>
             <h3 class="fw-light"><fmt:message key="product.edit2"/> # <c:out value="${requestScope.product.productId}"/></h3>
             <table width="20%"> <tr><td>
               <img class="bd-placeholder-img card-img-top" src="${product.picture}" class="img-thumbnail" alt="${product.title}"  width="98%"/>
             </td></tr> </table>
+
+            <c:if test="${not empty message}"> <p class="text-red"><fmt:message key="${message}"/></p> </c:if>
 
             <fieldset>
               <form action="${pageContext.request.contextPath}/controller?command=edit_product&productId=${requestScope.product.productId}" method="post" enctype="multipart/form-data">
@@ -68,15 +74,32 @@
                 <select name="active"  class="form-select" required title="Status">
                   <option value="${requestScope.product.active}" selected>${requestScope.product.active}</option>
                   <option value="true">true</option>
-                  <option value="true">false</option>
+                  <option value="false">false</option>
                 </select><br>
-                <input type="file" name="image"  title=<fmt:message key="add_product.image.placeholder"/> pattern="([^s]+(.(?i)(jpg|png|gif|bmp))$)" class="form-control input-lg"/><br>
-                <c:if test="${not empty message}"> <p><fmt:message key="${message}"/></p> </c:if>
                 <input type="submit"  value=<fmt:message key="product.edit"/> >
               </form>
             </fieldset>
 
+            <fieldset>
+            <form action="${pageContext.request.contextPath}/controller?command=update_picture&productId=${requestScope.product.productId}" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="command" value="update_picture"/><br>
+              <input type="file" name="image"  title=<fmt:message key="add_product.image.placeholder"/> pattern="([^s]+(.(?i)(jpg|png|gif|bmp))$)" class="form-control input-lg"/><br>
+              <c:if test="${not empty message_picture}"> <p><fmt:message key="${message_picture}"/></p> </c:if>
+              <input type="submit"  value=<fmt:message key="product.picture_edit"/> >
+            </form>
+              </fieldset>
 
+            <h3 class="fw-light"><fmt:message key="add_product.find_product_title"/></h3>
+            <fieldset>
+              <form action="${pageContext.request.contextPath}/controller?command=go_to_edit_product" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="command" value="go_to_edit_product"/><br>
+                <input type="text" name="product_id" value="${productId}" required placeholder=<fmt:message key="add_product.edit_product.placeholder"/> title=<fmt:message key="add_product.edit_product.placeholder"/>  pattern="\d{1,6}\" class="form-control input-lg"/><br>
+                <input type="submit"  value=<fmt:message key="add_product.find"/> >
+              </form>
+            </fieldset>
+            <p class="float-end mb-1">
+              <a href="${pageContext.request.contextPath}/controller?command=product_maintenance" class="text-muted"><fmt:message key="back_to_list_of_products"/></a>
+            </p>
       </div>
 
     </div>

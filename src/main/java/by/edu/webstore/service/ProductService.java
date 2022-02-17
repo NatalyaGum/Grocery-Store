@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface ProductService {
-    boolean insertNewProduct(Map<String, String> productData, InputStream image) throws ServiceException;
+    long insertNewProduct(Map<String, String> productData, InputStream image) throws ServiceException;
     List<Product> findAllProducts(int offset, int limit) throws ServiceException;
     List<ProductType> findAllProductTypes() throws ServiceException;
     boolean insertNewProductType(String productTypeData) throws ServiceException;
@@ -20,5 +20,6 @@ public interface ProductService {
     Optional<Product> getProductById (long id) throws ServiceException;
     boolean  updateProduct(Map<String, String> productData, InputStream image) throws ServiceException;
     boolean  updateProduct(Map<String, String> productData) throws ServiceException;
+    boolean UpdateProductPicture(long id,InputStream image) throws ServiceException;
 
 }

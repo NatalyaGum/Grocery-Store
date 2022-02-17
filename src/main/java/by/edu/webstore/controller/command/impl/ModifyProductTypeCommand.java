@@ -27,6 +27,9 @@ public class ModifyProductTypeCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
+        session.removeAttribute(MESSAGE);
+        session.removeAttribute(MESSAGE_TYPE);
+        session.removeAttribute(MESSAGE_TYPE_PRODUCT);
         Router commandResult = null;
         String oldProductType = request.getParameter(DELETE_TYPE);
         String newProductType = request.getParameter(MODIFY_TYPE);
@@ -36,13 +39,12 @@ public class ModifyProductTypeCommand implements Command {
                     List<ProductType> productTypes = productService.findAllProductTypes();
                     session.setAttribute(PRODUCT_TYPES_LIST, productTypes);
                     session.setAttribute(MESSAGE_TYPE_PRODUCT, MODIFY_PRODUCT_TYPE_CONFIRM_MESSAGE_KEY);
-                    commandResult = new Router(PagePath.PRODUCT_MANAGEMENT, Router.RouterType.REDIRECT);
+                    commandResult = new Router(PagePath.PRODUCT_ADD_PAGE, Router.RouterType.REDIRECT);
                 } else {
                     request.setAttribute(MODIFY_TYPE, newProductType);
                     request.setAttribute(MESSAGE_TYPE_PRODUCT, ERROR_MESSAGE_KEY);
-                    commandResult = new Router(PagePath.PRODUCT_MANAGEMENT, Router.RouterType.FORWARD);
+                    commandResult = new Router(PagePath.PRODUCT_ADD_PAGE, Router.RouterType.FORWARD);
                 }
-
             } catch (ServiceException e) {
                 logger.error("Impossible to update product type:", e);
                 throw new CommandException("Impossible to update product type:", e);
@@ -54,10 +56,10 @@ public class ModifyProductTypeCommand implements Command {
                     List<ProductType> productTypes = productService.findAllProductTypes();
                     session.setAttribute(PRODUCT_TYPES_LIST, productTypes);
                     session.setAttribute(MESSAGE_TYPE_PRODUCT, DELETE_PRODUCT_TYPE_CONFIRM_MESSAGE_KEY);
-                    commandResult = new Router(PagePath.PRODUCT_MANAGEMENT, Router.RouterType.REDIRECT);
+                    commandResult = new Router(PagePath.PRODUCT_ADD_PAGE, Router.RouterType.REDIRECT);
                 } else {
                     request.setAttribute(MESSAGE_TYPE_PRODUCT, ERROR_MESSAGE_KEY);
-                    commandResult = new Router(PagePath.PRODUCT_MANAGEMENT, Router.RouterType.FORWARD);
+                    commandResult = new Router(PagePath.PRODUCT_ADD_PAGE, Router.RouterType.FORWARD);
                 }
 
             } catch (ServiceException e) {

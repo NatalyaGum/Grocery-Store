@@ -85,18 +85,21 @@ public class SecurityFilter implements Filter {
 
     private final EnumSet<CommandType> adminCommands = EnumSet.of(
             CHANGE_LOCALE,
+            SIGN_OUT,
             GO_TO_MAIN_PAGE,
             GO_TO_CATALOG,
             ADD_PRODUCT,
             PRODUCT_MAINTENANCE,
             GO_TO_EDIT_PRODUCT,
             EDIT_PRODUCT,
+            UPDATE_PICTURE,
             MODIFY_PRODUCT_TYPE,
             ADD_PRODUCT_TYPE,
             GO_TO_PRODUCT_ADD);
 
-    private final EnumSet<CommandType> userCommands = EnumSet.of(
+    private final EnumSet<CommandType> clientCommands = EnumSet.of(
             CHANGE_LOCALE,
+            SIGN_OUT,
             GO_TO_CATALOG,
             GO_TO_MAIN_PAGE);
 
@@ -104,7 +107,7 @@ public class SecurityFilter implements Filter {
 
         roleMap.put(GUEST, guestCommands);
         roleMap.put(ADMIN, adminCommands);
-        roleMap.put(CLIENT, userCommands);
+        roleMap.put(CLIENT, clientCommands);
     }
 
     @Override

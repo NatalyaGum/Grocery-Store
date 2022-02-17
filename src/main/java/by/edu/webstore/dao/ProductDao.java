@@ -16,9 +16,9 @@ public interface ProductDao extends BaseDao<Product> {
 
     List<Product> findAllEntities() throws DaoException;
 
-    long insertNewEntity(Product entity) throws DaoException, ConnectionPoolException;
+    long insertNewProduct(Product entity) throws DaoException, ConnectionPoolException;
 
-    long insertNewEntity(Product product, InputStream image) throws DaoException;
+    long insertNewProduct(Product product, InputStream image) throws DaoException;
 
     boolean isProductExist(String title) throws DaoException;
 
@@ -34,6 +34,7 @@ public interface ProductDao extends BaseDao<Product> {
     List<Product> findAllEntities(int offset, int limit) throws DaoException;
     boolean updateProduct(Product product, InputStream image) throws DaoException;
     boolean updateProduct(Product product) throws DaoException;
+    boolean updateProductPicture(long id,InputStream image)throws DaoException;
 }
 
 

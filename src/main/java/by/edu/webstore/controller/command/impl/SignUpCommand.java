@@ -4,6 +4,7 @@ import by.edu.webstore.controller.command.Command;
 import by.edu.webstore.controller.command.PagePath;
 import by.edu.webstore.controller.command.ParameterAndAttribute;
 import by.edu.webstore.controller.command.Router;
+import by.edu.webstore.entity.User;
 import by.edu.webstore.exception.ServiceException;
 import by.edu.webstore.service.ServiceProvider;
 import by.edu.webstore.service.UserService;
@@ -14,10 +15,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+
+import static by.edu.webstore.controller.command.ParameterAndAttribute.*;
 
 public class SignUpCommand implements Command {
     static Logger logger = LogManager.getLogger();
-    private static final String SIGN_UP_CONFIRM_MESSAGE_KEY = "confirm.sign_up";
+    //private static final String SIGN_UP_CONFIRM_MESSAGE_KEY = "confirm.sign_up";
     private static final String SIGN_UP_ERROR_MESSAGE_KEY = "error.sign_up";
     private static final String EMAIL_AVAILABILITY_ERROR_MESSAGE_KEY = "error.email_availability";
 
@@ -38,9 +42,11 @@ public class SignUpCommand implements Command {
                 request.setAttribute(ParameterAndAttribute.USER, userData);
                 request.setAttribute(ParameterAndAttribute.MESSAGE, EMAIL_AVAILABILITY_ERROR_MESSAGE_KEY);
                 return new Router(PagePath.REGISTRATION_PAGE, Router.RouterType.FORWARD);
-            }
-            if (service.registerUser(userData)) {
-                session.setAttribute(ParameterAndAttribute.MESSAGE, SIGN_UP_CONFIRM_MESSAGE_KEY);
+            }Optional<User> optionalUser =service.registerUser(userData);
+            if (optionalUser.isPresent()) {
+                //session.setAttribute(ParameterAndAttribute.MESSAGE, SIGN_UP_CONFIRM_MESSAGE_KEY);
+                session.setAttribute(USER, optionalUser.get());
+                session.setAttribute(ROLE, optionalUser.get().getRole().toString());
                 return new Router(PagePath.MAIN_PAGE, Router.RouterType.REDIRECT);
             } else {
                 request.setAttribute(ParameterAndAttribute.USER, userData);

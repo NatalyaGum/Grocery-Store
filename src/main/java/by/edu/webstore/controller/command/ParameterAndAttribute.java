@@ -53,6 +53,7 @@ public final class ParameterAndAttribute {
     public static final String MESSAGE = "message";
     public static final String MESSAGE_TYPE="message_product_type";
     public static final String MESSAGE_TYPE_PRODUCT="message_type_product";
+    public static final String MESSAGE_PICTURE="message_picture";
     public static final String TODAY="today";
 
 

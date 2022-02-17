@@ -19,6 +19,7 @@ public enum CommandType {
     PRODUCT_MAINTENANCE("product_maintenance"),
     EDIT_PRODUCT("edit_product"),
     GO_TO_EDIT_PRODUCT("go_to_edit_product"),
+    UPDATE_PICTURE("update_picture"),
     ADD_PRODUCT_TYPE ("add_product_type");
 
     private String webCommandName;

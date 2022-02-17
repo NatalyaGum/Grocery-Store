@@ -9,7 +9,7 @@ public class PagePath {
     public static final String SHOW_USERS_PAGE = "jsp/users1.jsp";
     public static final String FIND_USER_BY_ID= "controller?command=find_user_by_id&userId=";
     public static final String ERROR_404="jsp/error404.jsp";
-    public static final String PRODUCT_MANAGEMENT="jsp/product_management.jsp";
+    public static final String PRODUCT_ADD_PAGE ="jsp/product_add.jsp";
     public static final String CATALOG="jsp/catalog.jsp";
     public static final String AUTHORIZATION ="jsp/authorization.jsp";
     public static final String PRODUCT_MAINTENANCE ="jsp/product_maintenance.jsp";

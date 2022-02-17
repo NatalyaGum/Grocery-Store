@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class AddProductCommand implements Command {
     static Logger logger = LogManager.getLogger();
     private static final ProductService productService = ServiceProvider.getInstance().getProductService();
@@ -30,23 +31,29 @@ public class AddProductCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
 
         HttpSession session = request.getSession();
+        session.removeAttribute(ParameterAndAttribute.MESSAGE_TYPE_PRODUCT);
+        session.removeAttribute(ParameterAndAttribute.MESSAGE_TYPE);
+        session.removeAttribute(ParameterAndAttribute.MESSAGE);
         Map<String, String> productData = new HashMap<>();
         productData.put(ParameterAndAttribute.TITLE, request.getParameter(ParameterAndAttribute.TITLE));
         productData.put(ParameterAndAttribute.DESCRIPTION, request.getParameter(ParameterAndAttribute.DESCRIPTION));
         productData.put(ParameterAndAttribute.MANUFACTURE, request.getParameter(ParameterAndAttribute.MANUFACTURE));
         productData.put(ParameterAndAttribute.PRICE, request.getParameter(ParameterAndAttribute.PRICE));
         productData.put(ParameterAndAttribute.TYPE, request.getParameter(ParameterAndAttribute.TYPE));
+        long id;
         try {
             Part imagePart = request.getPart(ParameterAndAttribute.IMAGE);
             InputStream imageInputStream = imagePart.getInputStream();
-            if (productService.insertNewProduct(productData, imageInputStream)) {
+            id=productService.insertNewProduct(productData, imageInputStream);
+            if (id>0) {
                 session.setAttribute(ParameterAndAttribute.MESSAGE,ADD_PRODUCT_CONFIRM_MESSAGE_KEY);
-                return new Router(PagePath.PRODUCT_MANAGEMENT,Router.RouterType.REDIRECT);
+                session.setAttribute(ParameterAndAttribute.PRODUCT_ID,id);
+                return new Router(PagePath.PRODUCT_ADD_PAGE,Router.RouterType.REDIRECT);
             } else {
                 request.setAttribute(ParameterAndAttribute.PRODUCT,productData);
                 request.setAttribute(ParameterAndAttribute.MESSAGE,ADD_PRODUCT_ERROR_MESSAGE_KEY);
                 // request.setAttribute(PRODUCT_CREATION_RESULT, INVALID);
-                return new Router(PagePath.PRODUCT_MANAGEMENT,Router.RouterType.FORWARD);
+                return new Router(PagePath.PRODUCT_ADD_PAGE,Router.RouterType.FORWARD);
             }
             //List<Product> products = productService.findAllProducts();
            // session.setAttribute(PRODUCT_LIST, PRODUCTS);

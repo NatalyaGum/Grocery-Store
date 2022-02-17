@@ -44,7 +44,7 @@ public class JspSecurityFilter implements Filter {
         adminPages = Set.of(
                 MAIN_PAGE,
                 CATALOG,
-                PRODUCT_MANAGEMENT,
+                PRODUCT_ADD_PAGE,
                 PRODUCT_MAINTENANCE,
                 PRODUCT_EDIT,
                 ERROR,

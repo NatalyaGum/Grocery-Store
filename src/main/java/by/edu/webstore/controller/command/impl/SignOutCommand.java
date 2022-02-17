@@ -23,7 +23,6 @@ public class SignOutCommand implements Command {
         if (session!=null) {
             session.invalidate();
         }
-        request.getSession(true);
         logger.info("Session was ended.");
         return new Router(PagePath.MAIN_PAGE, Router.RouterType.REDIRECT);
     }

@@ -41,7 +41,6 @@
             <p><a href="${pageContext.request.contextPath}/controller?command=change_locale&language=RU"
                   class="text-muted">RU</a>&nbsp;</p>
         </div>
-        <c:if test="${not empty message}"><p class="text-muted"><fmt:message key="${message}"/></p></c:if>
     </div>
     </div>
 
@@ -63,6 +62,8 @@
 
                             <div class="card-body">
                                 <p class="card-text">${product.title} <br>${product.description} <br>${product.manufacture}</p>
+                                    ${product.price} <fmt:message key="rub"/><br>
+                                <fmt:message key="product.status"/>: ${product.active}
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a href="${pageContext.request.contextPath}/controller?command=go_to_edit_product&product_id=${product.productId}">

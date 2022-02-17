@@ -17,6 +17,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+import static by.edu.webstore.controller.command.ParameterAndAttribute.*;
+
 public class GoToProductAddCommand implements Command {
     static Logger logger = LogManager.getLogger();
     ProductService service = ServiceProvider.getInstance().getProductService();
@@ -24,12 +26,15 @@ public class GoToProductAddCommand implements Command {
     public Router execute(HttpServletRequest request) {
 
         HttpSession session = request.getSession();
+        session.removeAttribute(MESSAGE);
+        session.removeAttribute(MESSAGE_TYPE_PRODUCT);
+        session.removeAttribute(MESSAGE_TYPE);
         Router commandResult = null;
         try {
             List<ProductType> productTypes = service.findAllProductTypes();
             session.setAttribute(ParameterAndAttribute.PRODUCT_TYPES_LIST, productTypes);
             // session.setAttribute(ParameterAndAttribute.CURRENT_PAGE, CurrentPageExtractor.extract(request));
-            commandResult = new Router(PagePath.PRODUCT_MANAGEMENT, Router.RouterType.FORWARD);
+            commandResult = new Router(PagePath.PRODUCT_ADD_PAGE, Router.RouterType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Try to execute FindAllRoomsCommand was failed " + e);
             commandResult = new Router(PagePath.ERROR, Router.RouterType.FORWARD);

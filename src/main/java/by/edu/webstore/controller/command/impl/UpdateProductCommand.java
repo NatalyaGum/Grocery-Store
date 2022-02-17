@@ -5,23 +5,27 @@ import by.edu.webstore.controller.command.PagePath;
 import by.edu.webstore.controller.command.ParameterAndAttribute;
 import by.edu.webstore.controller.command.Router;
 import by.edu.webstore.entity.Product;
-import by.edu.webstore.entity.User;
+
+import by.edu.webstore.entity.ProductType;
 import by.edu.webstore.exception.CommandException;
 import by.edu.webstore.exception.ServiceException;
 import by.edu.webstore.service.ProductService;
 import by.edu.webstore.service.ServiceProvider;
-import jakarta.servlet.ServletException;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.Part;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-import java.io.InputStream;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import static by.edu.webstore.controller.command.ParameterAndAttribute.MESSAGE;
+import static by.edu.webstore.controller.command.ParameterAndAttribute.MESSAGE_PICTURE;
 
 public class UpdateProductCommand implements Command {
 
@@ -34,6 +38,8 @@ public class UpdateProductCommand implements Command {
         public Router execute (HttpServletRequest request) throws CommandException {
 
             HttpSession session = request.getSession();
+            session.removeAttribute(MESSAGE_PICTURE);
+            session.removeAttribute(MESSAGE);
             Long product_id = Long.parseLong(request.getParameter(ParameterAndAttribute.PRODUCT_ID));
             Map<String, String> productData = new HashMap<>();
             productData.put(ParameterAndAttribute.PRODUCT_ID, Long.toString(product_id));
@@ -44,26 +50,17 @@ public class UpdateProductCommand implements Command {
             productData.put(ParameterAndAttribute.TYPE, request.getParameter(ParameterAndAttribute.TYPE));
             productData.put(ParameterAndAttribute.ACTIVE, request.getParameter(ParameterAndAttribute.ACTIVE));
             try {
-                Part imagePart = request.getPart(ParameterAndAttribute.IMAGE);
-                if (imagePart!=null){
-                InputStream imageInputStream = imagePart.getInputStream();
-                if (productService.updateProduct(productData, imageInputStream)) {
+                List<ProductType> productTypes = productService.findAllProductTypes();
+                request.setAttribute(ParameterAndAttribute.PRODUCT_TYPES_LIST, productTypes);
+                if (productService.updateProduct(productData)) {
                     session.setAttribute(ParameterAndAttribute.MESSAGE, PRODUCT_CONFIRM_MESSAGE_KEY);
                     Optional<Product> optionalProduct=productService.getProductById (product_id) ;
                     request.setAttribute(ParameterAndAttribute.PRODUCT, optionalProduct.get());
                     return new Router(PagePath.PRODUCT_EDIT, Router.RouterType.FORWARD);
-                } else {
-                    request.setAttribute(ParameterAndAttribute.PRODUCT, productData);
+                }  else {
                     request.setAttribute(ParameterAndAttribute.MESSAGE, PRODUCT_ERROR_MESSAGE_KEY);
-                    // request.setAttribute(PRODUCT_CREATION_RESULT, INVALID);
-                    return new Router(PagePath.PRODUCT_EDIT, Router.RouterType.FORWARD);
-                }}else if (productService.updateProduct(productData)) {
-                    session.setAttribute(ParameterAndAttribute.MESSAGE, PRODUCT_CONFIRM_MESSAGE_KEY);
                     Optional<Product> optionalProduct=productService.getProductById (product_id) ;
                     request.setAttribute(ParameterAndAttribute.PRODUCT, optionalProduct.get());
-                    return new Router(PagePath.PRODUCT_EDIT, Router.RouterType.FORWARD);
-                }  else { request.setAttribute(ParameterAndAttribute.PRODUCT, productData);
-                    request.setAttribute(ParameterAndAttribute.MESSAGE, PRODUCT_ERROR_MESSAGE_KEY);
                     // request.setAttribute(PRODUCT_CREATION_RESULT, INVALID);
                     return new Router(PagePath.PRODUCT_EDIT, Router.RouterType.FORWARD);}
 
@@ -73,9 +70,7 @@ public class UpdateProductCommand implements Command {
             } catch (ServiceException e) {
                 logger.error("Impossible to update product:", e);
                 throw new CommandException("Impossible to update product:", e);
-            } catch (ServletException | IOException e) {
-                logger.error("Impossible to get image of product", e);
-                throw new CommandException("Impossible to get image of product:", e);
             }
+
         }
     }

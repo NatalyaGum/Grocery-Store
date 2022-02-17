@@ -22,14 +22,14 @@ public class ProductServiceImpl implements ProductService {
     private static final Logger logger = LogManager.getLogger();
     private static final ProductDao productDao = DaoProvider.getInstance().getProductDao();
 
-    public boolean insertNewProduct(Map<String, String> productData, InputStream image) throws ServiceException {
-        boolean result = false;
+    public long insertNewProduct(Map<String, String> productData, InputStream image) throws ServiceException {
+        long result = 0;
 
         if (ProductValidator.getInstance().checkProductData(productData, image)) {
             BigDecimal price = BigDecimal.valueOf(Double.parseDouble(productData.get(ParameterAndAttribute.PRICE)));
             Product product = new Product(productData.get(ParameterAndAttribute.TITLE), productData.get(ParameterAndAttribute.DESCRIPTION), price, productData.get(ParameterAndAttribute.MANUFACTURE), new ProductType(productData.get(ParameterAndAttribute.TYPE)));
             try {
-                result = productDao.insertNewEntity(product, image) > 0;
+                result = productDao.insertNewProduct(product, image) ;
             } catch (DaoException e) {
                 logger.error("Product cannot be added:", e);
                 throw new ServiceException("Product cannot be added:", e);
@@ -177,4 +177,19 @@ public class ProductServiceImpl implements ProductService {
         return result;
     }
 
+
+    public boolean UpdateProductPicture(long id,InputStream image) throws ServiceException {
+    boolean result = false;
+        try {
+            result = productDao.updateProductPicture(id, image) ;
+        } catch (DaoException e) {
+            logger.error("Product cannot be added:", e);
+            throw new ServiceException("Product cannot be added:", e);
+        } catch (NumberFormatException e) {
+            logger.warn("Price parameter doesn't contain number");
+        } catch (IllegalArgumentException e) {
+            logger.warn("This enum type has no constant with the specified name");
+    }
+        return result;
+}
 }

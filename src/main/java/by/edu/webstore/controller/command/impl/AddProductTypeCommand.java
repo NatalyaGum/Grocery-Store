@@ -28,17 +28,20 @@ public class AddProductTypeCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
 
         HttpSession session = request.getSession();
+        session.removeAttribute(MESSAGE);
+        session.removeAttribute(MESSAGE_TYPE);
+        session.removeAttribute(MESSAGE_TYPE_PRODUCT);
         String productTypeData = request.getParameter(PRODUCT_TYPE);
         try {
             if (productService.insertNewProductType(productTypeData)) {
                 List<ProductType> productTypes = productService.findAllProductTypes();
                 session.setAttribute(PRODUCT_TYPES_LIST, productTypes);
                 session.setAttribute(MESSAGE_TYPE, ADD_PRODUCT_TYPE_CONFIRM_MESSAGE_KEY);
-                return new Router(PagePath.PRODUCT_MANAGEMENT, Router.RouterType.REDIRECT);
+                return new Router(PagePath.PRODUCT_ADD_PAGE, Router.RouterType.REDIRECT);
             } else {
                 request.setAttribute(PRODUCT_TYPE, productTypeData);
                 request.setAttribute(MESSAGE_TYPE, ADD_PRODUCT_ERROR_MESSAGE_KEY);
-                return new Router(PagePath.PRODUCT_MANAGEMENT, Router.RouterType.FORWARD);
+                return new Router(PagePath.PRODUCT_ADD_PAGE, Router.RouterType.FORWARD);
             }
 
         } catch (ServiceException e) {

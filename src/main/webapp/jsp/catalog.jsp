@@ -61,24 +61,10 @@
         <c:if test="${not empty message}"><p class="text-muted"><fmt:message key="${message}"/></p></c:if>
     </div>
     </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4 offset-md-1 py-4">
-                <h4 class="text-black"><fmt:message key="sign_up.submit"/></h4>
-                <ul class="list-unstyled">
-                    <li><a href="${pageContext.request.contextPath}/controller?command=go_to_product_add" class="text-black"><fmt:message key="add_product"/></a></li>
-                    <li><a href="#" class="text-black">Лайк на Facebook</a></li>
-                    <li><a href="#" class="text-black">Напишите мне</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
 </header>
 
 <main>
-
+    <jsp:include page="${sessionScope.role}.jsp"/>
 
 
     <div class="album py-5 bg-light">
@@ -94,6 +80,7 @@
 
                         <div class="card-body">
                             <p class="card-text">${product.title} <br>${product.description} <br>${product.manufacture}</p>
+                                ${product.price} <fmt:message key="rub"/>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-outline-secondary">Смотреть</button>
@@ -148,7 +135,7 @@
 <footer class="text-muted py-5">
     <div class="container">
         <p class="float-end mb-1">
-            <a href="#">Вернуться наверх</a>
+            <a class="text-muted" href="#"><fmt:message key="top"/></a>
         </p>
         <p class="mb-1"> &copy; WebShop</p>
 

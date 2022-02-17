@@ -28,6 +28,7 @@ public class CommandProvider {
         commands.put(CommandType.PRODUCT_MAINTENANCE, new ProductMaintenanceCommand());
         commands.put(CommandType.EDIT_PRODUCT, new UpdateProductCommand());
         commands.put(CommandType.GO_TO_EDIT_PRODUCT, new GoToEditCommand());
+        commands.put(CommandType.UPDATE_PICTURE, new UpdatePictureCommand());
     }
     private CommandProvider() {
     }

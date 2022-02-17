@@ -32,10 +32,10 @@ public class ProductDaoImpl implements ProductDao {
     private static final String FIND_PRODUCT_BY_TITLE = "SELECT id_product FROM products WHERE name=?";
     private static final String FIND_ALL_PRODUCTS = """
             SELECT id_product, title, product_type.product_type, price, picture, manufacture, description, active FROM products
-            JOIN product_type ON products.product_type_id=product_type.id_product_type""";
+            JOIN product_type ON products.product_type_id=product_type.id_product_type ORDER BY id_product DESC""";
     private static final String FIND_ALL_PRODUCTS_PAGES = """
             SELECT id_product, title, product_type.product_type, price, picture, manufacture, description, active FROM products
-            JOIN product_type ON products.product_type_id=product_type.id_product_type ORDER BY id_product  LIMIT ?,?""";
+            JOIN product_type ON products.product_type_id=product_type.id_product_type ORDER BY id_product DESC  LIMIT ?,?""";
     private static final String FIND_ALL_PRODUCTS_BY_TYPE = """
             SELECT id_product, title, product_type.product_type, price, picture, description, manufacture FROM products
             JOIN product_type ON product_type.id_product_type=product_type_id WHERE active=1 AND product_type.product_type=?""";
@@ -53,7 +53,7 @@ public class ProductDaoImpl implements ProductDao {
     SELECT COUNT(product_type_id) FROM products JOIN product_type 
     ON product_type.id_product_type=products.product_type_id WHERE product_type=?""";
     private static final String FIND_TOTAL_PRODUCTS_NUMBER ="SELECT COUNT(id_product) FROM products";
-
+    private static final String UPDATE_PICTURE="UPDATE products SET picture=? WHERE id_product=?";
 
     public Optional<Product> findProductById(long id) throws DaoException {
         Optional<Product> productOptional = Optional.empty();
@@ -112,12 +112,12 @@ public class ProductDaoImpl implements ProductDao {
     }
 
 
-    public long insertNewEntity(Product product) throws DaoException, ConnectionPoolException {
+    public long insertNewProduct(Product product) throws DaoException, ConnectionPoolException {
         return 0;
     }
 
 
-    public long insertNewEntity(Product product, InputStream image) throws DaoException {
+    public long insertNewProduct(Product product, InputStream image) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_NEW_PRODUCT, RETURN_GENERATED_KEYS)) {
             statement.setString(1, product.getTitle());
@@ -323,6 +323,20 @@ public class ProductDaoImpl implements ProductDao {
             throw new DaoException("Impossible to insert product into database. Database error:", e);
         }return result;
     }
+
+
+    public boolean updateProductPicture(long id,InputStream image)throws DaoException{
+    boolean result = false;
+        try (Connection connection = connectionPool.getConnection();
+    PreparedStatement statement = connection.prepareStatement(UPDATE_PICTURE)) {
+        statement.setBlob(1, image);
+        statement.setLong(2, id);
+        result = statement.executeUpdate() == 1;
+    } catch (SQLException | ConnectionPoolException e) {
+        logger.error("Impossible to insert product into database. Database error:", e);
+        throw new DaoException("Impossible to insert product into database. Database error:", e);
+    }return result;
+}
 }
 
 

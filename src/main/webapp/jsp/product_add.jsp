@@ -32,9 +32,9 @@
         <p class="text-muted">+375170000000</p>
       </div>
       <div>
-        <p><a href="${pageContext.request.contextPath}/controller?command=change_locale&language=EN">EN</a>
+        <p><a class="text-muted" href="${pageContext.request.contextPath}/controller?command=change_locale&language=EN">EN</a>
         </p><p>
-        <a href="${pageContext.request.contextPath}/controller?command=change_locale&language=RU">RU</a></p>
+        <a class="text-muted" href="${pageContext.request.contextPath}/controller?command=change_locale&language=RU">RU</a></p>
       </div>
     </div>
   </div>
@@ -61,11 +61,18 @@
                 </select><br><br>
                 <input type="text" name="price" title="<fmt:message key="add_product.price.placeholder"/>" value="<c:out value="${requestScope.product.price}"/>" required placeholder="<fmt:message key="add_product.price.placeholder"/>" pattern="\d{1,5}\.\d{1,2}" class="form-control input-lg"/><br>
                 <input type="file" name="image" title=<fmt:message key="add_product.image.placeholder"/> value="<c:out value="${requestScope.product.image}"/>" required placeholder=<fmt:message key="add_product.image.placeholder"/> pattern="([^s]+(.(?i)(jpg|png|gif|bmp))$)" class="form-control input-lg"/><br>
-                <c:if test="${not empty message}"> <p><fmt:message key="${message}"/></p>  </c:if>
+                <c:if test="${not empty message}"> <p><fmt:message key="${message}"/> ${productId}</p>  </c:if>
                 <input type="submit"  value=<fmt:message key="add_product.add"/> >
               </form>
             </fieldset>
-
+            <h3 class="fw-light"><fmt:message key="add_product.find_product_title"/></h3>
+            <fieldset>
+              <form action="${pageContext.request.contextPath}/controller?command=go_to_edit_product" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="command" value="go_to_edit_product"/><br>
+                <input type="text" name="product_id" value="${productId}" required placeholder=<fmt:message key="add_product.edit_product.placeholder"/> title=<fmt:message key="add_product.edit_product.placeholder"/>  pattern="\d{1,6}\" class="form-control input-lg"/><br>
+                <input type="submit"  value=<fmt:message key="add_product.find"/> >
+              </form>
+            </fieldset>
 
       </div>
     <br><br>
@@ -109,7 +116,7 @@
 <footer class="text-muted py-5">
   <div class="container">
     <p class="float-end mb-1">
-      <a href="#"><fmt:message key="top"/></a>
+      <a class="text-muted" href="#"><fmt:message key="top"/></a>
     </p>
     <p class="mb-1"> &copy; WebStore</p>
 
