@@ -8,11 +8,11 @@ import java.util.Map;
 
 public class ProductValidator {
     private static final String INCORRECT_VALUE_PARAMETER = " incorrect";
-    private static final String TITLE_REGEX = "[A-Za-zА-Яа-я-,.!?\"%()\\s]{2,75}";
+    private static final String TITLE_REGEX = "[A-Za-zА-Яа-я-,.!?\"%()\\s]{2,100}";
     private static final String DESCRIPTION_REGEX = ".{10,500}";
     private static final String PRICE_REGEX = "\\d{1,5}\\.\\d{1,2}";
-    private static final String MANUFACTURE_REGEX = "[A-Za-zА-Яа-я-,.!?\"%()\\s]{3,100}";
-    private static final String PRODUCT_TYPE_REGEX = "[A-Za-zА-Яа-я-,.!?\"\"%()\\s]{3,75}";
+    private static final String MANUFACTURE_REGEX = "[A-Za-zА-Яа-я-,.!?\"%()\\s]{3,45}";
+    private static final String PRODUCT_TYPE_REGEX = "[A-Za-zА-Яа-я-,.!?\"\"%()\\s]{3,45}";
 
     private static final ProductValidator instance = new ProductValidator();
 
@@ -69,7 +69,9 @@ public class ProductValidator {
     }
 
     public boolean checkProductType(String productType) {
-        return productType.matches(PRODUCT_TYPE_REGEX);
+        boolean result = (productType.matches(PRODUCT_TYPE_REGEX));
+
+        return result;
     }
 
 }

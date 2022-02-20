@@ -35,6 +35,7 @@ public interface ProductDao extends BaseDao<Product> {
     boolean updateProduct(Product product, InputStream image) throws DaoException;
     boolean updateProduct(Product product) throws DaoException;
     boolean updateProductPicture(long id,InputStream image)throws DaoException;
+    boolean isTypeExist(String productType) throws  DaoException;
 }
 
 

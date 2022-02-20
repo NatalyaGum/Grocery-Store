@@ -38,7 +38,7 @@ public class SignUpCommand implements Command {
         userData.put(ParameterAndAttribute.PHONE_NUMBER, request.getParameter(ParameterAndAttribute.PHONE_NUMBER));
 
         try {
-            if (service.isEmailAvailable(userData)) {
+            if (service.isEmailExist(userData)) {
                 request.setAttribute(ParameterAndAttribute.USER, userData);
                 request.setAttribute(ParameterAndAttribute.MESSAGE, EMAIL_AVAILABILITY_ERROR_MESSAGE_KEY);
                 return new Router(PagePath.REGISTRATION_PAGE, Router.RouterType.FORWARD);

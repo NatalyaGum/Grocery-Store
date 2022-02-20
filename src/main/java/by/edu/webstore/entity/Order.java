@@ -2,12 +2,15 @@ package by.edu.webstore.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.Objects;
 
 
 public class Order extends AbstractEntity {
     public enum OrderStatus {REJECTED, PREPARING, DELIVERED, ORDERED}
     public enum PaymentMethod {CASH, CARD}
 
+    private Map<Long, Integer> addedProducts;
     private long orderId;
     private BigDecimal cost;
     private OrderStatus status;
@@ -16,6 +19,14 @@ public class Order extends AbstractEntity {
     private long userId;
     private long addressId;
 
+
+    public Map<Long, Integer> getProducts() {
+        return addedProducts;
+    }
+
+    public void setProducts(Map<Long, Integer> products) {
+        this.addedProducts = products;
+    }
     public long getOrderId() {
         return orderId;
     }
@@ -75,28 +86,35 @@ public class Order extends AbstractEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Order)) return false;
         Order order = (Order) o;
-        return orderId == order.orderId && userId == order.userId &&
-                addressId == order.addressId && status == order.status &&
-                orderDate.equals(order.orderDate) && method == order.method;
+        return orderId == order.orderId &&
+                userId == order.userId &&
+                addressId == order.addressId &&
+                addedProducts.equals(order.addedProducts) &&
+                cost.equals(order.cost) &&
+                status == order.status &&
+                orderDate.equals(order.orderDate) &&
+                method == order.method;
     }
 
     @Override
     public int hashCode() {
         int first = 31;
         int result = 1;
+        result=result * first +(addedProducts != null ? addedProducts.hashCode() : 0);
         result = result * first + (int) orderId;
         result = result * first + (int) userId;
         result = result * first + (int) addressId;
+        result = result * first + (addedProducts!=null ? addedProducts.hashCode() : 0);
+        result = result * first + (cost!=null ? cost.hashCode() : 0);
         result = result * first + (status != null ? status.hashCode() : 0);
         result = result * first + (orderDate != null ? orderDate.hashCode() : 0);
         result = result * first + (method != null ? method.hashCode() : 0);
         return result;
+}
 
-    }
-
-    @Override
+        @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Order{ ");

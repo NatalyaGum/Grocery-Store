@@ -19,7 +19,6 @@
 
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
-            <br>
             <a href="${pageContext.request.contextPath}/controller?command=go_to_main_page" class="navbar-brand d-flex align-items-center">
                 <H1><strong>&divonx;WebStore</strong></H1>
             </a>
@@ -51,7 +50,7 @@
         <c:if test="${not empty sessionScope.user}">
             <div class="text-white"><b><c:out value="${sessionScope.user.role}: ${sessionScope.user.email} "/></b><br>
                 <fmt:message key="user.edit"/>
-                <p> <a href="${pageContext.request.contextPath}/controller?command=sign_out" class="text-muted"><fmt:message key="user.logout"/></a></p></div>
+                <p> <a href="${pageContext.request.contextPath}/controller?command=sign_out" class="text-muted"><fmt:message key="user.sign_out"/></a></p></div>
         </c:if>
 
         <div>
@@ -83,8 +82,11 @@
                                 ${product.price} <fmt:message key="rub"/>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Смотреть</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Редактировать</button>
+                                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="post"
+                                          action="${pageContext.request.contextPath}/controller?command=add_to_card&page=${page_number}&productId=${product.productId}">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary"><fmt:message key="product.buy"/> </button>
+                                    <input type="number" name="product_count" min="1" max="20" value="1" step="1" class="btn btn-sm btn-outline-secondary" ></input>
+                                    </form>
                                 </div>
                                 <small class="text-muted">#${product.productId}</small>
                             </div>

@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isEmailAvailable(Map<String, String> userData) throws ServiceException {
+    public boolean isEmailExist(Map<String, String> userData) throws ServiceException {
         try {
             boolean foundEmail = userDao.isEmailExist(userData.get(EMAIL));
             return foundEmail;

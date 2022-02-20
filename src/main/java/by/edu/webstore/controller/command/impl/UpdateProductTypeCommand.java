@@ -17,7 +17,7 @@ import java.util.List;
 
 import static by.edu.webstore.controller.command.ParameterAndAttribute.*;
 
-public class ModifyProductTypeCommand implements Command {
+public class UpdateProductTypeCommand implements Command {
     static Logger logger = LogManager.getLogger();
     private static final ProductService productService = ServiceProvider.getInstance().getProductService();
     private static final String ERROR_MESSAGE_KEY = "error.update_product_type";
@@ -35,6 +35,10 @@ public class ModifyProductTypeCommand implements Command {
         String newProductType = request.getParameter(MODIFY_TYPE);
         if (!request.getParameter(MODIFY_TYPE).isEmpty()) {
             try {
+                if(productService.isTypeExist(newProductType)) {
+                    request.setAttribute(PRODUCT_TYPE_MODIFY, newProductType);
+                    request.setAttribute(MESSAGE_TYPE_PRODUCT, ERROR_MESSAGE_KEY);
+                    return new Router(PagePath.PRODUCT_ADD_PAGE, Router.RouterType.FORWARD);}
                 if (productService.modifyProductType(oldProductType, newProductType)) {
                     List<ProductType> productTypes = productService.findAllProductTypes();
                     session.setAttribute(PRODUCT_TYPES_LIST, productTypes);

@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static by.edu.webstore.controller.command.ParameterAndAttribute.EMAIL;
+
 public class ProductServiceImpl implements ProductService {
     private static final Logger logger = LogManager.getLogger();
     private static final ProductDao productDao = DaoProvider.getInstance().getProductDao();
@@ -82,7 +84,11 @@ public class ProductServiceImpl implements ProductService {
         boolean result = false;
         if (ProductValidator.getInstance().checkProductType(newProductType)) {
             try {
-                result = productDao.modifyProductType(oldProductType, newProductType);
+                if(!productDao.isTypeExist(newProductType)){
+                result = productDao.modifyProductType(oldProductType, newProductType);}
+                else{
+
+                }
             } catch (DaoException e) {
                 logger.error("Product types cannot be modified:", e);
                 throw new ServiceException("Product types cannot be modified:", e);
@@ -192,4 +198,14 @@ public class ProductServiceImpl implements ProductService {
     }
         return result;
 }
+    public boolean isTypeExist(String type) throws ServiceException {
+        try {
+            boolean foundEmail = productDao.isTypeExist(type);
+            return foundEmail;
+        } catch (DaoException exception) {
+            logger.error("Error has occurred while checking product type availability: " + exception);
+            throw new ServiceException("Error has occurred while checking product type availability: " + exception);
+        }
+    }
+
 }

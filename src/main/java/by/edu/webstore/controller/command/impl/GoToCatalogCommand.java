@@ -25,19 +25,19 @@ public class GoToCatalogCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-
+        HttpSession session=request.getSession();
         int page = 1;
         int recordsPerPage = 6;
-        if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));}
+        if (request.getParameter(PAGE) != null) {
+            page = Integer.parseInt(request.getParameter(PAGE));}
        // HttpSession session = request.getSession();
         try {
             List<Product> products=productService.findAllProducts((page-1) * recordsPerPage, recordsPerPage);
             int totalProductNumber = productService.getTotalProductNumber();
             int pagesNumber = (int) Math.ceil(totalProductNumber * 1.0 / recordsPerPage);
-            request.setAttribute(PAGES_NUMBER, pagesNumber);
-            request.setAttribute(PAGE_NUMBER, page);
-            request.setAttribute(PRODUCTS_LIST, products);
+            session.setAttribute(PAGES_NUMBER, pagesNumber);
+            session.setAttribute(PAGE_NUMBER, page);
+            session.setAttribute(PRODUCTS_LIST, products);
             return new Router(PagePath.CATALOG, Router.RouterType.FORWARD);
         } catch (ServiceException e) {
             logger.error( "Impossible to find products:", e);

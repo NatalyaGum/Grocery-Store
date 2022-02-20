@@ -53,8 +53,10 @@ public class Address extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return addressId == address.addressId && apartmentNumber == address.apartmentNumber &&
-                streetName.equals(address.streetName) && houseNumber.equals(address.houseNumber);
+        return addressId == address.addressId &&
+                apartmentNumber == address.apartmentNumber &&
+                streetName.equals(address.streetName) &&
+                houseNumber.equals(address.houseNumber);
     }
 
     @Override

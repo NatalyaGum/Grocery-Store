@@ -20,7 +20,9 @@ public enum CommandType {
     EDIT_PRODUCT("edit_product"),
     GO_TO_EDIT_PRODUCT("go_to_edit_product"),
     UPDATE_PICTURE("update_picture"),
+    ADD_TO_CARD("add_to_card"),
     ADD_PRODUCT_TYPE ("add_product_type");
+
 
     private String webCommandName;
 

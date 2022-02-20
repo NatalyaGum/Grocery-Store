@@ -54,6 +54,7 @@ public class ProductDaoImpl implements ProductDao {
     ON product_type.id_product_type=products.product_type_id WHERE product_type=?""";
     private static final String FIND_TOTAL_PRODUCTS_NUMBER ="SELECT COUNT(id_product) FROM products";
     private static final String UPDATE_PICTURE="UPDATE products SET picture=? WHERE id_product=?";
+    private static final String FIND_TYPE_BY_NAME = "SELECT id_product_type FROM product_type WHERE product_type=?";
 
     public Optional<Product> findProductById(long id) throws DaoException {
         Optional<Product> productOptional = Optional.empty();
@@ -337,6 +338,21 @@ public class ProductDaoImpl implements ProductDao {
         throw new DaoException("Impossible to insert product into database. Database error:", e);
     }return result;
 }
+
+
+    public boolean isTypeExist(String productType) throws  DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_TYPE_BY_NAME)) {
+            statement.setString(1, productType);
+            try (  ResultSet resultSet = statement.executeQuery()){
+                boolean result = resultSet.isBeforeFirst();
+                logger.debug( "isTypeExist method was completed successfully. Result: " + result);
+                return result;
+            }} catch (SQLException | ConnectionPoolException e) {
+            logger.error( "Impossible to check existence of product type. Database access error:", e);
+            throw new DaoException("Impossible to check existence of product type. Database access error:", e);
+        }
+    }
 }
 
 

@@ -120,12 +120,14 @@ public class User extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return UserId == user.UserId && (email != null ? email.equalsIgnoreCase(user.email) : user.email == null) &&
+        return UserId == user.UserId &&
+                (email != null ? email.equalsIgnoreCase(user.email) : user.email == null) &&
                 (password != null ? password.equals(user.password) : user.password == null) &&
                 (name != null ? name.equals(user.name) : user.name == null) &&
                 (surname != null ? surname.equals(user.surname) : user.surname == null) &&
                 (phone != null ? phone.equals(user.phone) : user.phone == null) &&
-                role == user.role && status == user.status;
+                role == user.role &&
+                status == user.status;
     }
 
 

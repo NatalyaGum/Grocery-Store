@@ -21,7 +21,7 @@ public class AddProductTypeCommand implements Command {
 
     static Logger logger = LogManager.getLogger();
     private static final ProductService productService = ServiceProvider.getInstance().getProductService();
-    private static final String ADD_PRODUCT_ERROR_MESSAGE_KEY = "error.add_product";
+    private static final String ADD_PRODUCT_ERROR_MESSAGE_KEY = "error.add_product_type";
     private static final String ADD_PRODUCT_TYPE_CONFIRM_MESSAGE_KEY = "confirm.product_type_add";
 
     @Override
@@ -33,7 +33,12 @@ public class AddProductTypeCommand implements Command {
         session.removeAttribute(MESSAGE_TYPE_PRODUCT);
         String productTypeData = request.getParameter(PRODUCT_TYPE);
         try {
-            if (productService.insertNewProductType(productTypeData)) {
+
+            if(productService.isTypeExist(productTypeData)) {
+                request.setAttribute(PRODUCT_TYPE_ADD, productTypeData);
+                request.setAttribute(MESSAGE_TYPE, ADD_PRODUCT_ERROR_MESSAGE_KEY);
+                return new Router(PagePath.PRODUCT_ADD_PAGE, Router.RouterType.FORWARD);}
+            if(productService.insertNewProductType(productTypeData)){
                 List<ProductType> productTypes = productService.findAllProductTypes();
                 session.setAttribute(PRODUCT_TYPES_LIST, productTypes);
                 session.setAttribute(MESSAGE_TYPE, ADD_PRODUCT_TYPE_CONFIRM_MESSAGE_KEY);

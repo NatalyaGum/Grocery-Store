@@ -21,7 +21,7 @@ public class CommandProvider {
         commands.put(CommandType.ADD_PRODUCT, new AddProductCommand());
         commands.put(CommandType.GO_TO_PRODUCT_ADD, new GoToProductAddCommand());
         commands.put(CommandType.ADD_PRODUCT_TYPE, new AddProductTypeCommand());
-        commands.put(CommandType.MODIFY_PRODUCT_TYPE, new ModifyProductTypeCommand());
+        commands.put(CommandType.MODIFY_PRODUCT_TYPE, new UpdateProductTypeCommand());
         commands.put(CommandType.GO_TO_CATALOG, new GoToCatalogCommand());
         commands.put(CommandType.SIGN_OUT, new SignOutCommand());
         commands.put(CommandType.GO_TO_AUTHORIZATION, new GoToAuthorizationPageCommand());
@@ -29,6 +29,7 @@ public class CommandProvider {
         commands.put(CommandType.EDIT_PRODUCT, new UpdateProductCommand());
         commands.put(CommandType.GO_TO_EDIT_PRODUCT, new GoToEditCommand());
         commands.put(CommandType.UPDATE_PICTURE, new UpdatePictureCommand());
+        commands.put(CommandType.ADD_TO_CARD, new AddToCardCommand());
     }
     private CommandProvider() {
     }

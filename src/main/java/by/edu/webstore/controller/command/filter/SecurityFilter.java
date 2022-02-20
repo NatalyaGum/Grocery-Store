@@ -81,6 +81,7 @@ public class SecurityFilter implements Filter {
             GO_TO_REGISTRATION,
             GO_TO_AUTHORIZATION,
             SIGN_IN,
+            ADD_TO_CARD,
             SIGN_UP);
 
     private final EnumSet<CommandType> adminCommands = EnumSet.of(
@@ -101,6 +102,7 @@ public class SecurityFilter implements Filter {
             CHANGE_LOCALE,
             SIGN_OUT,
             GO_TO_CATALOG,
+            ADD_TO_CARD,
             GO_TO_MAIN_PAGE);
 
     public void init(FilterConfig config) throws ServletException {

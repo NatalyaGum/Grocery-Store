@@ -20,7 +20,6 @@
 
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
-            <br>
             <a href="${pageContext.request.contextPath}/controller?command=go_to_main_page" class="navbar-brand d-flex align-items-center">
                 <H1><strong>&divonx;WebStore</strong></H1>
             </a>
@@ -31,7 +30,7 @@
                 <a href="${pageContext.request.contextPath}/controller?command=edit_profile"
                    class="text-muted">  <fmt:message key="user.edit"/></a>
                 <p><a href="${pageContext.request.contextPath}/controller?command=sign_out"
-                      class="text-muted"><fmt:message key="user.logout"/></a></p></div>
+                      class="text-muted"><fmt:message key="user.sign_out"/></a></p></div>
         </c:if>
 
 

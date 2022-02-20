@@ -44,8 +44,12 @@
 <main>
 
   <div class="py-5 text-center container">
+    <table width="90%"align="center" > <tr border="2px"><td width="45%" align="left" valign="top">
+      <jsp:include page="${sessionScope.role}.jsp"/>
+    </td>
+    <td>
 
-          <div class="card shadow-sm">
+
             <p class="float-end mb-1">
               <a href="${pageContext.request.contextPath}/controller?command=product_maintenance" class="text-muted"><fmt:message key="back_to_list_of_products"/></a>
             </p>
@@ -59,9 +63,9 @@
             <fieldset>
               <form action="${pageContext.request.contextPath}/controller?command=edit_product&productId=${requestScope.product.productId}" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="command" value="edit_product"/><br>
-                <input type="text" name="title" value="<c:out value="${requestScope.product.title}"/>" required title=<fmt:message key="add_product.title.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?""%()\s]{2,75}" class="form-control input-lg"/><br>
+                <input type="text" name="title" value="<c:out value="${requestScope.product.title}"/>" required title=<fmt:message key="add_product.title.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?""%()\s]{2,100}" class="form-control input-lg"/><br>
                 <TEXTAREA name="description" value="<c:out value="${requestScope.product.description}"/>" required title=<fmt:message key="add_product.description.placeholder"/> pattern=".{10,500}" class="form-control input-lg"/><c:out value="${requestScope.product.description}"/></TEXTAREA><br>
-                <input type="text" name="manufacture" value="<c:out value="${requestScope.product.manufacture}"/>" required title=<fmt:message key="add_product.manufacture.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?""%()\s]{3,100}" class="form-control input-lg"/><br>
+                <input type="text" name="manufacture" value="<c:out value="${requestScope.product.manufacture}"/>" required title=<fmt:message key="add_product.manufacture.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?""%()\s]{3,45}" class="form-control input-lg"/><br>
                 <fmt:message key="add_product.type.placeholder"/><br>
                 <select name="type"  class="form-select" required>
                   <option value="${requestScope.product.productType}" selected>${requestScope.product.productType}</option>
@@ -100,10 +104,10 @@
             <p class="float-end mb-1">
               <a href="${pageContext.request.contextPath}/controller?command=product_maintenance" class="text-muted"><fmt:message key="back_to_list_of_products"/></a>
             </p>
-      </div>
 
-    </div>
 
+
+  </td></tr> </table>
   </div>
 
 </main>

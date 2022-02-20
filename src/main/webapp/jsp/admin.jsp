@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="pagecontent"/>
@@ -12,6 +13,6 @@
                 <li><a class="col-10 mb-1 small" href="${pageContext.request.contextPath}/controller?command=order_maintenance" class= "text-muted">&divonx;<fmt:message key="order.maintenance"/></a></li>
                 <br>
                 <li><a class="col-10 mb-1 small" href="${pageContext.request.contextPath}/controller?command=edit_profile" class="text-muted">&divonx;<fmt:message key="user.edit"/></a></li>
-                <li><a class="col-10 mb-1 small" href="${pageContext.request.contextPath}/controller?command=sign_out" class= "text-muted">&divonx;<fmt:message key="user.logout"/></a></li>
+                <li><a class="col-10 mb-1 small" href="${pageContext.request.contextPath}/controller?command=sign_out" class= "text-muted">&divonx;<fmt:message key="user.sign_out"/></a></li>
                 </ul>
         </div>

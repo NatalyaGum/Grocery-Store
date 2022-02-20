@@ -44,15 +44,19 @@
 <main>
 
   <div class="py-5 text-center container">
+    <table width="90%"align="center" > <tr border="2px"><td width="45%" align="left" valign="top">
+      <jsp:include page="${sessionScope.role}.jsp"/>
+      </td>
+      <td>
 
-          <div class="card shadow-sm">
+
             <h3 class="fw-light"><fmt:message key="add_product"/></h3>
             <fieldset>
               <form action="${pageContext.request.contextPath}/controller?command=add_product" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="command" value="add_product"/><br>
-                <input type="text" name="title" title=<fmt:message key="add_product.title.placeholder"/> value="<c:out value="${requestScope.product.title}"/>" required placeholder=<fmt:message key="add_product.title.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?""%()\s]{2,75}" class="form-control input-lg"/><br>
+                <input type="text" name="title" title=<fmt:message key="add_product.title.placeholder"/> value="<c:out value="${requestScope.product.title}"/>" required placeholder=<fmt:message key="add_product.title.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?""%()\s]{2,100}" class="form-control input-lg"/><br>
                 <TEXTAREA name="description" value="<c:out value="${requestScope.product.description}"/>" required title=<fmt:message key="add_product.description.placeholder"/> pattern=".{10,500}" class="form-control input-lg"/><fmt:message key="add_product.description.placeholder"/></TEXTAREA><br>
-                <input type="text" name="manufacture" value="<c:out value="${requestScope.product.manufacture}"/>" required title=<fmt:message key="add_product.manufacture.placeholder"/> placeholder=<fmt:message key="add_product.manufacture.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?""%()\s]{3,100}" class="form-control input-lg"/><br>
+                <input type="text" name="manufacture" value="<c:out value="${requestScope.product.manufacture}"/>" required title=<fmt:message key="add_product.manufacture.placeholder"/> placeholder=<fmt:message key="add_product.manufacture.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?%()\s]{3,45}" class="form-control input-lg"/><br>
                 <fmt:message key="add_product.type.placeholder"/><br>
                 <select name="type"  class="form-select" required placeholder=<fmt:message key="add_product.type.placeholder"/>>
                   <c:forEach var="element" items="${product_types_list}">
@@ -74,15 +78,15 @@
               </form>
             </fieldset>
 
-      </div>
+
     <br><br>
 
-    <div class="card shadow-sm">
+
       <h3 class="fw-light"><fmt:message key="add_product_type"/></h3>
       <fieldset>
         <form action="${pageContext.request.contextPath}/controller?command=add_product_type" method="post" enctype="multipart/form-data">
           <input type="hidden" name="command" value="add_product_type"/><br>
-          <input type="text" name="product_type" value="<c:out value="${requestScope.product_type.product_type}"/>" required placeholder=<fmt:message key="add_product_type.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?""%()\s]{3,75}" class="form-control input-lg"/><br>
+          <input type="text" name="product_type" value="<c:out value="${requestScope.product_type_add}"/>"  required placeholder=<fmt:message key="add_product_type.placeholder"/>  title= <fmt:message key="add_product_type.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?%()\s]{3,45}" class="form-control input-lg"/><br>
           <c:if test="${not empty message_product_type}"> <p><fmt:message key="${message_product_type}"/></p>  </c:if>
           <input type="submit"  value=<fmt:message key="add_product.add"/> >
         </form>
@@ -98,16 +102,16 @@
               <option value="${element.productTypeName}">${element.productTypeName}</option>
             </c:forEach>
           </select><br>
-          <input type="text" name="modify_type_name" value="<c:out value="${requestScope.product_type.product_type}"/>" placeholder=<fmt:message key="product_type.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?""%()\s]{3,75}" class="form-control input-lg"/>
+          <input type="text" name="modify_type_name" value="<c:out value="${requestScope.product_type_modify}"/>" placeholder=<fmt:message key="product_type.placeholder"/> title=<fmt:message key="product_type.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?%()\s]{3,45}" class="form-control input-lg"/>
           <c:if test="${not empty message_type_product}"> <p><fmt:message key="${message_type_product}"/></p>  </c:if><br>
           <input type="submit"  value=<fmt:message key="product_type.modify"/> >
         </form>
       </fieldset>
 
+      </td></tr> </table>
 
 
 
-    </div>
 
   </div>
 

@@ -21,5 +21,6 @@ public interface ProductService {
     boolean  updateProduct(Map<String, String> productData, InputStream image) throws ServiceException;
     boolean  updateProduct(Map<String, String> productData) throws ServiceException;
     boolean UpdateProductPicture(long id,InputStream image) throws ServiceException;
+    boolean isTypeExist(String type) throws ServiceException;
 
 }

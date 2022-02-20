@@ -25,6 +25,7 @@ public final class ParameterAndAttribute {
     public static final String PRODUCTS_LIST="products_list";
     public static final String PAGES_NUMBER="pages_number";
     public static final String PAGE_NUMBER="page_number";
+    public static final String PAGE="page";
 // Parameters
     public static final String ROLE = "role";
     public static final String LANGUAGE = "language";
@@ -45,8 +46,13 @@ public final class ParameterAndAttribute {
     public static final String DESCRIPTION ="description";
     public static final String MANUFACTURE = "manufacture";
     public static final String PRODUCT_TYPE = "product_type";
+    public static final String PRODUCT_TYPE_ADD= "product_type_add";
+    public static final String PRODUCT_TYPE_MODIFY = "product_type_modify";
+    public static final String PRODUCT_COUNT="product_count";
+    public static final String ORDER_MAP="order_map";
     public static final String DELETE_TYPE="delete_type_name";
     public static final String MODIFY_TYPE="modify_type_name";
+    public static final String CARD="card";
 
 
  // Session

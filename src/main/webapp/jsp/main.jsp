@@ -20,7 +20,6 @@
 
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
-            <br>
             <a href="${pageContext.request.contextPath}/controller?command=go_to_main_page"
                class="navbar-brand d-flex align-items-center">
                 <H1><strong>&divonx;WebStore</strong></H1>
@@ -58,7 +57,7 @@
                 <a href="${pageContext.request.contextPath}/controller?command=edit_profile"
                    class="text-muted">  <fmt:message key="user.edit"/></a>
                 <p><a href="${pageContext.request.contextPath}/controller?command=sign_out"
-                      class="text-muted"><fmt:message key="user.logout"/></a></p></div>
+                      class="text-muted"><fmt:message key="user.sign_out"/></a></p></div>
         </c:if>
 
         <div>
@@ -74,24 +73,26 @@
 
 </header>
 <main>
-    <br><br><br><br>
-    <table width="100%">
-        <tr>
-            <td width=450px>
-                <jsp:include page="${sessionScope.role}.jsp"/>
-            </td>
-            <td>
+
+
                 <section class="py-5 text-center container">
+                    <table width="100%">
+                        <tr>
+                            <td width=40%>
+                                <jsp:include page="${sessionScope.role}.jsp"/>
+                            </td>
+                            <td align="center">
                     <h1 class="fw-light"><fmt:message key="title2"/></h1>
                     <p class="lead text-muted"><fmt:message key="title3"/></p>
                     <p>
                         <a href="${pageContext.request.contextPath}/controller?command=go_to_catalog"
                            class="btn btn-primary my-2"><fmt:message key="catalog.open"/></a>
                     </p>
+                            </td>
+                        </tr>
+                    </table>
                 </section>
-            </td>
-        </tr>
-    </table>
+
 
 
 </main>

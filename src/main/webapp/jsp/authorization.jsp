@@ -20,7 +20,6 @@
 
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
-            <br>
             <a href="${pageContext.request.contextPath}/controller?command=go_to_main_page"
                class="navbar-brand d-flex align-items-center">
                 <H1><strong>&divonx;WebStore</strong></H1>
@@ -66,19 +65,19 @@
 
 </header>
 <main>
-    <br><br><br><br>
-    <table width="100%">
+    <section class="py-5 text-center container">
+    <table width="100%" >
         <tr>
-            <td width=450px>
+            <td width=40% >
                 <jsp:include page="${sessionScope.role}.jsp"/>
             </td>
-            <td>
+            <td align="center">
 
-                <section class="py-5 text-center container">
+
                     <h1 class="fw-light"><fmt:message key="sign_in.title2"/></h1>
                     <p class="lead text-muted"><fmt:message key="sign_in.title3"/></p>
 
-                    <c:if test="${sessionScope.role eq 'guest'}">
+
                         <div>
                             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="post"
                                   action="${pageContext.request.contextPath}/controller?command=sign_in">
@@ -104,12 +103,12 @@
 
                         </div>
                         </div>
-                    </c:if>
+
 
             </td>
         </tr>
     </table>
-
+    </section>
 
 </main>
 <br><br><br><br>   <br><br><br><br>
