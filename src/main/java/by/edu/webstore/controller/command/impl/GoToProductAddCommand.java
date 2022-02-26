@@ -36,7 +36,7 @@ public class GoToProductAddCommand implements Command {
             // session.setAttribute(ParameterAndAttribute.CURRENT_PAGE, CurrentPageExtractor.extract(request));
             commandResult = new Router(PagePath.PRODUCT_ADD_PAGE, Router.RouterType.FORWARD);
         } catch (ServiceException e) {
-            logger.error("Try to execute FindAllRoomsCommand was failed " + e);
+            logger.error("Try to execute GoToProductAddCommand was failed " + e);
             commandResult = new Router(PagePath.ERROR, Router.RouterType.FORWARD);
         }
         return commandResult;

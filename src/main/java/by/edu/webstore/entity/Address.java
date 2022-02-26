@@ -4,9 +4,26 @@ package by.edu.webstore.entity;
 public class Address extends AbstractEntity {
     private long addressId;
     private String streetName;
-    private String houseNumber;
+    private String buildingNumber;
     private int apartmentNumber;
     private String comment;
+
+    public Address() {
+    }
+    public Address(String streetName, String buildingNumber, int apartmentNumber, String comment) {
+        this.streetName = streetName;
+        this.buildingNumber = buildingNumber;
+        this.apartmentNumber = apartmentNumber;
+        this.comment = comment;
+    }
+
+    public Address(long addressId, String streetName, String buildingNumber, int apartmentNumber, String comment) {
+        this.addressId = addressId;
+        this.streetName = streetName;
+        this.buildingNumber = buildingNumber;
+        this.apartmentNumber = apartmentNumber;
+        this.comment = comment;
+    }
 
     public long getAddressId() {
         return addressId;
@@ -24,12 +41,12 @@ public class Address extends AbstractEntity {
         this.streetName = streetName;
     }
 
-    public String getHouseNumber() {
-        return houseNumber;
+    public String getBuildingNumber() {
+        return buildingNumber;
     }
 
-    public void setHouseNumber(String houseNumber) {
-        this.houseNumber = houseNumber;
+    public void setBuildingNumber(String houseNumber) {
+        this.buildingNumber = houseNumber;
     }
 
     public int getApartmentNumber() {
@@ -56,7 +73,17 @@ public class Address extends AbstractEntity {
         return addressId == address.addressId &&
                 apartmentNumber == address.apartmentNumber &&
                 streetName.equals(address.streetName) &&
-                houseNumber.equals(address.houseNumber);
+                buildingNumber.equals(address.buildingNumber);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Г.Минск");
+        sb.append(", ул. ").append(streetName);
+        sb.append(", д. ").append(buildingNumber);
+        sb.append(", кв. ").append(apartmentNumber);
+        sb.append(". Примечание: ").append(comment);
+        return sb.toString();
     }
 
     @Override
@@ -66,7 +93,7 @@ public class Address extends AbstractEntity {
         result = result * first + (int) addressId;
         result = result * first + apartmentNumber;
         result = result * first + (streetName != null ? streetName.hashCode() : 0);
-        result = result * first + (houseNumber != null ? houseNumber.hashCode() : 0);
+        result = result * first + (buildingNumber != null ? buildingNumber.hashCode() : 0);
         return result;
     }
 }

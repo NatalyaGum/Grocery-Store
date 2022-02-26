@@ -1,5 +1,6 @@
 package by.edu.webstore.dao;
 
+import by.edu.webstore.dao.impl.OrderDaoImpl;
 import by.edu.webstore.dao.impl.ProductDaoImpl;
 import by.edu.webstore.dao.impl.AddressDaoImpl;
 import by.edu.webstore.dao.impl.UserDaoImpl;
@@ -9,7 +10,7 @@ public class DaoProvider {
     private UserDao userDao = new UserDaoImpl();
     private AddressDao addressDao = new AddressDaoImpl();
     private ProductDao productDao = new ProductDaoImpl();
-   // private OrderDao orderDao = new OrderDaoImpl();
+    private OrderDao orderDao = new OrderDaoImpl();
 
     private DaoProvider() {
     }
@@ -29,8 +30,11 @@ public class DaoProvider {
     public ProductDao getProductDao() {
         return productDao;
     }
-/*
+
     public OrderDao getOrderDao() {
         return orderDao;
-    }*/
+    }
+    public AddressDao getAddressDao() {
+        return addressDao;
+    }
 }

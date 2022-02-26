@@ -207,5 +207,4 @@ public class ProductServiceImpl implements ProductService {
             throw new ServiceException("Error has occurred while checking product type availability: " + exception);
         }
     }
-
 }

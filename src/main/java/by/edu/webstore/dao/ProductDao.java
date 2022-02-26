@@ -16,7 +16,7 @@ public interface ProductDao extends BaseDao<Product> {
 
     List<Product> findAllEntities() throws DaoException;
 
-    long insertNewProduct(Product entity) throws DaoException, ConnectionPoolException;
+
 
     long insertNewProduct(Product product, InputStream image) throws DaoException;
 

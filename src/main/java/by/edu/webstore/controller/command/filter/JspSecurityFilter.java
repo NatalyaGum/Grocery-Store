@@ -37,7 +37,10 @@ public class JspSecurityFilter implements Filter {
 
         clientPages = Set.of(
                 MAIN_PAGE,
+                ORDER_PAGE,
                 CATALOG,
+                ADDRESS_ADD_PAGE,
+                USER_ORDERS,
                 ERROR,
                 ERROR_404);
 
@@ -46,7 +49,7 @@ public class JspSecurityFilter implements Filter {
                 CATALOG,
                 PRODUCT_ADD_PAGE,
                 PRODUCT_MAINTENANCE,
-                PRODUCT_EDIT,
+                PRODUCT_EDIT_PAGE,
                 ERROR,
                 ERROR_404);
 

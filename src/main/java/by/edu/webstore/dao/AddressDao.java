@@ -9,11 +9,11 @@ import java.util.Optional;
 
 public interface AddressDao extends BaseDao<Address> {
 
-    Optional<Address> findEntityById(long addressId) throws DaoException;
+    Optional<Address> findAddressById(long addressId) throws DaoException;
 
     List<Address> findUserAddresses(long userId) throws DaoException;
 
-    long insertNewEntity(Address address) throws DaoException;
+    long insertNewAddress(Address address) throws DaoException;
 
 }
 

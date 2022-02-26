@@ -30,6 +30,12 @@ public class CommandProvider {
         commands.put(CommandType.GO_TO_EDIT_PRODUCT, new GoToEditCommand());
         commands.put(CommandType.UPDATE_PICTURE, new UpdatePictureCommand());
         commands.put(CommandType.ADD_TO_CARD, new AddToCardCommand());
+        commands.put(CommandType. GO_TO_CARD, new GoToCardCommand());
+        commands.put(CommandType.GO_TO_ADD_ADDRESS, new GoToAddAddressCommand());
+        commands.put(CommandType.ADD_ADDRESS, new AddAddressCommand());
+        commands.put(CommandType.CREATE_ORDER, new AddOrderCommand());
+        commands.put(CommandType. GO_TO_ORDERS, new GoToOrdersCommand());
+
     }
     private CommandProvider() {
     }

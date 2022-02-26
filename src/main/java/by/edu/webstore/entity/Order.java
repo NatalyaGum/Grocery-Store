@@ -3,28 +3,58 @@ package by.edu.webstore.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.Objects;
+
 
 
 public class Order extends AbstractEntity {
-    public enum OrderStatus {REJECTED, PREPARING, DELIVERED, ORDERED}
-    public enum PaymentMethod {CASH, CARD}
+    public enum OrderStatus {
+        REJECTED("rejected"),
+        PREPARING("preparing"),
+        DELIVERED("delivered"),
+        ORDERED("ordered");
+        private String status;
+        OrderStatus (String status){this.status=status;}
+        public String toString() {
+            return status;
+        }
 
-    private Map<Long, Integer> addedProducts;
+
+    }
+    public enum PaymentMethod {
+        CASH("cash"),
+        CARD("card");
+        private String method;
+        PaymentMethod (String method){this.method=method;}
+        public String toString() {
+            return method;
+        }
+    }
+
+    private Map<Product, Integer> addedProducts;
     private long orderId;
     private BigDecimal cost;
     private OrderStatus status;
     private LocalDateTime orderDate;
     private PaymentMethod method;
     private long userId;
-    private long addressId;
+    private Address address;
 
+    public Order() {
+    }
+    public Order(Map<Product, Integer> addedProducts, BigDecimal cost, OrderStatus status, LocalDateTime orderDate, PaymentMethod method, Address address) {
+        this.addedProducts = addedProducts;
+        this.cost = cost;
+        this.status = status;
+        this.orderDate = orderDate;
+        this.method = method;
+        this.address = address;
+    }
 
-    public Map<Long, Integer> getProducts() {
+    public Map<Product, Integer> getProducts() {
         return addedProducts;
     }
 
-    public void setProducts(Map<Long, Integer> products) {
+    public void setProducts(Map<Product, Integer> products) {
         this.addedProducts = products;
     }
     public long getOrderId() {
@@ -75,12 +105,12 @@ public class Order extends AbstractEntity {
         this.userId = userId;
     }
 
-    public long getAddressId() {
-        return addressId;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAddressId(long addressId) {
-        this.addressId = addressId;
+    public void setAddress(Address addressId) {
+        this.address = address;
     }
 
     @Override
@@ -90,7 +120,7 @@ public class Order extends AbstractEntity {
         Order order = (Order) o;
         return orderId == order.orderId &&
                 userId == order.userId &&
-                addressId == order.addressId &&
+                address.equals(order.address) &&
                 addedProducts.equals(order.addedProducts) &&
                 cost.equals(order.cost) &&
                 status == order.status &&
@@ -105,7 +135,7 @@ public class Order extends AbstractEntity {
         result=result * first +(addedProducts != null ? addedProducts.hashCode() : 0);
         result = result * first + (int) orderId;
         result = result * first + (int) userId;
-        result = result * first + (int) addressId;
+        result = result * first +  address.hashCode();
         result = result * first + (addedProducts!=null ? addedProducts.hashCode() : 0);
         result = result * first + (cost!=null ? cost.hashCode() : 0);
         result = result * first + (status != null ? status.hashCode() : 0);
@@ -124,7 +154,7 @@ public class Order extends AbstractEntity {
         builder.append(", orderDate=").append(orderDate);
         builder.append(", method=").append(method);
         builder.append(", userId=").append(userId);
-        builder.append(", addressId=").append(addressId);
+        builder.append(", addressId=").append(address);
         builder.append("}");
         return builder.toString();
     }

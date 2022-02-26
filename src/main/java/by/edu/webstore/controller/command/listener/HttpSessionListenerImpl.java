@@ -15,6 +15,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @WebListener
@@ -38,7 +40,8 @@ public class HttpSessionListenerImpl implements HttpSessionListener {
         session.setAttribute(LOCALE, DEFAULT_LOCALE);
         session.setAttribute(LANGUAGE, DEFAULT_LANGUAGE);
         session.setAttribute(ROLE, User.Role.GUEST.toString());
-        LocalDate today = LocalDate.now();
-        session.setAttribute(TODAY, today.toString());
+        LocalDateTime dateTime=LocalDateTime.now();
+        session.setAttribute(DATE, dateTime);
+               //dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
     }
 }

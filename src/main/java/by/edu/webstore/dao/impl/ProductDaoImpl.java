@@ -113,9 +113,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
 
-    public long insertNewProduct(Product product) throws DaoException, ConnectionPoolException {
-        return 0;
-    }
+
 
 
     public long insertNewProduct(Product product, InputStream image) throws DaoException {

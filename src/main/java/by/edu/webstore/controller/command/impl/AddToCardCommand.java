@@ -12,13 +12,11 @@ import java.util.HashMap;
 
 import java.util.Map;
 
-import static by.edu.webstore.controller.command.ParameterAndAttribute.PAGE_NUMBER;
-
 
 public class AddToCardCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        HttpSession session=request.getSession();
+      /*  HttpSession session=request.getSession();
         HashMap<Long,Integer> orderMap;
         int countProductsInCard=0;
         Integer count=Integer.parseInt(request.getParameter(ParameterAndAttribute.PRODUCT_COUNT));
@@ -34,8 +32,11 @@ public class AddToCardCommand implements Command {
         }
         session.setAttribute(ParameterAndAttribute.ORDER_MAP,orderMap);
         session.setAttribute(ParameterAndAttribute.CARD,countProductsInCard);
+
+
+
         Command command = CommandProvider.defineCommand("go_to_catalog");
-        Router router = command.execute(request);
-        return router;
+        Router router = command.execute(request);*/
+        return null;
     }
 }

@@ -19,9 +19,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static by.edu.webstore.controller.command.ParameterAndAttribute.MESSAGE;
@@ -48,13 +46,13 @@ public class UpdatePictureCommand implements Command {
                 Optional<Product> optionalProduct=productService.getProductById (product_id) ;
                 request.setAttribute(ParameterAndAttribute.PRODUCT, optionalProduct.get());
                 session.setAttribute(ParameterAndAttribute.MESSAGE_PICTURE,PRODUCT_CONFIRM_MESSAGE_KEY);
-                return new Router(PagePath.PRODUCT_EDIT,Router.RouterType.FORWARD);
+                return new Router(PagePath.PRODUCT_EDIT_PAGE,Router.RouterType.FORWARD);
             } else {
                 Optional<Product> optionalProduct=productService.getProductById (product_id) ;
                 request.setAttribute(ParameterAndAttribute.PRODUCT, optionalProduct.get());
                 request.setAttribute(ParameterAndAttribute.MESSAGE_PICTURE,PRODUCT_ERROR_MESSAGE_KEY);
                 // request.setAttribute(PRODUCT_CREATION_RESULT, INVALID);
-                return new Router(PagePath.PRODUCT_EDIT,Router.RouterType.FORWARD);
+                return new Router(PagePath.PRODUCT_EDIT_PAGE,Router.RouterType.FORWARD);
             }
             //List<Product> products = productService.findAllProducts();
             // session.setAttribute(PRODUCT_LIST, PRODUCTS);

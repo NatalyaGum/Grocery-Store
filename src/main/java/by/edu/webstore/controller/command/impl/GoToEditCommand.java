@@ -41,11 +41,10 @@ public class GoToEditCommand implements Command {
             } else{
                 request.setAttribute(ParameterAndAttribute.MESSAGE, PRODUCT_ERROR_MESSAGE_KEY);
             }
-
         }  catch (ServiceException e) {
             logger.error( "Impossible to find products:", e);
             throw new CommandException("Impossible to find products:", e);
         }
-        return new Router(PagePath.PRODUCT_EDIT, FORWARD);
+        return new Router(PagePath.PRODUCT_EDIT_PAGE, FORWARD);
     }
 }

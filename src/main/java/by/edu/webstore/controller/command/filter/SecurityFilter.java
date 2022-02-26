@@ -24,56 +24,9 @@ import static by.edu.webstore.entity.User.Role.*;
 public class SecurityFilter implements Filter {
 
 
-   /* private static final String DEFAULT_COMMAND = "go_to_main_page";
-    private EnumMap<User.Role, List<CommandType>> accessibleCommands;
-    @Override
-    public void init(FilterConfig filterConfig) {
-        accessibleCommands = new EnumMap<>(User.Role.class);
-        accessibleCommands.put(ADMIN, List.of(CHANGE_LOCALE,
-                GO_TO_MAIN_PAGE,
-                ADD_PRODUCT,
-                MODIFY_PRODUCT_TYPE,
-                ADD_PRODUCT_TYPE,
-                GO_TO_PRODUCT_ADD));
-        accessibleCommands.put(CLIENT, List.of(CHANGE_LOCALE,
-                GO_TO_MAIN_PAGE));
-        accessibleCommands.put(GUEST, List.of(CHANGE_LOCALE,
-                GO_TO_MAIN_PAGE,
-                GO_TO_REGISTRATION,
-                SIGN_IN,
-                SIGN_UP));
-    }
-
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        HttpSession session = httpServletRequest.getSession();
-       // User.Role role=(User.Role)session.getAttribute(ROLE);
-           User.Role role= User.Role.valueOf(session.getAttribute(ROLE).toString().toUpperCase());
-        // User.Role role=User.Role.valueOf(String.valueOf(session.getAttribute(ROLE)).toUpperCase());
-       *//* User.Role role = session.getAttribute(ROLE) == null
-                ? User.Role.GUEST
-                : (User.Role)session.getAttribute(ROLE);*//*
-        String command = request.getParameter(COMMAND);
-        if (command == null) {
-            command = DEFAULT_COMMAND;
-        }
-
-        CommandType commandType = CommandType.valueOf(command.toUpperCase());
-        Optional<CommandType> foundCommandType = accessibleCommands.get(role)
-                .stream()
-                .filter(c -> c == commandType)
-                .findFirst();
-        if (foundCommandType.isEmpty()) {
-            httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + PagePath.ERROR_404);
-            return;
-        }
-        chain.doFilter(request, response);
-
-    }*/
    private static final String DEFAULT_COMMAND = "go_to_main_page";
     private final EnumMap<User.Role, EnumSet<CommandType>> roleMap = new EnumMap<>(User.Role.class);
+
     private final EnumSet<CommandType> guestCommands = EnumSet.of(
             CHANGE_LOCALE,
             GO_TO_CATALOG,
@@ -100,9 +53,14 @@ public class SecurityFilter implements Filter {
 
     private final EnumSet<CommandType> clientCommands = EnumSet.of(
             CHANGE_LOCALE,
+            GO_TO_CARD,
+            GO_TO_ADD_ADDRESS,
             SIGN_OUT,
             GO_TO_CATALOG,
+            GO_TO_ORDERS,
             ADD_TO_CARD,
+            ADD_ADDRESS,
+            CREATE_ORDER,
             GO_TO_MAIN_PAGE);
 
     public void init(FilterConfig config) throws ServletException {

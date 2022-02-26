@@ -14,7 +14,7 @@ public class ColumnName {
     /* address table */
     public static final String ADDRESS_ID = "addresses.id_address";
     public static final String ADDRESS_STREET = "addresses.street";
-    public static final String ADDRESS_BUILDING_NUMBER = "addresses.build_number";
+    public static final String ADDRESS_BUILDING_NUMBER = "addresses.building";
     public static final String ADDRESS_APARTMENT = "addresses.apartment";
     public static final String ADDRESS_COMMENT = "addresses.comment";
     /* products table */
@@ -36,13 +36,14 @@ public class ColumnName {
     public static final String ORDER_COST = "orders.cost";
     public static final String ORDER_ = "orders.cost";
     public static final String ORDER_STATUS = "orders.order_status";
+    public static final String ORDER_METHOD = "orders.payment_method";
     public static final String ORDER_DATE = "orders.date";
     public static final String ORDER_USER_ID = "orders.users_user_id";
-    public static final String ORDER_ADDRESS_ID ="orders.id_address";
+    public static final String ORDER_ADDRESS_ID ="orders.delivery_address_id";
     /* purchases table */
     public static final String PURCHASES_ID_ORDER = "purchases.id_order";
     public static final String PURCHASES_ID_PRODUCT = "purchases.id_product";
-    public static final String PURCHASES_QUANTITY_PRODUCT = "purchases.quantity_of_product";
+    public static final String PURCHASES_QUANTITY = "purchases.quantity";
     /* payment cards table */
     public static final String CARD_ID = "payment_cards.id_card";
     public static final String CARD_USER_ID = "payment_cards.users_user_id";

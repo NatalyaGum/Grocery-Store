@@ -21,8 +21,12 @@ public enum CommandType {
     GO_TO_EDIT_PRODUCT("go_to_edit_product"),
     UPDATE_PICTURE("update_picture"),
     ADD_TO_CARD("add_to_card"),
-    ADD_PRODUCT_TYPE ("add_product_type");
-
+    GO_TO_CARD("go_to_card"),
+    GO_TO_ADD_ADDRESS("go_to_add_address"),
+ GO_TO_ORDERS("go_to_orders"),
+    ADD_ADDRESS("add_address"),
+    ADD_PRODUCT_TYPE ("add_product_type"),
+    CREATE_ORDER("create_order");
 
     private String webCommandName;
 

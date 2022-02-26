@@ -1,6 +1,7 @@
 package by.edu.webstore.service;
 
 
+import by.edu.webstore.service.impl.OrderServiceImpl;
 import by.edu.webstore.service.impl.UserServiceImpl;
 import by.edu.webstore.service.impl.ProductServiceImpl;
 
@@ -8,6 +9,7 @@ public final class ServiceProvider {
     private static final ServiceProvider instance = new ServiceProvider();
     private final UserService userService = new UserServiceImpl();
     private final ProductService productService = new ProductServiceImpl();
+    private final OrderService orderService = new OrderServiceImpl();
 
     private ServiceProvider() {
     }
@@ -22,5 +24,9 @@ public final class ServiceProvider {
 
     public ProductService getProductService() {
         return productService;
+    }
+
+    public OrderService getOrderService() {
+        return orderService;
     }
 }

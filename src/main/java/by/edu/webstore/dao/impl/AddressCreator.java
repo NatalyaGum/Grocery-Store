@@ -21,7 +21,7 @@ import static by.edu.webstore.dao.ColumnName.*;
         Address address = new Address();
         address.setAddressId(resultSet.getLong(ADDRESS_ID));
         address.setStreetName(resultSet.getString(ADDRESS_STREET));
-        address.setHouseNumber(resultSet.getString(ADDRESS_BUILDING_NUMBER));
+        address.setBuildingNumber(resultSet.getString(ADDRESS_BUILDING_NUMBER));
         address.setApartmentNumber(resultSet.getInt(ADDRESS_APARTMENT));
         address.setComment(resultSet.getString(ADDRESS_COMMENT));
         return address;

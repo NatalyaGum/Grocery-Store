@@ -13,6 +13,7 @@
     <meta charset="utf-8">
 
     <title><fmt:message key="title"/></title>
+
 </head>
 <body>
 <header>
@@ -63,8 +64,12 @@
 </header>
 
 <main>
-    <jsp:include page="${sessionScope.role}.jsp"/>
 
+
+        <table width="90%"align="center"> <tr ><td width="35%" align="left" valign="top">
+            <jsp:include page="${sessionScope.role}.jsp"/>
+        </td>
+            <td>
 
     <div class="album py-5 bg-light">
         <div class="container">
@@ -83,7 +88,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="post"
-                                          action="${pageContext.request.contextPath}/controller?command=add_to_card&page=${page_number}&productId=${product.productId}">
+                                          action="${pageContext.request.contextPath}/controller?command=go_to_catalog&page=${page_number}&productId=${product.productId}">
                                     <button type="submit" class="btn btn-sm btn-outline-secondary"><fmt:message key="product.buy"/> </button>
                                     <input type="number" name="product_count" min="1" max="20" value="1" step="1" class="btn btn-sm btn-outline-secondary" ></input>
                                     </form>
@@ -95,42 +100,38 @@
                 </div>
 </c:forEach>
 
-
-
             </div>
+            </div>
+     </div>
+                <%--For displaying Previous link except for the 1st page --%>
+                <c:if test="${page_number != 1}">
+                    <a href="?command=go_to_catalog&page=${page_number - 1}" class="text-muted"> <fmt:message key="previous_page" > </fmt:message></a>&nbsp;
+                </c:if>
 
-            <%--For displaying Previous link except for the 1st page --%>
-            <c:if test="${page_number != 1}">
-                <a href="?command=go_to_catalog&page=${page_number - 1}" class="text-muted"> <fmt:message key="previous_page" > </fmt:message></a>&nbsp;
-            </c:if>
+                <%--For displaying Page numbers.
+                The when condition does not display a link for the current page--%>
+                <c:choose>
+                    <c:when test="${products_list.size() != 0}">
+                        <c:forEach begin="1" end="${pages_number}" var="i">
+                            <c:choose>
+                                <c:when test="${page_number eq i}">
+                                    ${i}
+                                </c:when>
+                                <c:otherwise>
+                                    &nbsp; <a href="?command=go_to_catalog&page=${i}" class="text-muted"> ${i} </a>&nbsp;
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </c:when>
+                </c:choose>
 
-            <%--For displaying Page numbers.
-            The when condition does not display a link for the current page--%>
-            <c:choose>
-                <c:when test="${products_list.size() != 0}">
+                <%--For displaying Next link --%>
+                <c:if test="${page_number < pages_number}">
+                    &nbsp;<a href="?command=go_to_catalog&page=${page_number + 1}" class="text-muted"> <fmt:message key="next_page"></fmt:message></a>
+                </c:if>
+    </td></tr>
+        </table>
 
-                            <c:forEach begin="1" end="${pages_number}" var="i">
-                                <c:choose>
-                                    <c:when test="${page_number eq i}">
-                                        <td>${i}</td>
-                                    </c:when>
-                                    <c:otherwise>
-                                        &nbsp; <a href="?command=go_to_catalog&page=${i}" class="text-muted"> ${i} </a>&nbsp;
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
-
-                </c:when>
-            </c:choose>
-
-            <%--For displaying Next link --%>
-            <c:if test="${page_number < pages_number}">
-                &nbsp;<a href="?command=go_to_catalog&page=${page_number + 1}" class="text-muted"> <fmt:message key="next_page"></fmt:message></a>
-            </c:if>
-        </div>
-
-
-    </div>
 
 </main>
 

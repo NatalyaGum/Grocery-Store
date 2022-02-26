@@ -25,7 +25,7 @@ public class Сonnection {
 
         // DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 
-      //  Connection connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/webshop", "root", "nbg222");
+       Connection connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/webshop", "root", "nbg222");
         System.out.println("ok");
 
        // Сonnection connection3 =DriverManager.getConnection(DATABASE_URL, DATABASE_USER_NAME, DATABASE_PASSWORD);

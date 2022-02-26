@@ -23,19 +23,19 @@ public class AddressDaoImpl implements AddressDao {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     private static final String FIND_ADDRESS_BY_ID = """
-            SELECT id_address, street, build_number, apartment, comment  
-            FROM address
+            SELECT id_address, street, building, apartment, comment  
+            FROM addresses
             WHERE id_address=?""";
 
     private static final String FIND_ADDRESS_BY_USER_ID = """
-            SELECT id_address, street, build_number, apartment, comment, users_user_id FROM addresses
-             JOIN orders ON delivery_address_id=id_address
-             WHERE orders.users_user_id=?""";
+            SELECT id_address, street, building, apartment, comment FROM addresses          
+            WHERE users_user_id=?
+            ORDER BY id_address DESC """;
 
-    private static final String INSERT_NEW_ADDRESS = "INSERT INTO address (street, build_number, apartment, comment) VALUES(?, ?, ?, ?)";
+    private static final String INSERT_NEW_ADDRESS = "INSERT INTO addresses (street, building, apartment, comment) VALUES(?, ?, ?, ?)";
 
     @Override
-    public Optional<Address> findEntityById(long addressId) throws DaoException {
+    public Optional<Address> findAddressById(long addressId) throws DaoException {
         Optional<Address> addressOptional = Optional.empty();
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ADDRESS_BY_ID)) {
@@ -58,7 +58,7 @@ public class AddressDaoImpl implements AddressDao {
     @Override
     public List<Address> findUserAddresses(long userId) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(FIND_ADDRESS_BY_USER_ID)) {
+            PreparedStatement statement = connection.prepareStatement(FIND_ADDRESS_BY_USER_ID)) {
             statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
             List<Address> addresses = new ArrayList<>();
@@ -96,11 +96,11 @@ public class AddressDaoImpl implements AddressDao {
     }*/
 
     @Override
-    public long insertNewEntity(Address address) throws DaoException {
+    public long insertNewAddress(Address address) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_NEW_ADDRESS, RETURN_GENERATED_KEYS)) {
             statement.setString(1, address.getStreetName());
-            statement.setString(2, address.getHouseNumber());
+            statement.setString(2, address.getBuildingNumber());
             statement.setInt(3, address.getApartmentNumber());
             statement.setString(4, address.getComment());
             statement.executeUpdate();

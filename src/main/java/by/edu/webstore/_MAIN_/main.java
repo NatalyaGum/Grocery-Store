@@ -6,6 +6,8 @@ import by.edu.webstore.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class main {
@@ -22,6 +24,12 @@ public class main {
         User.Role role=optionalUser.get().getRole();
 
         System.out.println(optionalUser.get());
+
+        LocalDateTime dateTime=LocalDateTime.now();
+        dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        System.out.println(dateTime);
+        System.out.println(dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        System.out.println(dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")).toString());
 
     }
 
