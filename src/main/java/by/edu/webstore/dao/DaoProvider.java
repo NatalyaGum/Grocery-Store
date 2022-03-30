@@ -7,6 +7,8 @@ import by.edu.webstore.dao.impl.UserDaoImpl;
 
 
 public class DaoProvider {
+    private static final DaoProvider instance = new DaoProvider();
+
     private UserDao userDao = new UserDaoImpl();
     private AddressDao addressDao = new AddressDaoImpl();
     private ProductDao productDao = new ProductDaoImpl();
@@ -15,12 +17,12 @@ public class DaoProvider {
     private DaoProvider() {
     }
 
-    private static class DaoProviderHolder {
+   /* private static class DaoProviderHolder {
         private static final DaoProvider instance = new DaoProvider();
-    }
+    }*/
 
     public static DaoProvider getInstance() {
-        return DaoProviderHolder.instance;
+        return DaoProvider.instance;
     }
 
     public UserDao getUserDao() {

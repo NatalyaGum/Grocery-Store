@@ -41,6 +41,7 @@ public class JspSecurityFilter implements Filter {
                 CATALOG,
                 ADDRESS_ADD_PAGE,
                 USER_ORDERS,
+                UPDATE_PROFILE,
                 ERROR,
                 ERROR_404);
 
@@ -50,6 +51,8 @@ public class JspSecurityFilter implements Filter {
                 PRODUCT_ADD_PAGE,
                 PRODUCT_MAINTENANCE,
                 PRODUCT_EDIT_PAGE,
+                ADMIN_ORDERS,
+                UPDATE_PROFILE,
                 ERROR,
                 ERROR_404);
 

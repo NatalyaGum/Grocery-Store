@@ -18,8 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static by.edu.webstore.controller.command.ParameterAndAttribute.EMAIL;
-
 public class ProductServiceImpl implements ProductService {
     private static final Logger logger = LogManager.getLogger();
     private static final ProductDao productDao = DaoProvider.getInstance().getProductDao();
@@ -40,7 +38,6 @@ public class ProductServiceImpl implements ProductService {
             } catch (IllegalArgumentException e) {
                 logger.warn("This enum type has no constant with the specified name");
             }
-
         }
         return result;
     }
@@ -49,6 +46,16 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findAllProducts(int offset, int limit) throws ServiceException {
         try {
             return productDao.findAllEntities(offset, limit);
+        } catch (DaoException e) {
+            logger.error("product cannot be found:", e);
+            throw new ServiceException("Products cannot be found:", e);
+        }
+    }
+
+
+    public List<Product> findTypeOfProducts(int productTypeId) throws ServiceException {
+        try {
+            return productDao.findProductsByType(productTypeId);
         } catch (DaoException e) {
             logger.error("product cannot be found:", e);
             throw new ServiceException("Products cannot be found:", e);

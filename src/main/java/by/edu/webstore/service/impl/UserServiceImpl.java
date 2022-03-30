@@ -98,4 +98,22 @@ public class UserServiceImpl implements UserService {
         }
         return Optional.empty();
     }
+
+
+    public Optional<User> updateUser(Map<String, String> userData) throws ServiceException {
+        Optional<User> userOptional=null;
+        if (UserValidator.getInstance().checkUserPersonalData(userData)){
+            String password = PasswordEncoder.pasEncode(userData.get(PASSWORD));
+            User user=new User(Long.valueOf(userData.get(USER_ID)),userData.get(EMAIL), password, userData.get(NAME),userData.get(SURNAME),
+                    userData.get(PHONE_NUMBER), User.Role.CLIENT,User.Status.ACTIVE);
+            try {
+                userDao.updateUser(user);
+                userOptional = userDao.findUserById(Long.valueOf(userData.get(USER_ID)));
+            } catch (DaoException e) {
+                logger.error("Error has occurred while registering user: " + e);
+                throw new ServiceException("Error has occurred while registering user: ", e);
+            }
+        }
+        return userOptional;
+    }
 }

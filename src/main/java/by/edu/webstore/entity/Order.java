@@ -36,7 +36,7 @@ public class Order extends AbstractEntity {
     private OrderStatus status;
     private LocalDateTime orderDate;
     private PaymentMethod method;
-    private long userId;
+    private User user;
     private Address address;
 
     public Order() {
@@ -48,6 +48,16 @@ public class Order extends AbstractEntity {
         this.orderDate = orderDate;
         this.method = method;
         this.address = address;
+    }
+
+    public Order(Map<Product, Integer> addedProducts, BigDecimal cost, OrderStatus status, LocalDateTime orderDate, PaymentMethod method, Address address, User user) {
+        this.addedProducts = addedProducts;
+        this.cost = cost;
+        this.status = status;
+        this.orderDate = orderDate;
+        this.method = method;
+        this.address = address;
+        this.user=user;
     }
 
     public Map<Product, Integer> getProducts() {
@@ -97,19 +107,19 @@ public class Order extends AbstractEntity {
         this.method = method;
     }
 
-    public long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Address getAddress() {
         return address;
     }
 
-    public void setAddress(Address addressId) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
@@ -119,7 +129,7 @@ public class Order extends AbstractEntity {
         if (!(o instanceof Order)) return false;
         Order order = (Order) o;
         return orderId == order.orderId &&
-                userId == order.userId &&
+                user.equals(order.user) &&
                 address.equals(order.address) &&
                 addedProducts.equals(order.addedProducts) &&
                 cost.equals(order.cost) &&
@@ -134,7 +144,7 @@ public class Order extends AbstractEntity {
         int result = 1;
         result=result * first +(addedProducts != null ? addedProducts.hashCode() : 0);
         result = result * first + (int) orderId;
-        result = result * first + (int) userId;
+        result = result * first + (user!=null ? user.hashCode() : 0);
         result = result * first +  address.hashCode();
         result = result * first + (addedProducts!=null ? addedProducts.hashCode() : 0);
         result = result * first + (cost!=null ? cost.hashCode() : 0);
@@ -153,7 +163,7 @@ public class Order extends AbstractEntity {
         builder.append(", status='").append(status);
         builder.append(", orderDate=").append(orderDate);
         builder.append(", method=").append(method);
-        builder.append(", userId=").append(userId);
+        builder.append(", userId=").append(user);
         builder.append(", addressId=").append(address);
         builder.append("}");
         return builder.toString();

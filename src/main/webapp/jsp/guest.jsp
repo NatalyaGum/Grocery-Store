@@ -11,7 +11,7 @@
     <hr>
     <ul class="list-unstyled">
         <c:forEach var="element" items="${product_types_list}">
-            <li><a class="col-10 mb-1 small" href="${pageContext.request.contextPath}/controller?command=go_to_product_type&type=${element.productTypeName}" class= "text-muted">${element.productTypeName}</a><hr></li>
+            <li><a class="col-10 mb-1 small" href="${pageContext.request.contextPath}/controller?command=go_to_product_type&type=${element.productTypeId}" class= "text-muted">${element.productTypeName}</a><hr></li>
 
         </c:forEach>
     </ul>

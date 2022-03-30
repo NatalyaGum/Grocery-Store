@@ -15,5 +15,8 @@ public interface OrderService {
      List<Address> findUserAddresses(long userId) throws ServiceException;
      long  insertNewOrder(Map<String, Object> orderData, HashMap<Product, Integer> productMap)throws ServiceException;
      List<Order> findAllOrdersOfUser(long user_id,int offset, int limit) throws ServiceException;
-     int findTotalOrdersNumber (long user_id) throws ServiceException;
+     int findTotalOrdersNumberOfUser(long user_id) throws ServiceException;
+     List<Order> findAllOrders(int offset, int limit) throws ServiceException;
+     int findTotalOrdersNumber() throws ServiceException;
+     boolean updateOrderStatus(long orderId, String status)throws ServiceException;
 }

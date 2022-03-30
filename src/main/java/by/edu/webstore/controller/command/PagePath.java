@@ -3,7 +3,6 @@ package by.edu.webstore.controller.command;
 public class PagePath {
 
     public static final String MAIN_PAGE = "index.jsp";
-    //public static final String HOME_PAGE = "jsp/users.jsp";
     public static final String ERROR = "jsp/error500.jsp";
     public static final String REGISTRATION_PAGE = "jsp/registration.jsp";
     public static final String SHOW_USERS_PAGE = "jsp/users1.jsp";
@@ -16,8 +15,10 @@ public class PagePath {
     public static final String PRODUCT_EDIT_PAGE = "jsp/product_edit.jsp";
     public static final String ORDER_PAGE = "jsp/order.jsp";
     public static final String USER_ORDERS = "jsp/user_orders.jsp";
+    public static final String ADMIN_ORDERS = "jsp/admin_orders.jsp";
     public static final String ADDRESS_ADD_PAGE="jsp/address_add.jsp";
-  //  public static final String GO_TO_MAIN_PAGE = "controller?command=go_to_main_page";
+    public static final String UPDATE_PROFILE="jsp/update_profile.jsp";
+
 
     private PagePath() {
     }

@@ -39,6 +39,9 @@ public class ProductDaoImpl implements ProductDao {
     private static final String FIND_ALL_PRODUCTS_BY_TYPE = """
             SELECT id_product, title, product_type.product_type, price, picture, description, manufacture FROM products
             JOIN product_type ON product_type.id_product_type=product_type_id WHERE active=1 AND product_type.product_type=?""";
+    private static final String FIND_ALL_PRODUCTS_BY_TYPE_ID= """
+            SELECT id_product, title, product_type.product_type, price, picture, manufacture, description, active FROM products
+            JOIN product_type ON products.product_type_id=product_type.id_product_type WHERE active=1 AND product_type.id_product_type=? ORDER BY id_product DESC """;
     private static final String INSERT_NEW_PRODUCT = """
             INSERT INTO products (title, description, price, picture, manufacture, product_type_id)
             VALUES(?, ?, ?, ?, ?, (SELECT id_product_type FROM product_type WHERE product_type=?))""";
@@ -167,6 +170,25 @@ public class ProductDaoImpl implements ProductDao {
             }
             logger.debug("findProductsByType method was completed successfully. " + products.size()
                     + " products with type " + type + " were found");
+            return products;
+        } catch (SQLException | ConnectionPoolException e) {
+            logger.error("Impossible to find Products by type. Database error:", e);
+            throw new DaoException("Impossible to find Products by type. Database error:", e);
+        }
+    }
+
+    public List<Product> findProductsByType(int productTypeId ) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_PRODUCTS_BY_TYPE_ID)) {
+            statement.setInt(1, productTypeId);
+            ResultSet resultSet = statement.executeQuery();
+            List<Product> products = new ArrayList<>();
+            while (resultSet.next()) {
+                Product product = ProductCreator.getInstance().create(resultSet);
+                products.add(product);
+            }
+            logger.debug("findProductsByType method was completed successfully. " + products.size()
+                    + " products with type " + productTypeId + " were found");
             return products;
         } catch (SQLException | ConnectionPoolException e) {
             logger.error("Impossible to find Products by type. Database error:", e);

@@ -13,7 +13,7 @@ public interface AddressDao extends BaseDao<Address> {
 
     List<Address> findUserAddresses(long userId) throws DaoException;
 
-    long insertNewAddress(Address address) throws DaoException;
+    long insertNewAddress(Address address, long user_id) throws DaoException;
 
 }
 

@@ -36,6 +36,7 @@ public class UserDaoImpl implements UserDao {
             SELECT id_user, name, surname, email, password, phone, role, status FROM users""";
 
     private static final String UPDATE_USER_STATUS_BY_USER_ID = "UPDATE users SET status=? WHERE id_user=?";
+    private static final String UPDATE_USER = "UPDATE users SET name=?, surname=?, email=?, password=?, phone=?  WHERE id_user=?";
     private static final String UPDATE_USER_NAME = "UPDATE users SET name=? WHERE id_user=?";
     private static final String UPDATE_USER_SURNAME = "UPDATE users SET surname=? WHERE id_user=?";
     private static final String UPDATE_USER_MOBILE_NUMBER = "UPDATE users SET phone=? WHERE id_user=?";
@@ -106,6 +107,7 @@ public class UserDaoImpl implements UserDao {
             throw new DaoException("Impossible to insert new user into database. Database access error:", e);
         }
     }
+
 
 
     @Override
@@ -253,19 +255,40 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_EMAIL_AND_PASSWORD)) {
             statement.setString(1, email);
             statement.setString(2, password);
-            try (ResultSet resultSet = statement.executeQuery()){
-            if (resultSet.next()) {
-                User user = UserCreator.getInstance().createUser(resultSet);
-                userOptional = Optional.of(user);
-            }}
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    User user = UserCreator.getInstance().createUser(resultSet);
+                    userOptional = Optional.of(user);
+                }
+            }
             logger.debug("findUserByLoginAndPassword method was completed successfully." +
                     (userOptional.map(user -> " User with id " + user.getUserId() + " was found").orElse(" User with these email and password don't exist")));
             return userOptional;
         } catch (SQLException | ConnectionPoolException e) {
-            logger.error( "Impossible to find user in database.", e);
+            logger.error("Impossible to find user in database.", e);
             throw new DaoException("Impossible to find user in database. ", e);
         }
     }
+        @Override
+        public boolean updateUser(User user) throws  DaoException {
+            try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(UPDATE_USER)) {
+                statement.setString(1, user.getName());
+                statement.setString(2, user.getSurname());
+                statement.setString(3, user.getEmail());
+                statement.setString(4, user.getPassword());
+                statement.setString(5, user.getPhone());
+                statement.setLong(6, user.getUserId());
+                boolean result = statement.executeUpdate() == 1;
+                logger.info("Result of user email update for user with id " + user.getEmail() + " is " + result);
+                return result;
+            } catch (SQLException | ConnectionPoolException e) {
+                logger.error("Impossible to update user email. Database access error:", e);
+                throw new DaoException("Impossible to update user email. Database access error:", e);
+            }
+        }
+
+
 
 }
 

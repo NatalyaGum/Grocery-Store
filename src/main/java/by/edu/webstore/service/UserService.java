@@ -13,4 +13,5 @@ public interface UserService {
     Optional<User> registerUser(Map<String, String> userData) throws ServiceException;
     boolean isEmailExist(Map<String, String> userData) throws ServiceException;
     Optional<User> findUser(String email, String password) throws ServiceException;
+    Optional<User> updateUser(Map<String, String> userData) throws ServiceException;
 }

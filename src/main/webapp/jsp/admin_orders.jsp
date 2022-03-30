@@ -1,6 +1,8 @@
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="pagecontent"/>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
@@ -49,11 +51,24 @@
         </td>
             <td>
 
+<c:forEach var="order" items="${orders}">
 
-                <h3 class="fw-light"><fmt:message key="order.checkout"/></h3><br><br>
-                <h4 class="fw-light"><fmt:message key="order.products_in"/></h4><br>
+
+    <p class="fw-light"> ${order.orderDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))} #${order.orderId}
+    <form action="${pageContext.request.contextPath}/controller?command=go_to_orders_admin&page=${page_number}&orderId=${order.orderId}" method="post" >
+    <select name="order_status"   required title="Status">
+        <option value="${order.status}" selected>${order.status}</option>
+        <option value="REJECTED">REJECTED</option>
+        <option value="PREPARING">PREPARING</option>
+        <option value="ORDERED">ORDERED</option>
+        <option value="DELIVERED">DELIVERED</option>
+    </select>
+    <input type="submit"  value=<fmt:message key="product.edit"/> >
+</form>
+    </p>
+
                 <table ><tr><th> </th><th><fmt:message key="order.title"/></th><th><fmt:message key="order.price"/></th><th><fmt:message key="order.qty"/></th></tr>
-                <c:forEach var="entry" items="${product_map}">
+                <c:forEach var="entry" items="${order.products}">
                     <tr><td width="20%"/>
                         <img class="bd-placeholder-img card-img-top" src="${entry.key.picture}" class="img-thumbnail" alt="${entry.key.title}" width="98%"/>
                         </td><td>
@@ -61,43 +76,55 @@
                           </td><td>
                             ${entry.key.price} <fmt:message key="rub"/>
                           </td><td>
-                            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="post"
-                                  action="${pageContext.request.contextPath}/controller?command=go_to_card&productId=${entry.key.productId}">
-                                <input type="number" name="product_count" min="0" max="20" value=${entry.value} step="1" class="btn btn-sm btn-outline-secondary" >
-                                <button type="submit" class="btn btn-sm btn-outline-secondary"><fmt:message key="order.update_qty"/>
-                            </form>
+                                ${entry.value}
+
                              </td> </tr>
                 </c:forEach>
                     </table>
                 <hr>
-                <div align="right">${total} <fmt:message key="rub"/></div>
+                <div align="right">${order.cost} <fmt:message key="rub"/></div>
 
+    <p class="fw-light">
+                <br><fmt:message key="order.recipient"/>:
+                <c:out value="${order.user.name} ${order.user.surname} ${order.user.phone}"/>
 
+                <br><fmt:message key="order.address"/>:
 
+    Г. Минск , ул./просп.${order.address.streetName}, дом ${order.address.buildingNumber}
+    <c:if test="${order.address.apartmentNumber ne '0'}"> кв. ${order.address.apartmentNumber}. </c:if>
+    <c:if test="${order.address.comment ne 'NO COMMENTS'}"> Примечание: ${order.address.comment} </c:if>
 
-                    <p>
-                        <form action="${pageContext.request.contextPath}/controller?command=create_order" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="command" value="create_order"/>
-                <br>  <h4 class="fw-light"><fmt:message key="order.recipient"/></h4>
-                <c:out value="${sessionScope.user.name} ${sessionScope.user.surname} ${sessionScope.user.phone}"/>
+    <br><fmt:message key="order.payment_method"/>: ${order.method}
+    <hr>
+    </p><br>
+</c:forEach>
 
-                <br><br><h4 class="fw-light"><fmt:message key="order.address"/></h4>
-                <c:forEach var="element" items="${addresses_list}">
-                    <input type="radio" name="address" value=${element.addressId} required/> Г. Минск , ул./просп.${element.streetName}, дом ${element.buildingNumber}
-                    <c:if test="${element.apartmentNumber ne '0'}"> кв. ${element.apartmentNumber}. </c:if>
-                     <c:if test="${element.comment ne 'NO COMMENTS'}"> Примечание: ${element.comment} </c:if>
-                    <br>
-                </c:forEach>
+                <%--For displaying Previous link except for the 1st page --%>
+                <c:if test="${page_number != 1}">
+                    <a href="?command=go_to_order_admins&page=${page_number - 1}" class="text-muted"> <fmt:message key="previous_page" > </fmt:message></a>&nbsp;
+                </c:if>
 
-                <br><a href="${pageContext.request.contextPath}/controller?command=go_to_add_address">
-                   <h6> <fmt:message key="order.add_address"/> </h6></a>
+                <%--For displaying Page numbers.
+                The when condition does not display a link for the current page--%>
+                <c:choose>
+                    <c:when test="${products_list.size() != 0}">
+                        <c:forEach begin="1" end="${pages_number}" var="i">
+                            <c:choose>
+                                <c:when test="${page_number eq i}">
+                                    ${i}
+                                </c:when>
+                                <c:otherwise>
+                                    &nbsp; <a href="?command=go_to_orders_admin&page=${i}" class="text-muted"> ${i} </a>&nbsp;
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </c:when>
+                </c:choose>
 
-                        <br><h4 class="fw-light"><fmt:message key="order.payment_method"/></h4>
-                            <input type="radio" name="payment_method" value="cash" checked /><fmt:message key="order.method_cash"/>
-                           &nbsp;<input type="radio" name="payment_method" value="card" /><fmt:message key="order.method_card"/><br>
-                <c:if test="${not empty message}"><p class="text-muted"><fmt:message key="${message}"/></p></c:if>
-<c:if test="${not empty sessionScope.product_map and not empty addresses_list}">   <br><input type="submit"  value=<fmt:message key="order.create"/> ></c:if>
-                    </form></p>
+                <%--For displaying Next link --%>
+                <c:if test="${page_number < pages_number}">
+                    &nbsp;<a href="?command=go_to_orders_admin&page=${page_number + 1}" class="text-muted"> <fmt:message key="next_page"></fmt:message></a>
+                </c:if>
 
             </td></tr> </table>
 

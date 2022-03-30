@@ -54,7 +54,7 @@
 
         <c:if test="${not empty sessionScope.user}">
             <div class="text-white"><b><c:out value="${sessionScope.user.role}: ${sessionScope.user.email} "/></b><br>
-                <a href="${pageContext.request.contextPath}/controller?command=edit_profile"
+                <a href="${pageContext.request.contextPath}/controller?command=go_to_update_profile"
                    class="text-muted">  <fmt:message key="user.edit"/></a>
                 <p><a href="${pageContext.request.contextPath}/controller?command=sign_out"
                       class="text-muted"><fmt:message key="user.sign_out"/></a></p></div>
@@ -82,6 +82,7 @@
                                 <jsp:include page="${sessionScope.role}.jsp"/>
                             </td>
                             <td align="center">
+                                <c:if test="${not empty add_order_message}"><p class="text-muted"><fmt:message key="${add_order_message}"/></p><br></c:if>
                     <h1 class="fw-light"><fmt:message key="title2"/></h1>
                     <p class="lead text-muted"><fmt:message key="title3"/></p>
                     <p>

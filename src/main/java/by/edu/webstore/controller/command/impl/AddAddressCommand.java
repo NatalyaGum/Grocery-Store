@@ -31,11 +31,12 @@ public class AddAddressCommand implements Command {
         session.removeAttribute(ParameterAndAttribute.MESSAGE);
         User user = (User) session.getAttribute(ParameterAndAttribute.USER);
         Map<String, String> addressData = new HashMap<>();
+        addressData.put(ParameterAndAttribute.USER_ID,Long.toString(user.getUserId()));
         addressData.put(ParameterAndAttribute.STREET, request.getParameter(ParameterAndAttribute.STREET));
         addressData.put(ParameterAndAttribute.BUILDING, request.getParameter(ParameterAndAttribute.BUILDING));
         if(!request.getParameter(ParameterAndAttribute.APARTMENT).equals("")){
         addressData.put(ParameterAndAttribute.APARTMENT, request.getParameter(ParameterAndAttribute.APARTMENT));}
-        if(!request.getParameter(ParameterAndAttribute.COMMENT).equals("Notation")){
+        if(!request.getParameter(ParameterAndAttribute.COMMENT).equals("")){
         addressData.put(ParameterAndAttribute.COMMENT, request.getParameter(ParameterAndAttribute.COMMENT));}
         long id;
         Router router;

@@ -5,23 +5,17 @@ import by.edu.webstore.dao.*;
 import by.edu.webstore.entity.Address;
 import by.edu.webstore.entity.Order;
 import by.edu.webstore.entity.Product;
-import by.edu.webstore.entity.ProductType;
 import by.edu.webstore.exception.DaoException;
 import by.edu.webstore.exception.ServiceException;
 import by.edu.webstore.service.OrderService;
 import by.edu.webstore.util.validator.AddressValidator;
-import by.edu.webstore.util.validator.ProductValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static by.edu.webstore.controller.command.ParameterAndAttribute.*;
 
 public class OrderServiceImpl implements OrderService {
     static Logger logger = LogManager.getLogger();
@@ -47,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
                     apartmentNumber,
                     comment);
             try {
-                result = addressDao.insertNewAddress(address) ;
+                result = addressDao.insertNewAddress(address,Long.valueOf(addressData.get(ParameterAndAttribute.USER_ID))) ;
             } catch (DaoException e) {
                 logger.error("Address cannot be added:", e);
                 throw new ServiceException("Address cannot be added:", e);
@@ -90,9 +84,19 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    public int findTotalOrdersNumber(long user_id) throws ServiceException {
+    public int findTotalOrdersNumberOfUser(long user_id) throws ServiceException {
         try {
-            return orderDao.findTotalOrdersNumber(user_id);
+            return orderDao.findTotalOrdersNumberOfUser(user_id);
+        } catch (DaoException e) {
+            logger.error("product cannot be found:", e);
+            throw new ServiceException("Products cannot be found:", e);
+
+        }
+    }
+
+    public List<Order> findAllOrders(int offset, int limit) throws ServiceException {
+        try {
+            return orderDao.findAllOrders(offset, limit);
         } catch (DaoException e) {
             logger.error("product cannot be found:", e);
             throw new ServiceException("Products cannot be found:", e);
@@ -101,6 +105,25 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+    public int findTotalOrdersNumber() throws ServiceException {
+        try {
+            return orderDao.findTotalOrdersNumber();
+        } catch (DaoException e) {
+            logger.error("orders cannot be found:", e);
+            throw new ServiceException("Orders cannot be found:", e);
+
+        }
+    }
+
+    public boolean updateOrderStatus(long orderId, String status)throws ServiceException {
+        try {
+            return orderDao.updateOrderStatus(orderId,status);
+        } catch (DaoException e) {
+            logger.error("Order cannot be updated:", e);
+            throw new ServiceException("Order cannot be updated:", e);
+
+        }
+    }
 }
 
 

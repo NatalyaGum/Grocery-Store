@@ -28,7 +28,7 @@
 
       <c:if test="${not empty sessionScope.user}">
         <div class="text-white"><b><c:out value="${sessionScope.user.role}: ${sessionScope.user.email} "/></b><br>
-          <fmt:message key="user.edit"/>
+          <a href="${pageContext.request.contextPath}/controller?command=go_to_update_profile" class="text-muted"><fmt:message key="user.edit"/></a>
           <p> <a href="${pageContext.request.contextPath}/controller?command=sign_out" class="text-muted"><fmt:message key="user.sign_out"/></a></p></div>
       </c:if>
 

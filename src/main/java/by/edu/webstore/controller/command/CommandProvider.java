@@ -35,7 +35,10 @@ public class CommandProvider {
         commands.put(CommandType.ADD_ADDRESS, new AddAddressCommand());
         commands.put(CommandType.CREATE_ORDER, new AddOrderCommand());
         commands.put(CommandType. GO_TO_ORDERS, new GoToOrdersCommand());
-
+        commands.put(CommandType.GO_TO_PRODUCT_TYPE, new GoToProductTypeCommand());
+        commands.put(CommandType.GO_TO_ORDERS_ADMIN, new GoToOrdersAdminCommand());
+        commands.put(CommandType.GO_TO_UPDATE_PROFILE, new GoToUpdateProfileCommand());
+        commands.put(CommandType.UPDATE_PROFILE, new UpdateProfileCommand());
     }
     private CommandProvider() {
     }

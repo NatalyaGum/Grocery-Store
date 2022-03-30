@@ -35,6 +35,7 @@ public class SecurityFilter implements Filter {
             GO_TO_AUTHORIZATION,
             SIGN_IN,
             ADD_TO_CARD,
+            GO_TO_PRODUCT_TYPE,
             SIGN_UP);
 
     private final EnumSet<CommandType> adminCommands = EnumSet.of(
@@ -49,6 +50,9 @@ public class SecurityFilter implements Filter {
             UPDATE_PICTURE,
             MODIFY_PRODUCT_TYPE,
             ADD_PRODUCT_TYPE,
+            GO_TO_ORDERS_ADMIN,
+            GO_TO_UPDATE_PROFILE,
+            UPDATE_PROFILE,
             GO_TO_PRODUCT_ADD);
 
     private final EnumSet<CommandType> clientCommands = EnumSet.of(
@@ -61,6 +65,9 @@ public class SecurityFilter implements Filter {
             ADD_TO_CARD,
             ADD_ADDRESS,
             CREATE_ORDER,
+            GO_TO_UPDATE_PROFILE,
+            GO_TO_PRODUCT_TYPE,
+            UPDATE_PROFILE,
             GO_TO_MAIN_PAGE);
 
     public void init(FilterConfig config) throws ServletException {

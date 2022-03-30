@@ -33,6 +33,7 @@ public final class ParameterAndAttribute {
     public static final String LANGUAGE = "language";
     public static final String LOCALE = "locale";
     public static final String PASSWORD = "password";
+    public static final String OLD_PASSWORD = "old_password";
     public static final String SURNAME = "surname";
     public static final String NAME = "name";
     public static final String EMAIL = "email";
@@ -63,6 +64,10 @@ public final class ParameterAndAttribute {
     public static final String COMMENT="comment";
     public static final String ADDRESS="address";
     public static final String ADDRESS_ID="address_id";
+    public static final String ORDERID ="orderId";
+    public static final String TYPE_ID="type";
+    public static final String ORDERSTATUS="order_status";
+
 
 
     // Session
@@ -71,6 +76,8 @@ public final class ParameterAndAttribute {
     public static final String MESSAGE_TYPE_PRODUCT = "message_type_product";
     public static final String MESSAGE_PICTURE = "message_picture";
     public static final String DATE = "date";
+    public static final String ORDERS="orders";
+    public static final String ADD_ORDER_MESSAGE="add_order_message";
 
 
 }

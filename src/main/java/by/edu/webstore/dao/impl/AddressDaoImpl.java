@@ -32,7 +32,7 @@ public class AddressDaoImpl implements AddressDao {
             WHERE users_user_id=?
             ORDER BY id_address DESC """;
 
-    private static final String INSERT_NEW_ADDRESS = "INSERT INTO addresses (street, building, apartment, comment) VALUES(?, ?, ?, ?)";
+    private static final String INSERT_NEW_ADDRESS = "INSERT INTO addresses (street, building, apartment, comment, users_user_id) VALUES(?, ?, ?, ?,?)";
 
     @Override
     public Optional<Address> findAddressById(long addressId) throws DaoException {
@@ -96,13 +96,14 @@ public class AddressDaoImpl implements AddressDao {
     }*/
 
     @Override
-    public long insertNewAddress(Address address) throws DaoException {
+    public long insertNewAddress(Address address, long user_id) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_NEW_ADDRESS, RETURN_GENERATED_KEYS)) {
             statement.setString(1, address.getStreetName());
             statement.setString(2, address.getBuildingNumber());
             statement.setInt(3, address.getApartmentNumber());
             statement.setString(4, address.getComment());
+            statement.setLong(5, user_id);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             long addressId = 0;

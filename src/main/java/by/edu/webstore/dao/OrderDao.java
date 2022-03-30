@@ -13,5 +13,8 @@ import java.util.Map;
 public interface OrderDao extends BaseDao<Order>{
     long insertNewOrder(Map<String, Object> orderData, HashMap<Product, Integer> productMap) throws DaoException;
     List<Order> findAllOrdersOfUser(long user_id, int offset, int limit) throws DaoException;
-    int findTotalOrdersNumber(long user_id) throws DaoException;
+    int findTotalOrdersNumberOfUser(long user_id) throws DaoException;
+    int findTotalOrdersNumber() throws DaoException;
+    List<Order> findAllOrders(int offset, int limit) throws DaoException;
+    boolean updateOrderStatus(long orderId, String orderStatus ) throws DaoException;
 }

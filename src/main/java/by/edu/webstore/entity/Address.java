@@ -78,7 +78,7 @@ public class Address extends AbstractEntity {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Г.Минск");
+        final StringBuilder sb = new StringBuilder("Г. Минск");
         sb.append(", ул. ").append(streetName);
         sb.append(", д. ").append(buildingNumber);
         sb.append(", кв. ").append(apartmentNumber);

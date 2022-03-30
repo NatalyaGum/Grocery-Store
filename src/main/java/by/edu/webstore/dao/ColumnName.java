@@ -39,10 +39,10 @@ public class ColumnName {
     public static final String ORDER_METHOD = "orders.payment_method";
     public static final String ORDER_DATE = "orders.date";
     public static final String ORDER_USER_ID = "orders.users_user_id";
-    public static final String ORDER_ADDRESS_ID ="orders.delivery_address_id";
+    public static final String ORDER_ADDRESS_ID ="delivery_address_id";
     /* purchases table */
     public static final String PURCHASES_ID_ORDER = "purchases.id_order";
-    public static final String PURCHASES_ID_PRODUCT = "purchases.id_product";
+    public static final String PURCHASES_ID_PRODUCT = "products_id_product";
     public static final String PURCHASES_QUANTITY = "purchases.quantity";
     /* payment cards table */
     public static final String CARD_ID = "payment_cards.id_card";

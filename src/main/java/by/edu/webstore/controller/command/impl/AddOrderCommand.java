@@ -26,7 +26,7 @@ public class AddOrderCommand implements Command {
         static Logger logger = LogManager.getLogger();
         private static final OrderService orderService = ServiceProvider.getInstance().getOrderService();
         private static final String ADD_ADDRESS_ERROR_MESSAGE_KEY = "error.add_address";
-        private static final String ADD_PRODUCT_CONFIRM_MESSAGE_KEY = "confirm.product_add";
+        private static final String ADD_ORDER_CONFIRM_MESSAGE_KEY = "confirm.order_add";
 
         @Override
         public Router execute(HttpServletRequest request) throws CommandException {
@@ -42,12 +42,15 @@ public class AddOrderCommand implements Command {
             Router router;
             try {
                 orderId = orderService.insertNewOrder(orderData, productMap);
-                router= new Router(PagePath.ORDER_PAGE, Router.RouterType.FORWARD);
+                session.removeAttribute(PRODUCT_MAP);
+                session.removeAttribute(CARD);
+                request.setAttribute(ParameterAndAttribute.ADD_ORDER_MESSAGE,ADD_ORDER_CONFIRM_MESSAGE_KEY);
+                router= new Router(PagePath.MAIN_PAGE, Router.RouterType.FORWARD);
             } catch (ServiceException e) {
                 logger.error("Impossible to add new address:", e);
                 throw new CommandException("Impossible to add new address:", e);
             }
-            try {
+            /*try {
                 List<Address> addresses = orderService.findUserAddresses(user.getUserId());
                 if (addresses.size() > 0) {
                    session.setAttribute(ParameterAndAttribute.ADDRESSES_LIST, addresses);
@@ -55,6 +58,6 @@ public class AddOrderCommand implements Command {
             } catch (ServiceException e) {
                 logger.error("Impossible to find addresses:", e);
                 throw new CommandException("Impossible to find addresses:", e);
-            }return router;
+            }*/return router;
         }
     }

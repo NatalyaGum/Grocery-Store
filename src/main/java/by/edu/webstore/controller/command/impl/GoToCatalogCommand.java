@@ -37,7 +37,6 @@ public class GoToCatalogCommand implements Command {
         if (request.getParameter(PAGE) != null) {
             page = Integer.parseInt(request.getParameter(PAGE));
         }
-        // HttpSession session = request.getSession();
         try {
             List<Product> products = productService.findAllProducts((page - 1) * recordsPerPage, recordsPerPage);
             int totalProductNumber = productService.getTotalProductNumber();
