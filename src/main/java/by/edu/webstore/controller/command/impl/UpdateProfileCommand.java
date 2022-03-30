@@ -29,7 +29,6 @@ public class UpdateProfileCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        Router router = new Router(PagePath.UPDATE_PROFILE, Router.RouterType.FORWARD);
         if (checkPassword(request)) {
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute(USER);
@@ -51,7 +50,6 @@ public class UpdateProfileCommand implements Command {
                 }}
                 Optional<User> optionalUser = service.updateUser(userData);
                 if (optionalUser.isPresent()) {
-                    //session.setAttribute(ParameterAndAttribute.MESSAGE, SIGN_UP_CONFIRM_MESSAGE_KEY);
                     session.setAttribute(USER, optionalUser.get());
                     session.setAttribute(ROLE, optionalUser.get().getRole().toString());
                     session.setAttribute(ParameterAndAttribute.MESSAGE, UPDATE_PROFILE_MESSAGE_KEY);
@@ -66,7 +64,7 @@ public class UpdateProfileCommand implements Command {
                 return new Router(PagePath.ERROR_404, Router.RouterType.REDIRECT);
             }
         }
-        return router;
+        return new Router(PagePath.UPDATE_PROFILE, Router.RouterType.FORWARD);
     }
 
 
