@@ -25,11 +25,13 @@ public class GoToProductTypeCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
+        session.removeAttribute(PAGES_NUMBER);
+        session.removeAttribute(PAGE_NUMBER);
         int type_id=Integer.parseInt(request.getParameter(TYPE_ID));
         try {
             List<Product> products = productService.findTypeOfProducts(type_id);
             session.setAttribute(PRODUCTS_LIST, products);
-            return new Router(PagePath.CATALOG, Router.RouterType.FORWARD);
+            return new Router(PagePath.CATALOG_BY_TYPE, Router.RouterType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Impossible to find products:", e);
             throw new CommandException("Impossible to find products:", e);

@@ -17,7 +17,7 @@ public class User extends AbstractEntity {
 
     public enum Status {ACTIVE, BLOCKED}
 
-    private long UserId;
+    private long userId;
     private String email;
     private String password;
     private String name;
@@ -27,8 +27,8 @@ public class User extends AbstractEntity {
     private Status status;
 
 
-    public User(long UserId, String email, String password, String name, String surname, String phone, Role role, Status status) {
-        this.UserId = UserId;
+    public User(long userId, String email, String password, String name, String surname, String phone, Role role, Status status) {
+        this.userId = userId;
         this.email = email;
         this.password = password;
         this.name = name;
@@ -52,11 +52,11 @@ public class User extends AbstractEntity {
     }
 
     public long getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(long userId) {
-        this.UserId = userId;
+        this.userId = userId;
     }
 
     public String getEmail() {
@@ -120,7 +120,7 @@ public class User extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return UserId == user.UserId &&
+        return userId == user.userId &&
                 (email != null ? email.equalsIgnoreCase(user.email) : user.email == null) &&
                 (password != null ? password.equals(user.password) : user.password == null) &&
                 (name != null ? name.equals(user.name) : user.name == null) &&
@@ -135,7 +135,7 @@ public class User extends AbstractEntity {
     public int hashCode() {
         int first = 31;
         int result = 1;
-        result = result * first + (int) UserId;
+        result = result * first + (int) userId;
         result = result * first + (email != null ? email.hashCode() : 0);
         result = result * first + (password != null ? password.hashCode() : 0);
         result = result * first + (name != null ? name.hashCode() : 0);
@@ -150,7 +150,7 @@ public class User extends AbstractEntity {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("User{ ");
-        builder.append("userId=").append(UserId);
+        builder.append("userId=").append(userId);
         builder.append(", email=").append(email);
         builder.append(", password='").append(password);
         builder.append(", name=").append(name);

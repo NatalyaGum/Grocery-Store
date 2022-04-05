@@ -49,65 +49,38 @@
       </td>
       <td>
 
+        <c:if test="${not empty message}"> <b> <h2><fmt:message key="${message}"/></h2></b><br>  </c:if>
 
-            <h3 class="fw-light"><fmt:message key="add_product"/></h3>
-            <fieldset>
-              <form action="${pageContext.request.contextPath}/controller?command=add_product" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="command" value="add_product"/><br>
-                <input type="text" name="title" title=<fmt:message key="add_product.title.placeholder"/> value="<c:out value="${requestScope.product.title}"/>" required placeholder=<fmt:message key="add_product.title.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?""%()\s]{2,100}" class="form-control input-lg"/><br>
-                <TEXTAREA name="description" value="<c:out value="${requestScope.product.description}"/>" required title=<fmt:message key="add_product.description.placeholder"/> pattern=".{10,500}" class="form-control input-lg"/><fmt:message key="add_product.description.placeholder"/></TEXTAREA><br>
-                <input type="text" name="manufacture" value="<c:out value="${requestScope.product.manufacture}"/>" required title=<fmt:message key="add_product.manufacture.placeholder"/> placeholder=<fmt:message key="add_product.manufacture.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?%()\s]{3,45}" class="form-control input-lg"/><br>
-                <fmt:message key="add_product.type.placeholder"/><br>
-                <select name="type"  class="form-select" required placeholder=<fmt:message key="add_product.type.placeholder"/>>
-                  <c:forEach var="element" items="${product_types_list}">
-                    <option value="${element.productTypeName}">${element.productTypeName}</option>
-                  </c:forEach>
-                </select><br><br>
-                <input type="text" name="price" title="<fmt:message key="add_product.price.placeholder"/>" value="<c:out value="${requestScope.product.price}"/>" required placeholder="<fmt:message key="add_product.price.placeholder"/>" pattern="\d{1,5}\.\d{1,2}" class="form-control input-lg"/><br>
-                <input type="file" name="image" title=<fmt:message key="add_product.image.placeholder"/> value="<c:out value="${requestScope.product.image}"/>" required placeholder=<fmt:message key="add_product.image.placeholder"/> pattern="([^s]+(.(?i)(jpg|png|gif|bmp))$)" class="form-control input-lg"/><br>
-                <c:if test="${not empty message}"> <p><fmt:message key="${message}"/> ${productId}</p>  </c:if>
-                <input type="submit"  value=<fmt:message key="add_product.add"/> >
-              </form>
             </fieldset>
-            <h3 class="fw-light"><fmt:message key="add_product.find_product_title"/></h3>
+            <h3 class="fw-light"><fmt:message key="user.block_by_email"/></h3>
             <fieldset>
-              <form action="${pageContext.request.contextPath}/controller?command=go_to_edit_product" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="command" value="go_to_edit_product"/><br>
-                <input type="text" name="product_id" value="${productId}" required placeholder=<fmt:message key="add_product.edit_product.placeholder"/> title=<fmt:message key="add_product.edit_product.placeholder"/>  pattern="\d{1,6}\" class="form-control input-lg"/><br>
-                <input type="submit"  value=<fmt:message key="add_product.find"/> >
+              <form action="${pageContext.request.contextPath}/controller?command=go_to_user_maintenance" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="command" value="block_user"/><br>
+                <input type="email" name="block_email" required  title="<fmt:message key="sign_up.email.title"/>: *****@***.**"  pattern="(([A-Za-z\d._]+){5,25}@([A-Za-z]+){3,10}\.([a-z]+){2,3})"/><br><br>
+                <input type="submit"  value=<fmt:message key="user.block_by_email"/> >
               </form>
             </fieldset>
 
 
     <br><br>
 
-
-      <h3 class="fw-light"><fmt:message key="add_product_type"/></h3>
+      <h3 class="fw-light"><fmt:message key="user.make_admin"/></h3>
       <fieldset>
-        <form action="${pageContext.request.contextPath}/controller?command=add_product_type" method="post" enctype="multipart/form-data">
-          <input type="hidden" name="command" value="add_product_type"/><br>
-          <input type="text" name="product_type" value="<c:out value="${requestScope.product_type_add}"/>"  required placeholder=<fmt:message key="add_product_type.placeholder"/>  title= <fmt:message key="add_product_type.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?%()\s]{3,45}" class="form-control input-lg"/><br>
-          <c:if test="${not empty message_product_type}"> <p><fmt:message key="${message_product_type}"/></p>  </c:if>
-          <input type="submit"  value=<fmt:message key="add_product.add"/> >
+        <form action="${pageContext.request.contextPath}/controller?command=go_to_user_maintenance" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="command" value="make_admin"/><br>
+          <input type="email" name="admin_email" required  title="<fmt:message key="sign_up.email.title"/>: *****@***.**"  pattern="(([A-Za-z\d._]+){5,25}@([A-Za-z]+){3,10}\.([a-z]+){2,3})"/><br><br>
+
+          <input type="submit"  value=<fmt:message key="user.grant_permission"/> >
         </form>
       </fieldset>
 
-
-      <fieldset>
-        <form action="${pageContext.request.contextPath}/controller?command=modify_product_type" method="post" enctype="multipart/form-data">
-          <input type="hidden" name="command" value="modify_product_type"/>
-          <fmt:message key="add_product.type.placeholder"/><br>
-          <select name="delete_type_name"  class="form-select" required placeholder=<fmt:message key="add_product.type.placeholder"/>>
-            <c:forEach var="element" items="${product_types_list}">
-              <option value="${element.productTypeName}">${element.productTypeName}</option>
-            </c:forEach>
-          </select><br>
-          <input type="text" name="modify_type_name" value="<c:out value="${requestScope.product_type_modify}"/>" placeholder=<fmt:message key="product_type.placeholder"/> title=<fmt:message key="product_type.placeholder"/> pattern="[A-Za-zА-Яа-я-,.!?%()\s]{3,45}" class="form-control input-lg"/>
-          <c:if test="${not empty message_type_product}"> <p><fmt:message key="${message_type_product}"/></p>  </c:if><br>
-          <input type="submit"  value=<fmt:message key="product_type.modify"/> >
-        </form>
-      </fieldset>
-
+        <br><br>
+        <h3 class="fw-light"><fmt:message key="user.list"/></h3>
+        <c:forEach var="element" items="${users_list}">
+        ID:${element.userId} Name: ${element.name} Surname: ${element.surname} Phone: ${element.phone} Email: ${element.email}
+         <br> ${element.role} ${element.status}
+          <hr>
+        </c:forEach>
       </td></tr> </table>
 
 

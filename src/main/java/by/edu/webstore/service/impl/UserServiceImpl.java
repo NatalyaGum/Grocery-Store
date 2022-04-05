@@ -83,7 +83,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public Optional<User> findUser(String email, String password) throws ServiceException {
-
         try {
             if (UserValidator.getInstance().checkEmail(email) && UserValidator.getInstance().checkPassword(password)) {
                 Optional<User> user = userDao.findUserByEmailAndPassword(email,PasswordEncoder.pasEncode(password));
@@ -109,11 +108,41 @@ public class UserServiceImpl implements UserService {
             try {
                 userDao.updateUser(user);
                 userOptional = userDao.findUserById(Long.valueOf(userData.get(USER_ID)));
+
             } catch (DaoException e) {
                 logger.error("Error has occurred while registering user: " + e);
                 throw new ServiceException("Error has occurred while registering user: ", e);
             }
         }
         return userOptional;
+    }
+
+
+
+    public boolean blockUser(String email) throws ServiceException {
+        boolean flag= false;
+        try {
+            if (UserValidator.getInstance().checkEmail(email)) {
+               if(userDao.updateUserStatusByEmail(email)){
+                   flag= true;}}
+        } catch (DaoException exception) {
+            logger.error("Error has occurred while blocking of user with email \"{}\": {}", email, exception);
+            throw new ServiceException("Error has occurred while blocking of user with email \"" + email + "\": ", exception);
+        }
+       return flag;
+    }
+
+
+    public boolean makeAdmin(String email) throws ServiceException {
+        boolean flag= false;
+        try {
+            if (UserValidator.getInstance().checkEmail(email)) {
+                if(userDao.makeAdmin(email)){
+                    flag= true;}}
+        } catch (DaoException exception) {
+            logger.error("Error has occurred while creating admin with email \"{}\": {}", email, exception);
+            throw new ServiceException("Error has occurred while creating admin with email \"" + email + "\": ", exception);
+        }
+        return flag;
     }
 }

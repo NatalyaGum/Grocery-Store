@@ -29,6 +29,7 @@ public enum CommandType {
     GO_TO_PRODUCT_TYPE ("go_to_product_type"),
     GO_TO_ORDERS_ADMIN("go_to_orders_admin"),
     GO_TO_UPDATE_PROFILE("go_to_update_profile"),
+    GO_TO_USER_MAINTENANCE("go_to_user_maintenance"),
     UPDATE_PROFILE("update_profile"),
     CREATE_ORDER("create_order");
 

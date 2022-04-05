@@ -29,5 +29,6 @@ public interface UserDao extends BaseDao<User> {
     Optional<User> findUserById(long id) throws DaoException;
     long insertNewUser(User user) throws DaoException;
     boolean updateUser(User user) throws  DaoException;
-
+    boolean updateUserStatusByEmail(String email) throws  DaoException;
+    boolean makeAdmin(String email) throws  DaoException;
 }

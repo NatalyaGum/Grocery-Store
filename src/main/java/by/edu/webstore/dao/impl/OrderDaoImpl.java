@@ -288,7 +288,7 @@ public class OrderDaoImpl implements OrderDao {
         }
     }
     public int findTotalOrdersNumber() throws DaoException {
-        int result = 0;
+       // int result = 0;
         try (Connection connection = connectionPool.getConnection();
              Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(FIND_TOTAL_ORDERS_NUMBER)) {

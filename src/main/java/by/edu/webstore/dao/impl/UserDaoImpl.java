@@ -2,6 +2,7 @@ package by.edu.webstore.dao.impl;
 
 import by.edu.webstore.connection.ConnectionPool;
 import by.edu.webstore.dao.UserDao;
+import by.edu.webstore.entity.Product;
 import by.edu.webstore.entity.User;
 import by.edu.webstore.exception.ConnectionPoolException;
 import by.edu.webstore.exception.DaoException;
@@ -34,8 +35,9 @@ public class UserDaoImpl implements UserDao {
             SELECT id_user, name, surname, email, password, phone, role, status FROM users status WHERE email=? AND password=?""";
     private static final String FIND_ALL_USERS = """
             SELECT id_user, name, surname, email, password, phone, role, status FROM users""";
-
+    private static final String UPDATE_USER_ROLE_BY_EMAIL="UPDATE users SET role=? WHERE email=?";
     private static final String UPDATE_USER_STATUS_BY_USER_ID = "UPDATE users SET status=? WHERE id_user=?";
+    private static final String UPDATE_USER_STATUS_BY_EMAIL = "UPDATE users SET status=? WHERE email=?";
     private static final String UPDATE_USER = "UPDATE users SET name=?, surname=?, email=?, password=?, phone=?  WHERE id_user=?";
     private static final String UPDATE_USER_NAME = "UPDATE users SET name=? WHERE id_user=?";
     private static final String UPDATE_USER_SURNAME = "UPDATE users SET surname=? WHERE id_user=?";
@@ -288,8 +290,38 @@ public class UserDaoImpl implements UserDao {
             }
         }
 
+    @Override
+    public boolean updateUserStatusByEmail(String email) throws  DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_USER_STATUS_BY_EMAIL)) {
+            statement.setString(1, "blocked");
+            statement.setString(2, email);
+            boolean result = statement.executeUpdate() == 1;
+            logger.info( "updateUserStatusByEmail method was completed successfully. User status with user email  "
+                    + email + " were updated to blocked status");
+            return result;
+        } catch (SQLException | ConnectionPoolException e) {
+            logger.error( "Impossible to update users statuses. Database access error:", e);
+            throw new DaoException("Impossible to update users statuses. Database access error:", e);
+        }
+    }
 
 
+    @Override
+    public boolean makeAdmin(String email) throws  DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_USER_ROLE_BY_EMAIL)) {
+            statement.setString(1, "admin");
+            statement.setString(2, email);
+            boolean result = statement.executeUpdate() == 1;
+            logger.info( "makeAdmin method was completed successfully. User role with user email  "
+                    + email + " were updated to admin");
+            return result;
+        } catch (SQLException | ConnectionPoolException e) {
+            logger.error( "Impossible to update user role. Database access error:", e);
+            throw new DaoException("Impossible to update user role. Database access error:", e);
+        }
+    }
 }
 
 

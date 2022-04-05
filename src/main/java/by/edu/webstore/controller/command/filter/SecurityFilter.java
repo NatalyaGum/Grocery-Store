@@ -53,6 +53,7 @@ public class SecurityFilter implements Filter {
             GO_TO_ORDERS_ADMIN,
             GO_TO_UPDATE_PROFILE,
             UPDATE_PROFILE,
+            GO_TO_USER_MAINTENANCE,
             GO_TO_PRODUCT_ADD);
 
     private final EnumSet<CommandType> clientCommands = EnumSet.of(

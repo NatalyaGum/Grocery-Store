@@ -49,16 +49,10 @@ public class UpdateProfileCommand implements Command {
                     return new Router(PagePath.UPDATE_PROFILE, Router.RouterType.FORWARD);
                 }}
                 Optional<User> optionalUser = service.updateUser(userData);
-                if (optionalUser.isPresent()) {
-                    session.setAttribute(USER, optionalUser.get());
-                    session.setAttribute(ROLE, optionalUser.get().getRole().toString());
-                    session.setAttribute(ParameterAndAttribute.MESSAGE, UPDATE_PROFILE_MESSAGE_KEY);
-                    return new Router(PagePath.UPDATE_PROFILE, Router.RouterType.REDIRECT);
-                } else {
-                    request.setAttribute(ParameterAndAttribute.USER, userData);
-                    request.setAttribute(ParameterAndAttribute.MESSAGE, UPDATE_ERROR_MESSAGE_KEY);
-                    return new Router(PagePath.UPDATE_PROFILE, Router.RouterType.FORWARD);
-                }
+                session.setAttribute(USER, optionalUser.get());
+                session.setAttribute(ROLE, optionalUser.get().getRole().toString());
+                session.setAttribute(ParameterAndAttribute.MESSAGE, UPDATE_PROFILE_MESSAGE_KEY);
+                return new Router(PagePath.UPDATE_PROFILE, Router.RouterType.REDIRECT);
             } catch (ServiceException e) {
                 logger.error("Error has occurred while signing up: " + e);
                 return new Router(PagePath.ERROR_404, Router.RouterType.REDIRECT);

@@ -67,8 +67,8 @@ public final class ParameterAndAttribute {
     public static final String ORDERID ="orderId";
     public static final String TYPE_ID="type";
     public static final String ORDERSTATUS="order_status";
-
-
+    public static final String BLOCK_EMAIL="block_email";
+    public static final String ADMIN_EMAIL="admin_email";
 
     // Session
     public static final String MESSAGE = "message";

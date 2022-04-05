@@ -39,6 +39,7 @@ public class CommandProvider {
         commands.put(CommandType.GO_TO_ORDERS_ADMIN, new GoToOrdersAdminCommand());
         commands.put(CommandType.GO_TO_UPDATE_PROFILE, new GoToUpdateProfileCommand());
         commands.put(CommandType.UPDATE_PROFILE, new UpdateProfileCommand());
+        commands.put(CommandType.GO_TO_USER_MAINTENANCE, new GoToUserMaintenanceCommand());
     }
     private CommandProvider() {
     }

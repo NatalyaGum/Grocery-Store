@@ -9,7 +9,7 @@
             <ul class="list-unstyled">
                 <li><a class="col-10 mb-1 small" href="${pageContext.request.contextPath}/controller?command=product_maintenance" class= "text-muted">&divonx;<fmt:message key="product.maintenance"/></a></li>
                 <li><a class="col-10 mb-1 small" href="${pageContext.request.contextPath}/controller?command=go_to_product_add" class= "text-muted">&divonx;<fmt:message key="add_product"/></a></li>
-                <li><a class="col-10 mb-1 small" href="${pageContext.request.contextPath}/controller?command=user_maintenance" class= "text-muted">&divonx;<fmt:message key="user.maintenance"/></a></li>
+                <li><a class="col-10 mb-1 small" href="${pageContext.request.contextPath}/controller?command=go_to_user_maintenance" class= "text-muted">&divonx;<fmt:message key="user.maintenance"/></a></li>
                 <li><a class="col-10 mb-1 small" href="${pageContext.request.contextPath}/controller?command=go_to_orders_admin" class= "text-muted">&divonx;<fmt:message key="order.maintenance"/></a></li>
                 <br>
                 <li><a class="col-10 mb-1 small" href="${pageContext.request.contextPath}/controller?command=go_to_update_profile" class="text-muted">&divonx;<fmt:message key="user.edit"/></a></li>
