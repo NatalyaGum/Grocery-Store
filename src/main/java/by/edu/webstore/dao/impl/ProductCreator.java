@@ -28,10 +28,9 @@ public class ProductCreator {
         product.setTitle(resultSet.getString(PRODUCTS_TITLE));
         product.setDescription(resultSet.getString(PRODUCTS_DESCRIPTION));
         product.setPrice(resultSet.getBigDecimal(PRODUCTS_PRICE));
-       // product.setImage(resultSet.getString(PRODUCTS_IMAGE));
         product.setPicture(ImageEncoder.encodeBlob(resultSet.getBlob(PRODUCTS_IMAGE)));
         product.setManufacture(resultSet.getString(PRODUCTS_MANUFACTURE));
-        product.setProductType( new ProductType(resultSet.getString(PRODUCT_TYPE)));
+        product.setProductType(new ProductType(resultSet.getString(PRODUCT_TYPE)));
         product.setActive(resultSet.getBoolean(PRODUCTS_ACTIVE));
         return product;
     }

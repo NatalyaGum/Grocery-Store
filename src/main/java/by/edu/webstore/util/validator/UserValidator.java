@@ -4,6 +4,10 @@ import java.util.Map;
 
 import static by.edu.webstore.controller.command.ParameterAndAttribute.*;
 
+/**
+ * {@code UserValidator} class implements functional  to validate input data
+ * for work with class {@link by.edu.webstore.entity.User}
+ */
 public class UserValidator {
     private static final String INCORRECT_VALUE_PARAMETER = " incorrect";
     private static final String EMAIL_REGEX = "(([\\p{Alpha}\\d._]+){5,25}@([\\p{Lower}]+){3,10}\\.([\\p{Lower}]+){2,3})";
@@ -39,20 +43,6 @@ public class UserValidator {
     public boolean checkNumber(String number) {
         return number != null && number.matches(NUMBER_REGEX);
     }
-
-
-   /* public boolean checkUserData(Map<String, String> userData) {
-        boolean isValid = true;
-        if (!checkEmail(userData.get(EMAIL))) {
-            userData.put(EMAIL, userData.get(EMAIL) + INCORRECT_VALUE_PARAMETER);
-            isValid = false;
-        }
-        if (!checkPassword(userData.get(PASSWORD))) {
-            userData.put(PASSWORD, userData.get(EMAIL) + INCORRECT_VALUE_PARAMETER);
-            isValid = false;
-        }
-        return isValid;
-    }*/
 
 
     public boolean checkUserPersonalData(Map<String, String> userData) {

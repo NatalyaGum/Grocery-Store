@@ -88,9 +88,9 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="post"
-                                          action="${pageContext.request.contextPath}/controller?command=go_to_catalog&page=${page_number}&productId=${product.productId}">
+                                          action="${pageContext.request.contextPath}/controller?command=go_to_product_type&productId=${product.productId}&type=${type}">
                                     <button type="submit" class="btn btn-sm btn-outline-secondary"><fmt:message key="product.buy"/> </button>
-                                    <input type="number" name="product_count" min="1" max="20" value="1" step="1" class="btn btn-sm btn-outline-secondary" ></input>
+                                    <input type="number" name="product_count" min="1" max="20" value="1" step="1" class="btn btn-sm btn-outline-secondary" />
                                     </form>
                                 </div>
                                 <small class="text-muted">#${product.productId}</small>

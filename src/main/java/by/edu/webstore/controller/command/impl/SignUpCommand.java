@@ -21,7 +21,6 @@ import static by.edu.webstore.controller.command.ParameterAndAttribute.*;
 
 public class SignUpCommand implements Command {
     static Logger logger = LogManager.getLogger();
-    //private static final String SIGN_UP_CONFIRM_MESSAGE_KEY = "confirm.sign_up";
     private static final String SIGN_UP_ERROR_MESSAGE_KEY = "error.sign_up";
     private static final String EMAIL_AVAILABILITY_ERROR_MESSAGE_KEY = "error.email_availability";
 
@@ -42,9 +41,9 @@ public class SignUpCommand implements Command {
                 request.setAttribute(ParameterAndAttribute.USER, userData);
                 request.setAttribute(ParameterAndAttribute.MESSAGE, EMAIL_AVAILABILITY_ERROR_MESSAGE_KEY);
                 return new Router(PagePath.REGISTRATION_PAGE, Router.RouterType.FORWARD);
-            }Optional<User> optionalUser =service.registerUser(userData);
+            }
+            Optional<User> optionalUser = service.registerUser(userData);
             if (optionalUser.isPresent()) {
-                //session.setAttribute(ParameterAndAttribute.MESSAGE, SIGN_UP_CONFIRM_MESSAGE_KEY);
                 session.setAttribute(USER, optionalUser.get());
                 session.setAttribute(ROLE, optionalUser.get().getRole().toString());
                 return new Router(PagePath.MAIN_PAGE, Router.RouterType.REDIRECT);

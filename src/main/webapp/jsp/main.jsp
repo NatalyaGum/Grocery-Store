@@ -82,11 +82,18 @@
                                 <jsp:include page="${sessionScope.role}.jsp"/>
                             </td>
                             <td align="center">
-                                <c:if test="${not empty add_order_message}"><p class="text-muted"><fmt:message key="${add_order_message}"/></p><br></c:if>
+                                <fieldset>
+                                    <form action="${pageContext.request.contextPath}/controller?command=search" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="command" value="search"/>
+                                        <input type="text" name="search_value" class="form-control form-control-dark" required pattern="[A-Za-zА-Яа-я-,.!?%()\s]{2,100}" placeholder=<fmt:message key="search.placeholder"/> title=<fmt:message key="search.placeholder"/>   />
+                                        <input type="submit"  class="btn btn-primary my-2" value=<fmt:message key="search"/>  >
+                                    </form>
+                                </fieldset>
+                                <c:if test="${not empty add_order_message}"><p class="text-muted"><fmt:message key="${add_order_message}"/> #${orderId} </p><br></c:if>
                     <h1 class="fw-light"><fmt:message key="title2"/></h1>
                     <p class="lead text-muted"><fmt:message key="title3"/></p>
                     <p>
-                        <a href="${pageContext.request.contextPath}/controller?command=go_to_catalog"
+                        <a id="catalog" href="${pageContext.request.contextPath}/controller?command=go_to_catalog"
                            class="btn btn-primary my-2"><fmt:message key="catalog.open"/></a>
                     </p>
                             </td>

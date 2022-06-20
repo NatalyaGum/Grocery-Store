@@ -2,6 +2,11 @@ package by.edu.webstore.entity;
 
 import java.math.BigDecimal;
 
+/**
+ * {@code Product} class represent a room
+ *
+ * @see AbstractEntity
+ */
 public class Product extends AbstractEntity {
     private long productId;
     private String title;
@@ -15,8 +20,8 @@ public class Product extends AbstractEntity {
     public Product() {
     }
 
-    public Product( String title,  String description, BigDecimal price,
-                    String manufacture, ProductType productType) {
+    public Product(String title, String description, BigDecimal price,
+                   String manufacture, ProductType productType) {
         this.title = title;
         this.description = description;
         this.price = price;
@@ -24,8 +29,8 @@ public class Product extends AbstractEntity {
         this.productType = productType;
     }
 
-    public Product( String title,  String description, BigDecimal price,
-                    String picture,String manufacture, ProductType productType) {
+    public Product(String title, String description, BigDecimal price,
+                   String picture, String manufacture, ProductType productType) {
         this.title = title;
         this.description = description;
         this.price = price;
@@ -34,7 +39,7 @@ public class Product extends AbstractEntity {
         this.productType = productType;
     }
 
-    public Product(long productId, String title,  String manufacture, String description,
+    public Product(long productId, String title, String manufacture, String description,
                    BigDecimal price, String picture, ProductType productType, boolean active) {
         this.productId = productId;
         this.title = title;
@@ -46,7 +51,7 @@ public class Product extends AbstractEntity {
         this.active = active;
     }
 
-    public Product(long productId, String title,  String manufacture, String description,
+    public Product(long productId, String title, String manufacture, String description,
                    BigDecimal price, ProductType productType, boolean active) {
         this.productId = productId;
         this.title = title;
@@ -163,7 +168,7 @@ public class Product extends AbstractEntity {
         result = result * first + (price != null ? price.hashCode() : 0);
         result = result * first + (picture != null ? picture.hashCode() : 0);
         result = result * first + (productType.hashCode() != 0 ? productType.hashCode() : 0);
-        result = result * first +Boolean.hashCode(active);
+        result = result * first + Boolean.hashCode(active);
         return result;
 
     }

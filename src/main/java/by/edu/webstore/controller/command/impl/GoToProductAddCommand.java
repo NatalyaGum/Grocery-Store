@@ -22,6 +22,7 @@ import static by.edu.webstore.controller.command.ParameterAndAttribute.*;
 public class GoToProductAddCommand implements Command {
     static Logger logger = LogManager.getLogger();
     ProductService service = ServiceProvider.getInstance().getProductService();
+
     @Override
     public Router execute(HttpServletRequest request) {
 
@@ -33,14 +34,11 @@ public class GoToProductAddCommand implements Command {
         try {
             List<ProductType> productTypes = service.findAllProductTypes();
             session.setAttribute(ParameterAndAttribute.PRODUCT_TYPES_LIST, productTypes);
-            // session.setAttribute(ParameterAndAttribute.CURRENT_PAGE, CurrentPageExtractor.extract(request));
             commandResult = new Router(PagePath.PRODUCT_ADD_PAGE, Router.RouterType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Try to execute GoToProductAddCommand was failed " + e);
             commandResult = new Router(PagePath.ERROR, Router.RouterType.FORWARD);
         }
         return commandResult;
-
-
     }
 }

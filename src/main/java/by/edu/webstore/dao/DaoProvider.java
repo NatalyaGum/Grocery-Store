@@ -5,6 +5,9 @@ import by.edu.webstore.dao.impl.ProductDaoImpl;
 import by.edu.webstore.dao.impl.AddressDaoImpl;
 import by.edu.webstore.dao.impl.UserDaoImpl;
 
+/**
+ * {@code DaoProvider} class hold and provide instance of all classes extends {@link BaseDao}
+ */
 
 public class DaoProvider {
     private static final DaoProvider instance = new DaoProvider();
@@ -16,10 +19,6 @@ public class DaoProvider {
 
     private DaoProvider() {
     }
-
-   /* private static class DaoProviderHolder {
-        private static final DaoProvider instance = new DaoProvider();
-    }*/
 
     public static DaoProvider getInstance() {
         return DaoProvider.instance;
@@ -36,6 +35,7 @@ public class DaoProvider {
     public OrderDao getOrderDao() {
         return orderDao;
     }
+
     public AddressDao getAddressDao() {
         return addressDao;
     }

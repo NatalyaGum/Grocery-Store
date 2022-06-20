@@ -34,11 +34,12 @@ public class AddProductTypeCommand implements Command {
         String productTypeData = request.getParameter(PRODUCT_TYPE);
         try {
 
-            if(productService.isTypeExist(productTypeData)) {
+            if (productService.isTypeExist(productTypeData)) {
                 request.setAttribute(PRODUCT_TYPE_ADD, productTypeData);
                 request.setAttribute(MESSAGE_TYPE, ADD_PRODUCT_ERROR_MESSAGE_KEY);
-                return new Router(PagePath.PRODUCT_ADD_PAGE, Router.RouterType.FORWARD);}
-            if(productService.insertNewProductType(productTypeData)){
+                return new Router(PagePath.PRODUCT_ADD_PAGE, Router.RouterType.FORWARD);
+            }
+            if (productService.insertNewProductType(productTypeData)) {
                 List<ProductType> productTypes = productService.findAllProductTypes();
                 session.setAttribute(PRODUCT_TYPES_LIST, productTypes);
                 session.setAttribute(MESSAGE_TYPE, ADD_PRODUCT_TYPE_CONFIRM_MESSAGE_KEY);
@@ -52,9 +53,6 @@ public class AddProductTypeCommand implements Command {
         } catch (ServiceException e) {
             logger.error("Impossible to create new product type:", e);
             throw new CommandException("Impossible to create product type:", e);
-
         }
-
-
     }
 }

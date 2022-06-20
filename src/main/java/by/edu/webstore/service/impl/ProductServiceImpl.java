@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
             BigDecimal price = BigDecimal.valueOf(Double.parseDouble(productData.get(ParameterAndAttribute.PRICE)));
             Product product = new Product(productData.get(ParameterAndAttribute.TITLE), productData.get(ParameterAndAttribute.DESCRIPTION), price, productData.get(ParameterAndAttribute.MANUFACTURE), new ProductType(productData.get(ParameterAndAttribute.TYPE)));
             try {
-                result = productDao.insertNewProduct(product, image) ;
+                result = productDao.insertNewProduct(product, image);
             } catch (DaoException e) {
                 logger.error("Product cannot be added:", e);
                 throw new ServiceException("Product cannot be added:", e);
@@ -91,9 +91,9 @@ public class ProductServiceImpl implements ProductService {
         boolean result = false;
         if (ProductValidator.getInstance().checkProductType(newProductType)) {
             try {
-                if(!productDao.isTypeExist(newProductType)){
-                result = productDao.modifyProductType(oldProductType, newProductType);}
-                else{
+                if (!productDao.isTypeExist(newProductType)) {
+                    result = productDao.modifyProductType(oldProductType, newProductType);
+                } else {
 
                 }
             } catch (DaoException e) {
@@ -121,7 +121,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    public int  getTotalProductNumber () throws ServiceException{
+    public int getTotalProductNumber() throws ServiceException {
         try {
             return productDao.findTotalProductsNumber();
         } catch (DaoException e) {
@@ -129,7 +129,7 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    public Optional<Product> getProductById (long id) throws ServiceException{
+    public Optional<Product> getProductById(long id) throws ServiceException {
         try {
             return productDao.findProductById(id);
         } catch (DaoException e) {
@@ -138,20 +138,35 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    public boolean  updateProduct(Map<String, String> productData, InputStream image) throws ServiceException {
+    public List<Product> searchProducts(String value) throws ServiceException {
+        List<Product> result = null;
+        if (ProductValidator.getInstance().checkProductValue(value)) {
+            try {
+
+                result = productDao.searchProducts(value);
+            } catch (DaoException e) {
+                logger.error("product cannot be found:", e);
+                throw new ServiceException("Products cannot be found:", e);
+            }
+        }
+        return result;
+    }
+
+
+    public boolean updateProduct(Map<String, String> productData, InputStream image) throws ServiceException {
         boolean result = false;
         if (ProductValidator.getInstance().checkProductData(productData, image)) {
             BigDecimal price = BigDecimal.valueOf(Double.parseDouble(productData.get(ParameterAndAttribute.PRICE)));
-            long id=Long.parseLong(productData.get(ParameterAndAttribute.PRODUCT_ID));
-            boolean status=Boolean.valueOf(productData.get(ParameterAndAttribute.ACTIVE));
-            Product product = new Product(id,productData.get(ParameterAndAttribute.TITLE),
+            long id = Long.parseLong(productData.get(ParameterAndAttribute.PRODUCT_ID));
+            boolean status = Boolean.valueOf(productData.get(ParameterAndAttribute.ACTIVE));
+            Product product = new Product(id, productData.get(ParameterAndAttribute.TITLE),
                     productData.get(ParameterAndAttribute.MANUFACTURE),
                     productData.get(ParameterAndAttribute.DESCRIPTION),
                     price,
                     new ProductType(productData.get(ParameterAndAttribute.TYPE)),
                     status);
             try {
-                result = productDao.updateProduct(product, image) ;
+                result = productDao.updateProduct(product, image);
             } catch (DaoException e) {
                 logger.error("Product cannot be added:", e);
                 throw new ServiceException("Product cannot be added:", e);
@@ -164,20 +179,20 @@ public class ProductServiceImpl implements ProductService {
         return result;
     }
 
-    public boolean  updateProduct(Map<String, String> productData) throws ServiceException {
+    public boolean updateProduct(Map<String, String> productData) throws ServiceException {
         boolean result = false;
         if (ProductValidator.getInstance().checkProductData(productData)) {
             BigDecimal price = BigDecimal.valueOf(Double.parseDouble(productData.get(ParameterAndAttribute.PRICE)));
-            long id=Long.parseLong(productData.get(ParameterAndAttribute.PRODUCT_ID));
-            boolean status=Boolean.valueOf(productData.get(ParameterAndAttribute.ACTIVE));
-            Product product = new Product(id,productData.get(ParameterAndAttribute.TITLE),
+            long id = Long.parseLong(productData.get(ParameterAndAttribute.PRODUCT_ID));
+            boolean status = Boolean.valueOf(productData.get(ParameterAndAttribute.ACTIVE));
+            Product product = new Product(id, productData.get(ParameterAndAttribute.TITLE),
                     productData.get(ParameterAndAttribute.MANUFACTURE),
                     productData.get(ParameterAndAttribute.DESCRIPTION),
                     price,
                     new ProductType(productData.get(ParameterAndAttribute.TYPE)),
                     status);
             try {
-                result = productDao.updateProduct(product) ;
+                result = productDao.updateProduct(product);
             } catch (DaoException e) {
                 logger.error("Product cannot be added:", e);
                 throw new ServiceException("Product cannot be added:", e);
@@ -191,10 +206,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    public boolean UpdateProductPicture(long id,InputStream image) throws ServiceException {
-    boolean result = false;
+    public boolean UpdateProductPicture(long id, InputStream image) throws ServiceException {
+        boolean result = false;
         try {
-            result = productDao.updateProductPicture(id, image) ;
+            result = productDao.updateProductPicture(id, image);
         } catch (DaoException e) {
             logger.error("Product cannot be added:", e);
             throw new ServiceException("Product cannot be added:", e);
@@ -202,9 +217,10 @@ public class ProductServiceImpl implements ProductService {
             logger.warn("Price parameter doesn't contain number");
         } catch (IllegalArgumentException e) {
             logger.warn("This enum type has no constant with the specified name");
-    }
+        }
         return result;
-}
+    }
+
     public boolean isTypeExist(String type) throws ServiceException {
         try {
             boolean foundEmail = productDao.isTypeExist(type);

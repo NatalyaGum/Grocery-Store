@@ -1,7 +1,15 @@
 package by.edu.webstore.entity;
 
-
+/**
+ * {@code User} class represent a user
+ *
+ * @see AbstractEntity
+ */
 public class User extends AbstractEntity {
+
+    /**
+     * {@code Role} enum represent a user role
+     */
     public enum Role {
         ADMIN("admin"), CLIENT("client"), GUEST("guest");
         private String role;
@@ -11,10 +19,13 @@ public class User extends AbstractEntity {
         }
 
         public String toString() {
-        return role;
+            return role;
         }
     }
 
+    /**
+     * {@code Status} enum represent a user status
+     */
     public enum Status {ACTIVE, BLOCKED}
 
     private long userId;

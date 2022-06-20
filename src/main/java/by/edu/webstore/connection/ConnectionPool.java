@@ -17,6 +17,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * {@code ConnectionPool} class represent thread-safe pool of connection to database
+ */
 public class ConnectionPool {
     static Logger logger = LogManager.getLogger();
     private static final String BUNDLE_NAME = "db";
@@ -55,7 +58,9 @@ public class ConnectionPool {
         }
     }
 
-
+    /**
+     * Constructor creates queue of free {@link ProxyConnection}
+     */
     private ConnectionPool() {
 
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
@@ -65,15 +70,20 @@ public class ConnectionPool {
                 freeConnections.add(proxyConnection);
             } catch (SQLException e) {
                 logger.error("Database access error, connection not received", e);
-            }}
-            if (freeConnections.isEmpty()|| freeConnections.size()<DEFAULT_POOL_SIZE) {
-                logger.fatal("Error: no connections were created");
-                throw new RuntimeException("Error: no connections were created");
             }
-            logger.info( "Connection pool was created");
         }
+        if (freeConnections.isEmpty() || freeConnections.size() < DEFAULT_POOL_SIZE) {
+            logger.fatal("Error: no connections were created");
+            throw new RuntimeException("Error: no connections were created");
+        }
+        logger.info("Connection pool was created");
+    }
 
-
+    /**
+     * {@code getInstance} method represent thread-safe singleton
+     *
+     * @return instance of {@link ConnectionPool}
+     */
     public static ConnectionPool getInstance() {
         if (!instanceIsExist.get()) {
             instanceLocker.lock();
@@ -88,6 +98,11 @@ public class ConnectionPool {
         return instance;
     }
 
+    /**
+     * {@code getConnection} method get free {@link Connection} from {@link ConnectionPool}
+     *
+     * @return free {@link Connection} from {@link ConnectionPool}
+     */
     public Connection getConnection() throws ConnectionPoolException {
         ProxyConnection connection;
         try {
@@ -101,6 +116,9 @@ public class ConnectionPool {
         return connection;
     }
 
+    /**
+     * {@code releaseConnection} method release {@link Connection} into {@link ConnectionPool}
+     */
     public boolean releaseConnection(Connection connection) {
         boolean isReleased = false;
         if (givenAwayConnections.remove(connection)) {
@@ -109,6 +127,9 @@ public class ConnectionPool {
         return isReleased;
     }
 
+    /**
+     * {@code destroyPool} method destroy {@link ConnectionPool}
+     */
     public void destroyPool() throws ConnectionPoolException {
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
@@ -138,7 +159,7 @@ public class ConnectionPool {
         }
     }
 
-   private static Connection createConnection() throws SQLException {
+    private static Connection createConnection() throws SQLException {
         return DriverManager.getConnection(DATABASE_URL, DATABASE_USER_NAME, DATABASE_PASSWORD);
     }
 }

@@ -28,10 +28,10 @@ public class ProductMaintenanceCommand implements Command {
         int page = 1;
         int recordsPerPage = 6;
         if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));}
-       // HttpSession session = request.getSession();
+            page = Integer.parseInt(request.getParameter("page"));
+        }
         try {
-            List<Product> products=productService.findAllProducts((page-1) * recordsPerPage, recordsPerPage);
+            List<Product> products = productService.findAllProducts((page - 1) * recordsPerPage, recordsPerPage);
             int totalProductNumber = productService.getTotalProductNumber();
             int pagesNumber = (int) Math.ceil(totalProductNumber * 1.0 / recordsPerPage);
             request.setAttribute(PAGES_NUMBER, pagesNumber);
@@ -39,7 +39,7 @@ public class ProductMaintenanceCommand implements Command {
             request.setAttribute(PRODUCTS_LIST, products);
             return new Router(PagePath.PRODUCT_MAINTENANCE, Router.RouterType.FORWARD);
         } catch (ServiceException e) {
-            logger.error( "Impossible to find products:", e);
+            logger.error("Impossible to find products:", e);
             throw new CommandException("Impossible to find products:", e);
         }
 

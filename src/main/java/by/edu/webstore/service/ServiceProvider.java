@@ -5,6 +5,9 @@ import by.edu.webstore.service.impl.OrderServiceImpl;
 import by.edu.webstore.service.impl.UserServiceImpl;
 import by.edu.webstore.service.impl.ProductServiceImpl;
 
+/**
+ * {@code ServiceProvider} class hold and provide instance of all service classes
+ */
 public final class ServiceProvider {
     private static final ServiceProvider instance = new ServiceProvider();
     private final UserService userService = new UserServiceImpl();

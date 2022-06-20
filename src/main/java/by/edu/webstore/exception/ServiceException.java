@@ -1,6 +1,11 @@
 package by.edu.webstore.exception;
 
-public class ServiceException extends Exception{
+/**
+ * {@code ServiceException} class represent a checked exception from {@link by.edu.webstore.service}
+ *
+ * @see Exception
+ */
+public class ServiceException extends Exception {
     public ServiceException() {
     }
 

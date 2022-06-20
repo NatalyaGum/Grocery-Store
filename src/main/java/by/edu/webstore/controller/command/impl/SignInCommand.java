@@ -29,12 +29,12 @@ public class SignInCommand implements Command {
         String password = request.getParameter(PASSWORD);
         try {
             Optional<User> optionalUser = service.findUser(email, password);
-            if (optionalUser.isPresent()&& optionalUser.get().getStatus() != User.Status.BLOCKED) {
-                    session.setAttribute(USER, optionalUser.get());
-                    session.setAttribute(ROLE, optionalUser.get().getRole().toString());
-                    session.removeAttribute(MESSAGE);
-                    return new Router(PagePath.MAIN_PAGE, Router.RouterType.REDIRECT);
-                } else {
+            if (optionalUser.isPresent() && optionalUser.get().getStatus() != User.Status.BLOCKED) {
+                session.setAttribute(USER, optionalUser.get());
+                session.setAttribute(ROLE, optionalUser.get().getRole().toString());
+                session.removeAttribute(MESSAGE);
+                return new Router(PagePath.MAIN_PAGE, Router.RouterType.REDIRECT);
+            } else {
                 request.setAttribute(USER_EMAIL, email);
                 request.setAttribute(MESSAGE, SIGN_IN_ERROR_MESSAGE_KEY);
                 return new Router(PagePath.MAIN_PAGE, Router.RouterType.FORWARD);

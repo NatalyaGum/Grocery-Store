@@ -17,7 +17,7 @@ class UserCreator {
         return instance;
     }
 
-     User createUser(ResultSet resultSet) throws SQLException {
+    User createUser(ResultSet resultSet) throws SQLException {
         User user = new User();
         user.setUserId(resultSet.getLong(USER_ID));
         user.setName(resultSet.getString(USER_NAME));
@@ -26,7 +26,7 @@ class UserCreator {
         user.setPassword(resultSet.getString(USER_PASSWORD));
         user.setPhone(resultSet.getString(USER_PHONE_NUMBER));
         user.setRole(User.Role.valueOf(resultSet.getString(USER_ROLE).toUpperCase()));
-         user.setStatus(User.Status.valueOf(resultSet.getString(USER_STATUS).toUpperCase()));
+        user.setStatus(User.Status.valueOf(resultSet.getString(USER_STATUS).toUpperCase()));
         return user;
     }
 }

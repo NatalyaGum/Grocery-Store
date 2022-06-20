@@ -1,6 +1,11 @@
 package by.edu.webstore.exception;
 
-public class DaoException extends Exception{
+/**
+ * {@code DaoException} class represent a checked exception from {@link by.edu.webstore.dao}
+ *
+ * @see Exception
+ */
+public class DaoException extends Exception {
     public DaoException() {
     }
 

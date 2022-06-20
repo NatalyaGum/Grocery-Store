@@ -19,9 +19,6 @@ import java.util.Map;
 
 public class OrderServiceImpl implements OrderService {
     static Logger logger = LogManager.getLogger();
-    private static final String INCORRECT_VALUE_PARAMETER = "incorrect";
-    private static final UserDao userDao = DaoProvider.getInstance().getUserDao();
-    private static final ProductDao productDao = DaoProvider.getInstance().getProductDao();
     private static final AddressDao addressDao = DaoProvider.getInstance().getAddressDao();
     private static final OrderDao orderDao = DaoProvider.getInstance().getOrderDao();
 
@@ -30,25 +27,30 @@ public class OrderServiceImpl implements OrderService {
         int apartmentNumber;
         String comment;
         if (AddressValidator.getInstance().checkAddressData(addressData)) {
-            if(addressData.containsKey(ParameterAndAttribute.APARTMENT)) {
-                apartmentNumber=Integer.parseInt(addressData.get(ParameterAndAttribute.APARTMENT));
-            }else{apartmentNumber=0;}
-            if(addressData.containsKey(ParameterAndAttribute.COMMENT)){
-                comment=addressData.get(ParameterAndAttribute.COMMENT);
-            }else{comment="NO COMMENTS";}
+            if (addressData.containsKey(ParameterAndAttribute.APARTMENT)) {
+                apartmentNumber = Integer.parseInt(addressData.get(ParameterAndAttribute.APARTMENT));
+            } else {
+                apartmentNumber = 0;
+            }
+            if (addressData.containsKey(ParameterAndAttribute.COMMENT)) {
+                comment = addressData.get(ParameterAndAttribute.COMMENT);
+            } else {
+                comment = "NO COMMENTS";
+            }
             Address address = new Address(addressData.get(ParameterAndAttribute.STREET),
                     addressData.get(ParameterAndAttribute.BUILDING),
                     apartmentNumber,
                     comment);
             try {
-                result = addressDao.insertNewAddress(address,Long.valueOf(addressData.get(ParameterAndAttribute.USER_ID))) ;
+                result = addressDao.insertNewAddress(address, Long.valueOf(addressData.get(ParameterAndAttribute.USER_ID)));
             } catch (DaoException e) {
                 logger.error("Address cannot be added:", e);
                 throw new ServiceException("Address cannot be added:", e);
-            }catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 logger.warn("Apartment parameter doesn't contain number");
+            }
         }
-    }  return result;
+        return result;
     }
 
     public List<Address> findUserAddresses(long userId) throws ServiceException {
@@ -60,23 +62,18 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    public long  insertNewOrder(Map<String, Object> orderData, HashMap<Product, Integer> productMap)throws ServiceException {
+    public long insertNewOrder(Map<String, Object> orderData, HashMap<Product, Integer> productMap) throws ServiceException {
         try {
             return orderDao.insertNewOrder(orderData, productMap);
-           /* Order order;
-            order.setProducts(productMap);
-            order.setOrderDate((LocalDateTime)orderData.get(DATE));
-            order.setCost(((BigDecimal)orderData.get(TOTAL)));
-           // order.setMethod();*/
         } catch (DaoException e) {
             logger.error("Order cannot be added:", e);
             throw new ServiceException("Order cannot be added:", e);
         }
     }
 
-    public List<Order> findAllOrdersOfUser(long user_id,int offset, int limit) throws ServiceException {
+    public List<Order> findAllOrdersOfUser(long user_id, int offset, int limit) throws ServiceException {
         try {
-            return orderDao.findAllOrdersOfUser(user_id,offset, limit);
+            return orderDao.findAllOrdersOfUser(user_id, offset, limit);
         } catch (DaoException e) {
             logger.error("product cannot be found:", e);
             throw new ServiceException("Products cannot be found:", e);
@@ -115,9 +112,9 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    public boolean updateOrderStatus(long orderId, String status)throws ServiceException {
+    public boolean updateOrderStatus(long orderId, String status) throws ServiceException {
         try {
-            return orderDao.updateOrderStatus(orderId,status);
+            return orderDao.updateOrderStatus(orderId, status);
         } catch (DaoException e) {
             logger.error("Order cannot be updated:", e);
             throw new ServiceException("Order cannot be updated:", e);

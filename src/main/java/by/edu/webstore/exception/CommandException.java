@@ -1,6 +1,11 @@
 package by.edu.webstore.exception;
 
-public class CommandException extends Exception{
+/**
+ * {@code CommandException} class represent a checked exception from {@link by.edu.webstore.controller.command}
+ *
+ * @see Exception
+ */
+public class CommandException extends Exception {
     public CommandException() {
     }
 

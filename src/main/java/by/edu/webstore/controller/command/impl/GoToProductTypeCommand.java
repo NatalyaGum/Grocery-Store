@@ -2,6 +2,7 @@ package by.edu.webstore.controller.command.impl;
 
 import by.edu.webstore.controller.command.Command;
 import by.edu.webstore.controller.command.PagePath;
+import by.edu.webstore.controller.command.ParameterAndAttribute;
 import by.edu.webstore.controller.command.Router;
 import by.edu.webstore.entity.Product;
 import by.edu.webstore.exception.CommandException;
@@ -13,7 +14,9 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static by.edu.webstore.controller.command.ParameterAndAttribute.*;
 
@@ -27,7 +30,11 @@ public class GoToProductTypeCommand implements Command {
         HttpSession session = request.getSession();
         session.removeAttribute(PAGES_NUMBER);
         session.removeAttribute(PAGE_NUMBER);
-        int type_id=Integer.parseInt(request.getParameter(TYPE_ID));
+        if (request.getParameter(PRODUCT_ID) != null) {
+            addToCardCommand(request);
+        }
+        int type_id = Integer.parseInt(request.getParameter(TYPE_ID));
+        session.setAttribute(TYPE_ID, type_id);
         try {
             List<Product> products = productService.findTypeOfProducts(type_id);
             session.setAttribute(PRODUCTS_LIST, products);
@@ -38,5 +45,30 @@ public class GoToProductTypeCommand implements Command {
         }
 
     }
+
+
+    void addToCardCommand(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        HashMap<Long, Integer> orderMap;
+        int countProductsInCard = 0;
+        Integer count = Integer.parseInt(request.getParameter(ParameterAndAttribute.PRODUCT_COUNT));
+        Long product_id = Long.parseLong(request.getParameter(ParameterAndAttribute.PRODUCT_ID));
+        if (session.getAttribute(ParameterAndAttribute.ORDER_MAP) == null) {
+            orderMap = new HashMap<>();
+        } else {
+            orderMap = (HashMap<Long, Integer>) session.getAttribute(ParameterAndAttribute.ORDER_MAP);
+        }
+        if (orderMap.containsKey(product_id)) {
+            count += orderMap.get(product_id);
+            orderMap.put(product_id, count);
+        } else {
+            orderMap.put(product_id, count);
+        }
+        for (Map.Entry entry : orderMap.entrySet()) {
+            countProductsInCard += (int) entry.getValue();
+        }
+        session.setAttribute(ParameterAndAttribute.ORDER_MAP, orderMap);
+        session.setAttribute(ParameterAndAttribute.CARD, countProductsInCard);
     }
+}
 

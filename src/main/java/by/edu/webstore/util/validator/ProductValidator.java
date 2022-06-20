@@ -5,7 +5,10 @@ import by.edu.webstore.controller.command.ParameterAndAttribute;
 import java.io.InputStream;
 import java.util.Map;
 
-
+/**
+ * {@code ProductValidator} class implements functional to validate input data
+ * for work with class {@link by.edu.webstore.entity.Product}
+ */
 public class ProductValidator {
     private static final String INCORRECT_VALUE_PARAMETER = " incorrect";
     private static final String TITLE_REGEX = "[A-Za-zА-Яа-я-,.!?\"%()\\s]{2,100}";
@@ -18,6 +21,7 @@ public class ProductValidator {
 
     private ProductValidator() {
     }
+
     public static ProductValidator getInstance() {
         return instance;
     }
@@ -70,8 +74,15 @@ public class ProductValidator {
 
     public boolean checkProductType(String productType) {
         boolean result = (productType.matches(PRODUCT_TYPE_REGEX));
-
         return result;
+    }
+
+    public boolean checkProductValue(String productData) {
+        boolean isValid = true;
+        if (!productData.matches(TITLE_REGEX)) {
+            isValid = false;
+        }
+        return isValid;
     }
 
 }

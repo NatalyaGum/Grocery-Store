@@ -10,7 +10,6 @@ import by.edu.webstore.service.ServiceProvider;
 import by.edu.webstore.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,17 +20,16 @@ import static by.edu.webstore.controller.command.Router.RouterType.FORWARD;
 
 public class FindAllUsersCommand implements Command {
     static Logger logger = LogManager.getLogger();
+
     @Override
     public Router execute(HttpServletRequest request) {
 
-        HttpSession session = request.getSession();
         UserService service = ServiceProvider.getInstance().getUserService();
 
         Router router = null;
         try {
             List<User> users = service.findAllEntities();
             request.setAttribute(ParameterAndAttribute.USERS_LIST, users);
-           // session.setAttribute(ParameterAndAttribute.CURRENT_PAGE, CurrentPageExtractor.extract(request));
             router = new Router(PagePath.SHOW_USERS_PAGE, FORWARD);
         } catch (ServiceException e) {
             logger.error("Try to execute FindAllRoomsCommand was failed " + e);
@@ -39,4 +37,4 @@ public class FindAllUsersCommand implements Command {
         }
         return router;
     }
-    }
+}

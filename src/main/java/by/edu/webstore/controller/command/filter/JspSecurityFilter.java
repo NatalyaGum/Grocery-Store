@@ -12,8 +12,10 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+
 import static by.edu.webstore.controller.command.PagePath.*;
 import static by.edu.webstore.controller.command.ParameterAndAttribute.*;
+
 /**
  * {@code JspSecurityFilter} class implements functional of {@link Filter}
  * Restricts access to the page depending on the user's role.
@@ -34,6 +36,7 @@ public class JspSecurityFilter implements Filter {
                 REGISTRATION_PAGE,
                 CATALOG_BY_TYPE,
                 ERROR,
+                SEARCH_BY_TITLE,
                 ERROR_404);
 
         clientPages = Set.of(
@@ -45,6 +48,7 @@ public class JspSecurityFilter implements Filter {
                 UPDATE_PROFILE,
                 CATALOG_BY_TYPE,
                 ERROR,
+                SEARCH_BY_TITLE,
                 ERROR_404);
 
         adminPages = Set.of(
@@ -58,6 +62,7 @@ public class JspSecurityFilter implements Filter {
                 USER_MAINTENANCE,
                 CATALOG_BY_TYPE,
                 ERROR,
+                SEARCH_BY_TITLE,
                 ERROR_404);
 
         allPages = new HashSet<>();
@@ -80,8 +85,7 @@ public class JspSecurityFilter implements Filter {
 
         if (isPageExist) {
             HttpSession session = request.getSession();
-            //User.Role role= User.Role.valueOf(session.getAttribute(ROLE).toString().toUpperCase());
-           User.Role role = session.getAttribute(ROLE) == null
+            User.Role role = session.getAttribute(ROLE) == null
                     ? User.Role.GUEST
                     : User.Role.valueOf(session.getAttribute(ROLE).toString().toUpperCase());
 
@@ -92,7 +96,6 @@ public class JspSecurityFilter implements Filter {
                         default -> guestPages.stream().anyMatch(requestURI::contains);
                     };
             if (!isAccept) {
-               // response.sendError(HttpServletResponse.SC_FORBIDDEN);
                 response.sendRedirect(request.getContextPath() + "/" + PagePath.MAIN_PAGE);
             }
         } else {
@@ -100,5 +103,5 @@ public class JspSecurityFilter implements Filter {
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
-    }
+}
 

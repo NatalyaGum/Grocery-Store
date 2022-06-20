@@ -1,11 +1,12 @@
 package by.edu.webstore.controller.command.listener;
 
 import by.edu.webstore.controller.command.PagePath;
+
 import static by.edu.webstore.controller.command.ParameterAndAttribute.*;
 
 import by.edu.webstore.entity.ProductType;
 import by.edu.webstore.entity.User;
-import by.edu.webstore.exception.CommandException;
+
 import by.edu.webstore.exception.ServiceException;
 import by.edu.webstore.service.ProductService;
 import by.edu.webstore.service.ServiceProvider;
@@ -14,11 +15,12 @@ import jakarta.servlet.annotation.WebListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * {@code HttpSessionListenerImpl} class implements functional of {@link HttpSessionListener}
+ */
 @WebListener
 public class HttpSessionListenerImpl implements HttpSessionListener {
     static Logger logger = LogManager.getLogger();
@@ -40,8 +42,8 @@ public class HttpSessionListenerImpl implements HttpSessionListener {
         session.setAttribute(LOCALE, DEFAULT_LOCALE);
         session.setAttribute(LANGUAGE, DEFAULT_LANGUAGE);
         session.setAttribute(ROLE, User.Role.GUEST.toString());
-        LocalDateTime dateTime=LocalDateTime.now();
+        LocalDateTime dateTime = LocalDateTime.now();
         session.setAttribute(DATE, dateTime);
-               //dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+
     }
 }

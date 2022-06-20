@@ -39,7 +39,7 @@ public class ProductDaoImpl implements ProductDao {
     private static final String FIND_ALL_PRODUCTS_BY_TYPE = """
             SELECT id_product, title, product_type.product_type, price, picture, description, manufacture FROM products
             JOIN product_type ON product_type.id_product_type=product_type_id WHERE active=1 AND product_type.product_type=?""";
-    private static final String FIND_ALL_PRODUCTS_BY_TYPE_ID= """
+    private static final String FIND_ALL_PRODUCTS_BY_TYPE_ID = """
             SELECT id_product, title, product_type.product_type, price, picture, manufacture, description, active FROM products
             JOIN product_type ON products.product_type_id=product_type.id_product_type WHERE active=1 AND product_type.id_product_type=? ORDER BY id_product DESC """;
     private static final String INSERT_NEW_PRODUCT = """
@@ -53,11 +53,14 @@ public class ProductDaoImpl implements ProductDao {
     private static final String MODIFY_PRODUCT_TYPE = "UPDATE product_type SET product_type=? WHERE product_type=?";
     private static final String REMOVE_PRODUCT_TYPE = "DELETE FROM product_type WHERE product_type=?";
     private static final String EMPTY_PRODUCT_TYPE = """
-    SELECT COUNT(product_type_id) FROM products JOIN product_type 
-    ON product_type.id_product_type=products.product_type_id WHERE product_type=?""";
-    private static final String FIND_TOTAL_PRODUCTS_NUMBER ="SELECT COUNT(id_product) FROM products";
-    private static final String UPDATE_PICTURE="UPDATE products SET picture=? WHERE id_product=?";
+            SELECT COUNT(product_type_id) FROM products JOIN product_type 
+            ON product_type.id_product_type=products.product_type_id WHERE product_type=?""";
+    private static final String FIND_TOTAL_PRODUCTS_NUMBER = "SELECT COUNT(id_product) FROM products";
+    private static final String UPDATE_PICTURE = "UPDATE products SET picture=? WHERE id_product=?";
     private static final String FIND_TYPE_BY_NAME = "SELECT id_product_type FROM product_type WHERE product_type=?";
+    private static final String SEARCH_PRODUCTS_BY_NAME = """
+            SELECT id_product, title, product_type.product_type, price, picture, manufacture, description, active FROM products
+            JOIN product_type ON product_type.id_product_type=products.product_type_id WHERE active=1 AND title LIKE CONCAT( '%',?,'%') """;
 
     public Optional<Product> findProductById(long id) throws DaoException {
         Optional<Product> productOptional = Optional.empty();
@@ -97,7 +100,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     public List<Product> findAllEntities(int offset, int limit) throws DaoException {
-     try (Connection connection = connectionPool.getConnection();
+        try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_PRODUCTS_PAGES)) {
             statement.setInt(1, offset);
             statement.setInt(2, limit);
@@ -114,9 +117,6 @@ public class ProductDaoImpl implements ProductDao {
             throw new DaoException("Impossible to find all products. Database error:", e);
         }
     }
-
-
-
 
 
     public long insertNewProduct(Product product, InputStream image) throws DaoException {
@@ -177,7 +177,7 @@ public class ProductDaoImpl implements ProductDao {
         }
     }
 
-    public List<Product> findProductsByType(int productTypeId ) throws DaoException {
+    public List<Product> findProductsByType(int productTypeId) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_PRODUCTS_BY_TYPE_ID)) {
             statement.setInt(1, productTypeId);
@@ -196,6 +196,24 @@ public class ProductDaoImpl implements ProductDao {
         }
     }
 
+    public List<Product> searchProducts(String value) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SEARCH_PRODUCTS_BY_NAME)) {
+            statement.setString(1, value);
+            ResultSet resultSet = statement.executeQuery();
+            List<Product> products = new ArrayList<>();
+            while (resultSet.next()) {
+                Product product = ProductCreator.getInstance().create(resultSet);
+                products.add(product);
+            }
+            logger.debug("findProductsByType method was completed successfully. " + products.size()
+                    + " products with name " + value + " were found");
+            return products;
+        } catch (SQLException | ConnectionPoolException e) {
+            logger.error("Impossible to find Products by type. Database error:", e);
+            throw new DaoException("Impossible to find Products by type. Database error:", e);
+        }
+    }
 
     public List<ProductType> findAllProductTypes() throws DaoException {
         try (Connection connection = connectionPool.getConnection();
@@ -265,7 +283,7 @@ public class ProductDaoImpl implements ProductDao {
 
     public boolean deleteProductType(String oldProductType) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(REMOVE_PRODUCT_TYPE)) {
+             PreparedStatement statement = connection.prepareStatement(REMOVE_PRODUCT_TYPE)) {
             statement.setString(1, oldProductType);
             boolean result = statement.executeUpdate() == 1;
             logger.info("deleteProductType method was completed successfully.");
@@ -277,28 +295,31 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     public boolean isEmptyType(String oldProductType) throws DaoException {
-        boolean result=false;
+        boolean result = false;
         try (Connection connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(EMPTY_PRODUCT_TYPE)) {
+             PreparedStatement statement = connection.prepareStatement(EMPTY_PRODUCT_TYPE)) {
             statement.setString(1, oldProductType);
             ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()){
-             result=resultSet.getInt(1)==0;}
+            while (resultSet.next()) {
+                result = resultSet.getInt(1) == 0;
+            }
             logger.info("isEmptyType method was completed successfully.");
 
         } catch (SQLException | ConnectionPoolException e) {
             logger.error("Impossible to check ProductType. Database  error:", e);
             throw new DaoException("Impossible to check ProductType. Database  error:", e);
-        }return result;
-}
-    public int findTotalProductsNumber () throws DaoException {
+        }
+        return result;
+    }
+
+    public int findTotalProductsNumber() throws DaoException {
         int result = 0;
         try (Connection connection = connectionPool.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(FIND_TOTAL_PRODUCTS_NUMBER)) {
-            int  productsNumber = 0;
+            int productsNumber = 0;
             while (resultSet.next()) {
-                productsNumber=resultSet.getInt(1);
+                productsNumber = resultSet.getInt(1);
             }
             logger.info("findTotalProductsNumber method was completed successfully. " + productsNumber + " All products were found");
             return productsNumber;
@@ -320,11 +341,12 @@ public class ProductDaoImpl implements ProductDao {
             statement.setString(6, product.getProductType().toString());
             statement.setBoolean(7, product.getActive());
             statement.setLong(8, product.getProductId());
-             result = statement.executeUpdate() == 1;
+            result = statement.executeUpdate() == 1;
         } catch (SQLException | ConnectionPoolException e) {
             logger.error("Impossible to insert product into database. Database error:", e);
             throw new DaoException("Impossible to insert product into database. Database error:", e);
-        }return result;
+        }
+        return result;
     }
 
     public boolean updateProduct(Product product) throws DaoException {
@@ -342,34 +364,37 @@ public class ProductDaoImpl implements ProductDao {
         } catch (SQLException | ConnectionPoolException e) {
             logger.error("Impossible to insert product into database. Database error:", e);
             throw new DaoException("Impossible to insert product into database. Database error:", e);
-        }return result;
+        }
+        return result;
     }
 
 
-    public boolean updateProductPicture(long id,InputStream image)throws DaoException{
-    boolean result = false;
+    public boolean updateProductPicture(long id, InputStream image) throws DaoException {
+        boolean result = false;
         try (Connection connection = connectionPool.getConnection();
-    PreparedStatement statement = connection.prepareStatement(UPDATE_PICTURE)) {
-        statement.setBlob(1, image);
-        statement.setLong(2, id);
-        result = statement.executeUpdate() == 1;
-    } catch (SQLException | ConnectionPoolException e) {
-        logger.error("Impossible to insert product into database. Database error:", e);
-        throw new DaoException("Impossible to insert product into database. Database error:", e);
-    }return result;
-}
+             PreparedStatement statement = connection.prepareStatement(UPDATE_PICTURE)) {
+            statement.setBlob(1, image);
+            statement.setLong(2, id);
+            result = statement.executeUpdate() == 1;
+        } catch (SQLException | ConnectionPoolException e) {
+            logger.error("Impossible to insert product into database. Database error:", e);
+            throw new DaoException("Impossible to insert product into database. Database error:", e);
+        }
+        return result;
+    }
 
 
-    public boolean isTypeExist(String productType) throws  DaoException {
+    public boolean isTypeExist(String productType) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_TYPE_BY_NAME)) {
             statement.setString(1, productType);
-            try (  ResultSet resultSet = statement.executeQuery()){
+            try (ResultSet resultSet = statement.executeQuery()) {
                 boolean result = resultSet.isBeforeFirst();
-                logger.debug( "isTypeExist method was completed successfully. Result: " + result);
+                logger.debug("isTypeExist method was completed successfully. Result: " + result);
                 return result;
-            }} catch (SQLException | ConnectionPoolException e) {
-            logger.error( "Impossible to check existence of product type. Database access error:", e);
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            logger.error("Impossible to check existence of product type. Database access error:", e);
             throw new DaoException("Impossible to check existence of product type. Database access error:", e);
         }
     }

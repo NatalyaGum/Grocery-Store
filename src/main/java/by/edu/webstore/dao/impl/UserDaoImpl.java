@@ -2,12 +2,12 @@ package by.edu.webstore.dao.impl;
 
 import by.edu.webstore.connection.ConnectionPool;
 import by.edu.webstore.dao.UserDao;
-import by.edu.webstore.entity.Product;
 import by.edu.webstore.entity.User;
 import by.edu.webstore.exception.ConnectionPoolException;
 import by.edu.webstore.exception.DaoException;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,7 +35,7 @@ public class UserDaoImpl implements UserDao {
             SELECT id_user, name, surname, email, password, phone, role, status FROM users status WHERE email=? AND password=?""";
     private static final String FIND_ALL_USERS = """
             SELECT id_user, name, surname, email, password, phone, role, status FROM users""";
-    private static final String UPDATE_USER_ROLE_BY_EMAIL="UPDATE users SET role=? WHERE email=?";
+    private static final String UPDATE_USER_ROLE_BY_EMAIL = "UPDATE users SET role=? WHERE email=?";
     private static final String UPDATE_USER_STATUS_BY_USER_ID = "UPDATE users SET status=? WHERE id_user=?";
     private static final String UPDATE_USER_STATUS_BY_EMAIL = "UPDATE users SET status=? WHERE email=?";
     private static final String UPDATE_USER = "UPDATE users SET name=?, surname=?, email=?, password=?, phone=?  WHERE id_user=?";
@@ -46,18 +46,18 @@ public class UserDaoImpl implements UserDao {
     private static final String UPDATE_USER_PASSWORD = "UPDATE users SET password=? WHERE id_user=?";
 
 
-
     public Optional<User> findUserById(long id) throws DaoException {
         Optional<User> userOptional = Optional.empty();
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_ID)) {
             statement.setLong(1, id);
-           try (ResultSet resultSet = statement.executeQuery()){
-            if (resultSet.next()) {
-                User user = UserCreator.getInstance().createUser(resultSet);
-                userOptional = Optional.of(user);
-            }}
-            logger.error("findEntityById method was completed successfully."
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    User user = UserCreator.getInstance().createUser(resultSet);
+                    userOptional = Optional.of(user);
+                }
+            }
+            logger.info("findEntityById method was completed successfully."
                     + ((userOptional.isPresent()) ? " User with id " + id + " was found" : " User with id " + id + " don't exist"));
             return userOptional;
         } catch (SQLException | ConnectionPoolException e) {
@@ -70,7 +70,7 @@ public class UserDaoImpl implements UserDao {
     public List<User> findAllEntities() throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(FIND_ALL_USERS)){
+             ResultSet resultSet = statement.executeQuery(FIND_ALL_USERS)) {
             List<User> users = new ArrayList<>();
             while (resultSet.next()) {
                 User user = UserCreator.getInstance().createUser(resultSet);
@@ -79,11 +79,10 @@ public class UserDaoImpl implements UserDao {
             logger.debug("findAllEntities method was completed successfully. " + users.size() + " were found");
             return users;
         } catch (SQLException | ConnectionPoolException e) {
-            logger.error( "Impossible to find users. Database access error:", e);
+            logger.error("Impossible to find users. Database access error:", e);
             throw new DaoException("Impossible to find users. Database access error:", e);
         }
     }
-
 
 
     public long insertNewUser(User user) throws DaoException {
@@ -97,23 +96,23 @@ public class UserDaoImpl implements UserDao {
             statement.setString(6, user.getRole().name().toLowerCase());
             statement.setString(7, user.getStatus().name().toLowerCase());
             statement.executeUpdate();
-            try ( ResultSet resultSet = statement.getGeneratedKeys()){
-            long userId = 0;
-            if (resultSet.next()) {
-                userId = resultSet.getLong(1);
-                logger.info("insertNewEntity method was completed successfully. User with id " + userId + " was added");
+            try (ResultSet resultSet = statement.getGeneratedKeys()) {
+                long userId = 0;
+                if (resultSet.next()) {
+                    userId = resultSet.getLong(1);
+                    logger.info("insertNewEntity method was completed successfully. User with id " + userId + " was added");
+                }
+                return userId;
             }
-            return userId;
-        }} catch (SQLException | ConnectionPoolException e) {
-            logger.error( "Impossible to insert new user into database. Database access error:", e);
+        } catch (SQLException | ConnectionPoolException e) {
+            logger.error("Impossible to insert new user into database. Database access error:", e);
             throw new DaoException("Impossible to insert new user into database. Database access error:", e);
         }
     }
 
 
-
     @Override
-    public boolean updateUserName(long userId, String firstName) throws  DaoException  {
+    public boolean updateUserName(long userId, String firstName) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_USER_NAME)) {
             statement.setString(1, firstName);
@@ -122,29 +121,29 @@ public class UserDaoImpl implements UserDao {
             logger.debug("Result of user first name update for user with id " + userId + " is " + result);
             return result;
         } catch (SQLException | ConnectionPoolException e) {
-            logger.error( "Impossible to update user first name. Database access error:", e);
+            logger.error("Impossible to update user first name. Database access error:", e);
             throw new DaoException("Impossible to update user first name. Database access error:", e);
         }
     }
 
 
     @Override
-    public boolean updateUserSurname(long userId, String lastName) throws  DaoException {
+    public boolean updateUserSurname(long userId, String lastName) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_USER_SURNAME)) {
             statement.setString(1, lastName);
             statement.setLong(2, userId);
-            boolean result = statement.executeUpdate() ==1;
+            boolean result = statement.executeUpdate() == 1;
             logger.debug("Result of user last name update for user with id " + userId + " is " + result);
             return result;
         } catch (SQLException | ConnectionPoolException e) {
-            logger.error( "Impossible to update user last name. Database access error:", e);
+            logger.error("Impossible to update user last name. Database access error:", e);
             throw new DaoException("Impossible to update user last name. Database access error:", e);
         }
     }
 
     @Override
-    public boolean updateUserPhone(long userId, String mobileNumber) throws  DaoException {
+    public boolean updateUserPhone(long userId, String mobileNumber) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_USER_MOBILE_NUMBER)) {
             statement.setString(1, mobileNumber);
@@ -153,13 +152,13 @@ public class UserDaoImpl implements UserDao {
             logger.info("Result of user mobile number update for user with id " + userId + " is " + result);
             return result;
         } catch (SQLException | ConnectionPoolException e) {
-            logger.error( "Impossible to update user mobile number. Database access error:", e);
+            logger.error("Impossible to update user mobile number. Database access error:", e);
             throw new DaoException("Impossible to update user mobile number. Database access error:", e);
         }
     }
 
     @Override
-    public boolean updateUserEmail(long userId, String email) throws  DaoException {
+    public boolean updateUserEmail(long userId, String email) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_USER_EMAIL)) {
             statement.setString(1, email);
@@ -174,7 +173,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean updateUserPassword(long userId, String password) throws  DaoException {
+    public boolean updateUserPassword(long userId, String password) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_USER_PASSWORD)) {
             statement.setString(1, password);
@@ -183,75 +182,78 @@ public class UserDaoImpl implements UserDao {
             logger.info("Result of user password update for user with id " + userId + " is " + result);
             return result;
         } catch (SQLException | ConnectionPoolException e) {
-            logger.error( "Impossible to update user password. Database access error:", e);
+            logger.error("Impossible to update user password. Database access error:", e);
             throw new DaoException("Impossible to update user password. Database access error:", e);
         }
     }
 
     @Override
-    public boolean updateUserStatusById(User.Status status, Long userId) throws  DaoException {
+    public boolean updateUserStatusById(User.Status status, Long userId) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_USER_STATUS_BY_USER_ID)) {
-                statement.setString(1, status.name());
-                statement.setLong(2, userId);
+            statement.setString(1, status.name());
+            statement.setLong(2, userId);
             boolean result = statement.executeUpdate() == 1;
-            logger.info( "updateUserStatusesById method was completed successfully. User status with user id  "
+            logger.info("updateUserStatusesById method was completed successfully. User status with user id  "
                     + userId + " were updated to " + status + " status");
             return result;
         } catch (SQLException | ConnectionPoolException e) {
-            logger.error( "Impossible to update users statuses. Database access error:", e);
+            logger.error("Impossible to update users statuses. Database access error:", e);
             throw new DaoException("Impossible to update users statuses. Database access error:", e);
         }
     }
 
     @Override
-    public boolean isEmailExist(String email) throws  DaoException {
+    public boolean isEmailExist(String email) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_EMAIL)) {
             statement.setString(1, email);
-            try (  ResultSet resultSet = statement.executeQuery()){
-            boolean result = resultSet.isBeforeFirst();
-            logger.debug( "isEmailExist method was completed successfully. Result: " + result);
-            return result;
-        }} catch (SQLException | ConnectionPoolException e) {
-            logger.error( "Impossible to check existence of user email. Database access error:", e);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                boolean result = resultSet.isBeforeFirst();
+                logger.debug("isEmailExist method was completed successfully. Result: " + result);
+                return result;
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            logger.error("Impossible to check existence of user email. Database access error:", e);
             throw new DaoException("Impossible to check existence of user email. Database access error:", e);
         }
     }
 
     @Override
-    public boolean isMobileNumberExist(String mobileNumber) throws  DaoException {
+    public boolean isMobileNumberExist(String mobileNumber) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_PHONE)) {
             statement.setString(1, mobileNumber);
-            try (ResultSet resultSet = statement.executeQuery()){
-            boolean result = resultSet.isBeforeFirst();
-            logger.debug("isMobileNumberExist method was completed successfully. Result: " + result);
-            return result;
-        }} catch (SQLException | ConnectionPoolException e) {
-            logger.error( "Impossible to check existence of user mobile number. Database access error:", e);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                boolean result = resultSet.isBeforeFirst();
+                logger.debug("isMobileNumberExist method was completed successfully. Result: " + result);
+                return result;
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            logger.error("Impossible to check existence of user mobile number. Database access error:", e);
             throw new DaoException("Impossible to check existence of user mobile number. Database access error:", e);
         }
     }
 
     @Override
-    public boolean isUserExist(long userId, String passwordHash) throws  DaoException {
+    public boolean isUserExist(long userId, String passwordHash) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_ID_AND_PASSWORD)) {
             statement.setLong(1, userId);
             statement.setString(2, passwordHash);
-            try (  ResultSet resultSet = statement.executeQuery()){
-            boolean result = resultSet.isBeforeFirst();
-            logger.debug( "isUserExist method was completed successfully. Result: " + result);
-            return result;
-        }} catch (SQLException | ConnectionPoolException e) {
-            logger.error( "Impossible to check existence of user. Database access error:", e);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                boolean result = resultSet.isBeforeFirst();
+                logger.debug("isUserExist method was completed successfully. Result: " + result);
+                return result;
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            logger.error("Impossible to check existence of user. Database access error:", e);
             throw new DaoException("Impossible to check existence of user. Database access error:", e);
         }
     }
 
     @Override
-    public Optional<User> findUserByEmailAndPassword(String email, String password) throws  DaoException {
+    public Optional<User> findUserByEmailAndPassword(String email, String password) throws DaoException {
         Optional<User> userOptional = Optional.empty();
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_EMAIL_AND_PASSWORD)) {
@@ -271,54 +273,55 @@ public class UserDaoImpl implements UserDao {
             throw new DaoException("Impossible to find user in database. ", e);
         }
     }
-        @Override
-        public boolean updateUser(User user) throws  DaoException {
-            try (Connection connection = connectionPool.getConnection();
-                PreparedStatement statement = connection.prepareStatement(UPDATE_USER)) {
-                statement.setString(1, user.getName());
-                statement.setString(2, user.getSurname());
-                statement.setString(3, user.getEmail());
-                statement.setString(4, user.getPassword());
-                statement.setString(5, user.getPhone());
-                statement.setLong(6, user.getUserId());
-                boolean result = statement.executeUpdate() == 1;
-                logger.info("Result of user email update for user with id " + user.getEmail() + " is " + result);
-                return result;
-            } catch (SQLException | ConnectionPoolException e) {
-                logger.error("Impossible to update user email. Database access error:", e);
-                throw new DaoException("Impossible to update user email. Database access error:", e);
-            }
-        }
 
     @Override
-    public boolean updateUserStatusByEmail(String email) throws  DaoException {
+    public boolean updateUser(User user) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_USER)) {
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getSurname());
+            statement.setString(3, user.getEmail());
+            statement.setString(4, user.getPassword());
+            statement.setString(5, user.getPhone());
+            statement.setLong(6, user.getUserId());
+            boolean result = statement.executeUpdate() == 1;
+            logger.info("Result of user email update for user with id " + user.getEmail() + " is " + result);
+            return result;
+        } catch (SQLException | ConnectionPoolException e) {
+            logger.error("Impossible to update user email. Database access error:", e);
+            throw new DaoException("Impossible to update user email. Database access error:", e);
+        }
+    }
+
+    @Override
+    public boolean updateUserStatusByEmail(String email) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_USER_STATUS_BY_EMAIL)) {
             statement.setString(1, "blocked");
             statement.setString(2, email);
             boolean result = statement.executeUpdate() == 1;
-            logger.info( "updateUserStatusByEmail method was completed successfully. User status with user email  "
+            logger.info("updateUserStatusByEmail method was completed successfully. User status with user email  "
                     + email + " were updated to blocked status");
             return result;
         } catch (SQLException | ConnectionPoolException e) {
-            logger.error( "Impossible to update users statuses. Database access error:", e);
+            logger.error("Impossible to update users statuses. Database access error:", e);
             throw new DaoException("Impossible to update users statuses. Database access error:", e);
         }
     }
 
 
     @Override
-    public boolean makeAdmin(String email) throws  DaoException {
+    public boolean makeAdmin(String email) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_USER_ROLE_BY_EMAIL)) {
             statement.setString(1, "admin");
             statement.setString(2, email);
             boolean result = statement.executeUpdate() == 1;
-            logger.info( "makeAdmin method was completed successfully. User role with user email  "
+            logger.info("makeAdmin method was completed successfully. User role with user email  "
                     + email + " were updated to admin");
             return result;
         } catch (SQLException | ConnectionPoolException e) {
-            logger.error( "Impossible to update user role. Database access error:", e);
+            logger.error("Impossible to update user role. Database access error:", e);
             throw new DaoException("Impossible to update user role. Database access error:", e);
         }
     }

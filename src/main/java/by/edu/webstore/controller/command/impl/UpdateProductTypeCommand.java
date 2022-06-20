@@ -35,10 +35,11 @@ public class UpdateProductTypeCommand implements Command {
         String newProductType = request.getParameter(MODIFY_TYPE);
         if (!request.getParameter(MODIFY_TYPE).isEmpty()) {
             try {
-                if(productService.isTypeExist(newProductType)) {
+                if (productService.isTypeExist(newProductType)) {
                     request.setAttribute(PRODUCT_TYPE_MODIFY, newProductType);
                     request.setAttribute(MESSAGE_TYPE_PRODUCT, ERROR_MESSAGE_KEY);
-                    return new Router(PagePath.PRODUCT_ADD_PAGE, Router.RouterType.FORWARD);}
+                    return new Router(PagePath.PRODUCT_ADD_PAGE, Router.RouterType.FORWARD);
+                }
                 if (productService.modifyProductType(oldProductType, newProductType)) {
                     List<ProductType> productTypes = productService.findAllProductTypes();
                     session.setAttribute(PRODUCT_TYPES_LIST, productTypes);

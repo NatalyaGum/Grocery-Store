@@ -1,5 +1,10 @@
 package by.edu.webstore.exception;
 
+/**
+ * {@code ConnectionPoolException} class represent a checked exception from {@link by.edu.webstore.connection}
+ *
+ * @see Exception
+ */
 public class ConnectionPoolException extends Throwable {
     public ConnectionPoolException() {
         super();

@@ -44,25 +44,22 @@ public class AddProductCommand implements Command {
         try {
             Part imagePart = request.getPart(ParameterAndAttribute.IMAGE);
             InputStream imageInputStream = imagePart.getInputStream();
-            id=productService.insertNewProduct(productData, imageInputStream);
-            if (id>0) {
-                session.setAttribute(ParameterAndAttribute.MESSAGE,ADD_PRODUCT_CONFIRM_MESSAGE_KEY);
-                session.setAttribute(ParameterAndAttribute.PRODUCT_ID,id);
-                return new Router(PagePath.PRODUCT_ADD_PAGE,Router.RouterType.REDIRECT);
+            id = productService.insertNewProduct(productData, imageInputStream);
+            if (id > 0) {
+                session.setAttribute(ParameterAndAttribute.MESSAGE, ADD_PRODUCT_CONFIRM_MESSAGE_KEY);
+                session.setAttribute(ParameterAndAttribute.PRODUCT_ID, id);
+                return new Router(PagePath.PRODUCT_ADD_PAGE, Router.RouterType.REDIRECT);
             } else {
-                request.setAttribute(ParameterAndAttribute.PRODUCT,productData);
-                request.setAttribute(ParameterAndAttribute.MESSAGE,ADD_PRODUCT_ERROR_MESSAGE_KEY);
-                // request.setAttribute(PRODUCT_CREATION_RESULT, INVALID);
-                return new Router(PagePath.PRODUCT_ADD_PAGE,Router.RouterType.FORWARD);
+                request.setAttribute(ParameterAndAttribute.PRODUCT, productData);
+                request.setAttribute(ParameterAndAttribute.MESSAGE, ADD_PRODUCT_ERROR_MESSAGE_KEY);
+                return new Router(PagePath.PRODUCT_ADD_PAGE, Router.RouterType.FORWARD);
             }
-            //List<Product> products = productService.findAllProducts();
-           // session.setAttribute(PRODUCT_LIST, PRODUCTS);
 
         } catch (ServiceException e) {
-            logger.error( "Impossible to create new product:", e);
+            logger.error("Impossible to create new product:", e);
             throw new CommandException("Impossible to create product:", e);
         } catch (ServletException | IOException e) {
-            logger.error( "Impossible to get image of product", e);
+            logger.error("Impossible to get image of product", e);
             throw new CommandException("Impossible to get image of product:", e);
         }
     }

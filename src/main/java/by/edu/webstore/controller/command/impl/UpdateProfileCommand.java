@@ -21,7 +21,6 @@ import static by.edu.webstore.controller.command.ParameterAndAttribute.*;
 
 public class UpdateProfileCommand implements Command {
     static Logger logger = LogManager.getLogger();
-    private static final String UPDATE_ERROR_MESSAGE_KEY = "error.sign_up";
     private static final String SIGN_IN_ERROR_MESSAGE_KEY = "error.sign_in";
     private static final String EMAIL_AVAILABILITY_ERROR_MESSAGE_KEY = "error.email_availability";
     private static final String UPDATE_PROFILE_MESSAGE_KEY = "confirm.update_account_data";
@@ -42,12 +41,13 @@ public class UpdateProfileCommand implements Command {
             userData.put(ParameterAndAttribute.EMAIL, request.getParameter(ParameterAndAttribute.EMAIL));
             userData.put(ParameterAndAttribute.PHONE_NUMBER, request.getParameter(ParameterAndAttribute.PHONE_NUMBER));
             try {
-                if (!userData.get(EMAIL).equals(user.getEmail())){
-                   if (service.isEmailExist(userData)) {
-                    request.setAttribute(ParameterAndAttribute.USER, userData);
-                    request.setAttribute(ParameterAndAttribute.MESSAGE, EMAIL_AVAILABILITY_ERROR_MESSAGE_KEY);
-                    return new Router(PagePath.UPDATE_PROFILE, Router.RouterType.FORWARD);
-                }}
+                if (!userData.get(EMAIL).equals(user.getEmail())) {
+                    if (service.isEmailExist(userData)) {
+                        request.setAttribute(ParameterAndAttribute.USER, userData);
+                        request.setAttribute(ParameterAndAttribute.MESSAGE, EMAIL_AVAILABILITY_ERROR_MESSAGE_KEY);
+                        return new Router(PagePath.UPDATE_PROFILE, Router.RouterType.FORWARD);
+                    }
+                }
                 Optional<User> optionalUser = service.updateUser(userData);
                 session.setAttribute(USER, optionalUser.get());
                 session.setAttribute(ROLE, optionalUser.get().getRole().toString());

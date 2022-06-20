@@ -23,7 +23,6 @@ public class AddAddressCommand implements Command {
     static Logger logger = LogManager.getLogger();
     private static final OrderService orderService = ServiceProvider.getInstance().getOrderService();
     private static final String ADD_ADDRESS_ERROR_MESSAGE_KEY = "error.add_address";
-    private static final String ADD_PRODUCT_CONFIRM_MESSAGE_KEY = "confirm.product_add";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
@@ -31,24 +30,26 @@ public class AddAddressCommand implements Command {
         session.removeAttribute(ParameterAndAttribute.MESSAGE);
         User user = (User) session.getAttribute(ParameterAndAttribute.USER);
         Map<String, String> addressData = new HashMap<>();
-        addressData.put(ParameterAndAttribute.USER_ID,Long.toString(user.getUserId()));
+        addressData.put(ParameterAndAttribute.USER_ID, Long.toString(user.getUserId()));
         addressData.put(ParameterAndAttribute.STREET, request.getParameter(ParameterAndAttribute.STREET));
         addressData.put(ParameterAndAttribute.BUILDING, request.getParameter(ParameterAndAttribute.BUILDING));
-        if(!request.getParameter(ParameterAndAttribute.APARTMENT).equals("")){
-        addressData.put(ParameterAndAttribute.APARTMENT, request.getParameter(ParameterAndAttribute.APARTMENT));}
-        if(!request.getParameter(ParameterAndAttribute.COMMENT).equals("")){
-        addressData.put(ParameterAndAttribute.COMMENT, request.getParameter(ParameterAndAttribute.COMMENT));}
+        if (!request.getParameter(ParameterAndAttribute.APARTMENT).equals("")) {
+            addressData.put(ParameterAndAttribute.APARTMENT, request.getParameter(ParameterAndAttribute.APARTMENT));
+        }
+        if (!request.getParameter(ParameterAndAttribute.COMMENT).equals("")) {
+            addressData.put(ParameterAndAttribute.COMMENT, request.getParameter(ParameterAndAttribute.COMMENT));
+        }
         long id;
         Router router;
         try {
             id = orderService.insertNewAddress(addressData);
             if (id > 0) {
                 session.setAttribute(ParameterAndAttribute.PRODUCT_ID, id);
-                router= new Router(PagePath.ORDER_PAGE, Router.RouterType.FORWARD);
+                router = new Router(PagePath.ORDER_PAGE, Router.RouterType.FORWARD);
             } else {
                 request.setAttribute(ParameterAndAttribute.ADDRESS, addressData);
                 request.setAttribute(ParameterAndAttribute.MESSAGE, ADD_ADDRESS_ERROR_MESSAGE_KEY);
-                router= new Router(PagePath.ADDRESS_ADD_PAGE, Router.RouterType.FORWARD);
+                router = new Router(PagePath.ADDRESS_ADD_PAGE, Router.RouterType.FORWARD);
             }
         } catch (ServiceException e) {
             logger.error("Impossible to add new address:", e);
@@ -62,6 +63,7 @@ public class AddAddressCommand implements Command {
         } catch (ServiceException e) {
             logger.error("Impossible to find addresses:", e);
             throw new CommandException("Impossible to find addresses:", e);
-        }return router;
+        }
+        return router;
     }
 }

@@ -1,7 +1,6 @@
 package by.edu.webstore.controller;
 
 
-
 import by.edu.webstore.controller.command.*;
 import by.edu.webstore.exception.CommandException;
 import jakarta.servlet.RequestDispatcher;
@@ -11,13 +10,20 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import static jakarta.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
-@WebServlet(name = "controller", urlPatterns = { "/controller" })
+/**
+ * {@code Controller} class extends functional of {@link HttpServlet}
+ * Processes all requests after filtering.
+ */
+
+@WebServlet(name = "controller", urlPatterns = {"/controller"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,
         maxFileSize = 1024 * 1024,
         maxRequestSize = 1024 * 1024)
@@ -29,7 +35,7 @@ public class Controller extends HttpServlet {
         try {
             processRequest(req, resp);
         } catch (CommandException e) {
-            logger.error( "Internal error has occurred:", e);
+            logger.error("Internal error has occurred:", e);
             resp.sendError(SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
@@ -39,7 +45,7 @@ public class Controller extends HttpServlet {
         try {
             processRequest(req, resp);
         } catch (CommandException e) {
-            logger.error( "Internal error has occurred:", e);
+            logger.error("Internal error has occurred:", e);
             resp.sendError(SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }

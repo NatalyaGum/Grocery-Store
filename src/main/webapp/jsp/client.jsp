@@ -5,7 +5,7 @@
 <fmt:setBundle basename="pagecontent"/>
 
 <div class="col-sm-4 offset-md-1 py-4" >
-    <a href="${pageContext.request.contextPath}/controller?command=go_to_card"><h4><fmt:message key="order.cart"/> ${card}</h4></a>
+    <a href="${pageContext.request.contextPath}/controller?command=go_to_cart"><h4><fmt:message key="order.cart"/> ${card}</h4></a>
     <a href="${pageContext.request.contextPath}/controller?command=go_to_catalog"><h4><fmt:message key="catalog"/></h4></a>
     <ul class="list-unstyled">
         <c:forEach var="element" items="${product_types_list}">

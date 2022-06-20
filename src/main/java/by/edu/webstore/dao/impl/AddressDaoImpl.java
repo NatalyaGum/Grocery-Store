@@ -45,12 +45,12 @@ public class AddressDaoImpl implements AddressDao {
                 Address address = AddressCreator.getInstance().create(resultSet);
                 addressOptional = Optional.of(address);
             }
-            logger.debug( "findAddressById method was completed successfully." +
+            logger.debug("findAddressById method was completed successfully." +
                     (addressOptional.isPresent() ? " Address with id " + addressId + " was found"
                             : " Address with id " + addressId + " doesn't exist"));
             return addressOptional;
         } catch (SQLException | ConnectionPoolException e) {
-            logger.error( "Impossible to find address by user id from database. Database access error:", e);
+            logger.error("Impossible to find address by user id from database. Database access error:", e);
             throw new DaoException("Impossible to find address by user id from database. Database access error:", e);
         }
     }
@@ -58,7 +58,7 @@ public class AddressDaoImpl implements AddressDao {
     @Override
     public List<Address> findUserAddresses(long userId) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(FIND_ADDRESS_BY_USER_ID)) {
+             PreparedStatement statement = connection.prepareStatement(FIND_ADDRESS_BY_USER_ID)) {
             statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
             List<Address> addresses = new ArrayList<>();
@@ -66,34 +66,16 @@ public class AddressDaoImpl implements AddressDao {
                 Address address = AddressCreator.getInstance().create(resultSet);
                 addresses.add(address);
             }
-            logger.debug( "findUserAddresses method was completed successfully. " +
+            logger.debug("findUserAddresses method was completed successfully. " +
                     (!addresses.isEmpty() ? addresses.size() + " addresses were found for user with id " + userId
                             : "User with id " + userId + " doesn't have any addresses"));
             return addresses;
         } catch (SQLException | ConnectionPoolException e) {
-            logger.error( "Impossible to find addresses by user id from database. Database access error:", e);
+            logger.error("Impossible to find addresses by user id from database. Database access error:", e);
             throw new DaoException("Impossible to find addresses by user id from database. Database access error:", e);
         }
     }
 
-   /* @Override
-    public boolean insertUserAddress(long userId, Address address) throws DaoException {
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_NEW_ADDRESS_FOR_USER)) {
-            statement.setString(1, address.getStreetName());
-            statement.setString(2, address.getHouseNumber());
-            statement.setInt(3, address.getApartmentNumber());
-            statement.setString(4, address.getComment());
-            statement.setLong(5, userId);
-            boolean result = statement.executeUpdate() == 1;
-            logger.info( "insertUserAddress method was completed successfully."
-                    + (result ? "New address was inserted for user with id " + userId : "New address wasn't inserted for user with id " + userId));
-            return result;
-        } catch (SQLException | ConnectionPoolException e) {
-            logger.error( "Impossible to insert new address for user with id " + userId + " into database. Database access error:", e);
-            throw new DaoException("Impossible to insert new address for user with id " + userId + " into database. Database access error:", e);
-        }
-    }*/
 
     @Override
     public long insertNewAddress(Address address, long user_id) throws DaoException {
@@ -110,7 +92,7 @@ public class AddressDaoImpl implements AddressDao {
             if (resultSet.next()) {
                 addressId = resultSet.getLong(1);
             }
-            logger.info( addressId != 0 ? "insertAddress method was completed successfully. Address with id " + addressId + " was inserted"
+            logger.info(addressId != 0 ? "insertAddress method was completed successfully. Address with id " + addressId + " was inserted"
                     : "Address wasn't inserted into database");
             return addressId;
         } catch (SQLException | ConnectionPoolException e) {
@@ -118,7 +100,6 @@ public class AddressDaoImpl implements AddressDao {
             throw new DaoException("Impossible to insert new address into database. Database access error:", e);
         }
     }
-
 
 
     @Override

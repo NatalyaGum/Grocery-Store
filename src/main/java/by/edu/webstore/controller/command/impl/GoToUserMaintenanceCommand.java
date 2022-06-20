@@ -22,8 +22,9 @@ import static by.edu.webstore.controller.command.Router.RouterType.FORWARD;
 public class GoToUserMaintenanceCommand implements Command {
     static Logger logger = LogManager.getLogger();
     private static final String USER_BLOCKED = "user.blocked";
-    private static final String ADMIN_CRATED= "user.admin";
+    private static final String ADMIN_CRATED = "user.admin";
     private static final String ERROR_MESSAGE = "error";
+
     @Override
     public Router execute(HttpServletRequest request) {
         UserService service = ServiceProvider.getInstance().getUserService();
@@ -45,7 +46,7 @@ public class GoToUserMaintenanceCommand implements Command {
         }
     }
 
-    void blockUserCommand(HttpServletRequest request)  {
+    void blockUserCommand(HttpServletRequest request) {
         UserService service = ServiceProvider.getInstance().getUserService();
         String email = request.getParameter(BLOCK_EMAIL);
         try {
@@ -60,7 +61,7 @@ public class GoToUserMaintenanceCommand implements Command {
         }
     }
 
-    void makeAdminCommand(HttpServletRequest request)  {
+    void makeAdminCommand(HttpServletRequest request) {
         UserService service = ServiceProvider.getInstance().getUserService();
         String email = request.getParameter(ADMIN_EMAIL);
         try {

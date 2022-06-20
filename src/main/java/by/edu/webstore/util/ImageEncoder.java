@@ -8,12 +8,21 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Base64;
 
+/**
+ * {@code ImageEncoder} util class to help encode image
+ */
 public class ImageEncoder {
     private static final String IMAGE_TYPE = "data:image/jpeg;base64,";
 
     private ImageEncoder() {
     }
 
+    /**
+     * {@code encode} method to encode image as byte array to string
+     *
+     * @param image - image as Blob
+     * @return encoded image
+     */
     public static String encodeBlob(Blob image) throws DaoException {
         try {
             byte[] imageBytes = image.getBinaryStream().readAllBytes();

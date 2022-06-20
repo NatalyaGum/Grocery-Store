@@ -4,6 +4,10 @@ import by.edu.webstore.controller.command.ParameterAndAttribute;
 
 import java.util.Map;
 
+/**
+ * {@code AddressValidator} class implements functional to validate input data
+ * for work with class {@link by.edu.webstore.entity.Address}
+ */
 public class AddressValidator {
     private static final String INCORRECT_VALUE_PARAMETER = " incorrect";
     private static final String STREET_REGEX = "[A-Za-zА-Яа-я-,.\\s]{3,45}";
@@ -16,6 +20,7 @@ public class AddressValidator {
 
     private AddressValidator() {
     }
+
     public static AddressValidator getInstance() {
         return instance;
     }
@@ -31,16 +36,18 @@ public class AddressValidator {
             addressData.put(ParameterAndAttribute.BUILDING, addressData.get(ParameterAndAttribute.BUILDING) + INCORRECT_VALUE_PARAMETER);
             isValid = false;
         }
-        if (addressData.containsKey(ParameterAndAttribute.APARTMENT)){
-            if(!addressData.get(ParameterAndAttribute.APARTMENT).matches(APARTMENT_REGEX)){
-            addressData.put(ParameterAndAttribute.APARTMENT, addressData.get(ParameterAndAttribute.APARTMENT) + INCORRECT_VALUE_PARAMETER);
-            isValid = false;
-        }}
-        if (addressData.containsKey(ParameterAndAttribute.COMMENT)){
-            if(!addressData.get(ParameterAndAttribute.COMMENT).matches(COMMENT_REGEX)) {
-            addressData.put(ParameterAndAttribute.COMMENT, addressData.get(ParameterAndAttribute.COMMENT) + INCORRECT_VALUE_PARAMETER);
-            isValid = false;
-        }}
+        if (addressData.containsKey(ParameterAndAttribute.APARTMENT)) {
+            if (!addressData.get(ParameterAndAttribute.APARTMENT).matches(APARTMENT_REGEX)) {
+                addressData.put(ParameterAndAttribute.APARTMENT, addressData.get(ParameterAndAttribute.APARTMENT) + INCORRECT_VALUE_PARAMETER);
+                isValid = false;
+            }
+        }
+        if (addressData.containsKey(ParameterAndAttribute.COMMENT)) {
+            if (!addressData.get(ParameterAndAttribute.COMMENT).matches(COMMENT_REGEX)) {
+                addressData.put(ParameterAndAttribute.COMMENT, addressData.get(ParameterAndAttribute.COMMENT) + INCORRECT_VALUE_PARAMETER);
+                isValid = false;
+            }
+        }
         return isValid;
     }
 }

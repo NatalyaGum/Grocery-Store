@@ -1,5 +1,10 @@
 package by.edu.webstore.entity;
 
+/**
+ * {@code Address} class represent a address
+ *
+ * @see AbstractEntity
+ */
 
 public class Address extends AbstractEntity {
     private long addressId;
@@ -10,6 +15,7 @@ public class Address extends AbstractEntity {
 
     public Address() {
     }
+
     public Address(String streetName, String buildingNumber, int apartmentNumber, String comment) {
         this.streetName = streetName;
         this.buildingNumber = buildingNumber;

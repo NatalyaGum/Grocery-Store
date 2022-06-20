@@ -3,7 +3,7 @@ package by.edu.webstore.entity;
 import java.io.Serializable;
 
 public abstract class AbstractEntity implements Serializable, Cloneable {
-    /*private long id;
+    private long id;
 
     public AbstractEntity() {
     }
@@ -39,8 +39,8 @@ public abstract class AbstractEntity implements Serializable, Cloneable {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder(getClass().getSimpleName());
-        result.append("[ id = ").append(id);
+        result.append(" id = ").append(id);
         return result.toString();
-    }*/
+    }
 }
 

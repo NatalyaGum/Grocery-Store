@@ -13,7 +13,6 @@ public class GoToRegistrationCommand implements Command {
     public Router execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.removeAttribute(MESSAGE);
-        //session.setAttribute(ParameterAndAttribute.CURRENT_PAGE, CurrentPageExtractor.extract(request));
         return new Router(PagePath.REGISTRATION_PAGE, Router.RouterType.FORWARD);
     }
 }

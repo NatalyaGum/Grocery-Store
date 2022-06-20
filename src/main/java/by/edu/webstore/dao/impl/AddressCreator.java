@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import static by.edu.webstore.dao.ColumnName.*;
 
- class AddressCreator {
+class AddressCreator {
     private static AddressCreator instance;
 
     public static AddressCreator getInstance() {
@@ -17,7 +17,7 @@ import static by.edu.webstore.dao.ColumnName.*;
         return instance;
     }
 
-      Address create(ResultSet resultSet) throws SQLException {
+    Address create(ResultSet resultSet) throws SQLException {
         Address address = new Address();
         address.setAddressId(resultSet.getLong(ADDRESS_ID));
         address.setStreetName(resultSet.getString(ADDRESS_STREET));

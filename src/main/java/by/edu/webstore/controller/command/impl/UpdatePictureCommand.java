@@ -30,6 +30,7 @@ public class UpdatePictureCommand implements Command {
     private static final ProductService productService = ServiceProvider.getInstance().getProductService();
     private static final String PRODUCT_ERROR_MESSAGE_KEY = "error.update_picture";
     private static final String PRODUCT_CONFIRM_MESSAGE_KEY = "confirm.update_picture";
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
@@ -42,26 +43,24 @@ public class UpdatePictureCommand implements Command {
             request.setAttribute(ParameterAndAttribute.PRODUCT_TYPES_LIST, productTypes);
             Part imagePart = request.getPart(ParameterAndAttribute.IMAGE);
             InputStream imageInputStream = imagePart.getInputStream();
-            if (productService.UpdateProductPicture(product_id,imageInputStream)) {
-                Optional<Product> optionalProduct=productService.getProductById (product_id) ;
+            if (productService.UpdateProductPicture(product_id, imageInputStream)) {
+                Optional<Product> optionalProduct = productService.getProductById(product_id);
                 request.setAttribute(ParameterAndAttribute.PRODUCT, optionalProduct.get());
-                session.setAttribute(ParameterAndAttribute.MESSAGE_PICTURE,PRODUCT_CONFIRM_MESSAGE_KEY);
-                return new Router(PagePath.PRODUCT_EDIT_PAGE,Router.RouterType.FORWARD);
+                session.setAttribute(ParameterAndAttribute.MESSAGE_PICTURE, PRODUCT_CONFIRM_MESSAGE_KEY);
+                return new Router(PagePath.PRODUCT_EDIT_PAGE, Router.RouterType.FORWARD);
             } else {
-                Optional<Product> optionalProduct=productService.getProductById (product_id) ;
+                Optional<Product> optionalProduct = productService.getProductById(product_id);
                 request.setAttribute(ParameterAndAttribute.PRODUCT, optionalProduct.get());
-                request.setAttribute(ParameterAndAttribute.MESSAGE_PICTURE,PRODUCT_ERROR_MESSAGE_KEY);
-                // request.setAttribute(PRODUCT_CREATION_RESULT, INVALID);
-                return new Router(PagePath.PRODUCT_EDIT_PAGE,Router.RouterType.FORWARD);
+                request.setAttribute(ParameterAndAttribute.MESSAGE_PICTURE, PRODUCT_ERROR_MESSAGE_KEY);
+                return new Router(PagePath.PRODUCT_EDIT_PAGE, Router.RouterType.FORWARD);
             }
-            //List<Product> products = productService.findAllProducts();
-            // session.setAttribute(PRODUCT_LIST, PRODUCTS);
+
 
         } catch (ServiceException e) {
-            logger.error( "Impossible to update product:", e);
+            logger.error("Impossible to update product:", e);
             throw new CommandException("Impossible to update product:", e);
         } catch (ServletException | IOException e) {
-            logger.error( "Impossible to update image of product", e);
+            logger.error("Impossible to update image of product", e);
             throw new CommandException("Impossible to update image of product:", e);
         }
 

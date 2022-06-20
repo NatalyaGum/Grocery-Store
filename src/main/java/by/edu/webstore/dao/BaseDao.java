@@ -12,17 +12,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-import java.util.Optional;
+
+/**
+ * {@code BaseDao} interface represent common functional to dao classes
+ */
 
 public interface BaseDao<T extends AbstractEntity> {
-    static Logger logger = LogManager.getLogger();
-
-    //Optional<T> findEntityById(long id) throws DaoException;
+    Logger logger = LogManager.getLogger();
 
     List<T> findAllEntities() throws DaoException, ConnectionPoolException;
-
-   // long insertNewEntity(T entity) throws DaoException, ConnectionPoolException;
-
 
     default void close(Statement statement) {
         try {

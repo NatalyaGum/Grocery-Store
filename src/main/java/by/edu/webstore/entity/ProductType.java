@@ -1,8 +1,12 @@
 package by.edu.webstore.entity;
 
+/**
+ * {@code ProductType} class represent a type of product
+ *
+ * @see AbstractEntity
+ */
 
-
-public class ProductType extends AbstractEntity{
+public class ProductType extends AbstractEntity {
     private long productTypeId;
     private String productTypeName;
 
@@ -51,6 +55,6 @@ public class ProductType extends AbstractEntity{
 
     @Override
     public String toString() {
-       return productTypeName;
+        return productTypeName;
     }
 }

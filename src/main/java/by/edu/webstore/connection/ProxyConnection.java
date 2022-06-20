@@ -5,19 +5,32 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
- class ProxyConnection implements Connection {
+/**
+ * {@code ProxyConnection} class implements functional of {@link Connection}
+ * Delegate all methods, change method close() and add method reallyClose();
+ */
+class ProxyConnection implements Connection {
     private Connection connection;
 
     ProxyConnection(Connection connection) {
-        this.connection=connection;
+        this.connection = connection;
     }
 
+    /**
+     * {@code reallyClose} method close connection
+     */
     void reallyClose() throws SQLException {
         connection.close();
     }
 
+    /**
+     * {@code close} method set auto commit and return connection into connection pool
+     */
     @Override
     public void close() throws SQLException {
+        if (!connection.getAutoCommit()) {
+            connection.setAutoCommit(true);
+        }
         ConnectionPool.getInstance().releaseConnection(this);
     }
 

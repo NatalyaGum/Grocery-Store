@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Optional;
 
 
-public class GoToCardCommand implements Command {
+public class GoToCartCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static final ProductService productService = ServiceProvider.getInstance().getProductService();
     private static final OrderService orderService = ServiceProvider.getInstance().getOrderService();
@@ -49,11 +49,11 @@ public class GoToCardCommand implements Command {
                 long product_id = (Long) entry.getKey();
                 Optional<Product> optionalProduct = productService.getProductById(product_id);
                 if (optionalProduct.isPresent()) {
-                    if((int) entry.getValue()!=0){
-                    productMap.put(optionalProduct.get(), (int) entry.getValue());
-                    BigDecimal price = optionalProduct.get().getPrice();
-                    price=price.multiply(BigDecimal.valueOf(((int)entry.getValue())));
-                    totalPrice = totalPrice.add(price);
+                    if ((int) entry.getValue() != 0) {
+                        productMap.put(optionalProduct.get(), (int) entry.getValue());
+                        BigDecimal price = optionalProduct.get().getPrice();
+                        price = price.multiply(BigDecimal.valueOf(((int) entry.getValue())));
+                        totalPrice = totalPrice.add(price);
                     }
                 }
             }
@@ -75,13 +75,13 @@ public class GoToCardCommand implements Command {
         return new Router(PagePath.ORDER_PAGE, Router.RouterType.FORWARD);
     }
 
-    void updateQuantity(HttpServletRequest request)  {
+    void updateQuantity(HttpServletRequest request) {
         HttpSession session = request.getSession();
         HashMap<Long, Integer> orderMap = (HashMap<Long, Integer>) session.getAttribute(ParameterAndAttribute.ORDER_MAP);
         int countProductsInCard = 0;
         Integer count = Integer.parseInt(request.getParameter(ParameterAndAttribute.PRODUCT_COUNT));
         Long product_id = Long.parseLong(request.getParameter(ParameterAndAttribute.PRODUCT_ID));
-        if (count==0) {
+        if (count == 0) {
             orderMap.remove(product_id);
         } else {
             orderMap.put(product_id, count);

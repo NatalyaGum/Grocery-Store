@@ -1,0 +1,6 @@
+2022-05-17 20:37:22 [main] [main] [18] INFO  by.edu.webstore._MAIN_.main - text: 
+2022-05-17 20:37:23 [main] [<init>] [73] INFO  by.edu.webstore.connection.ConnectionPool - Connection pool was created
+2022-05-17 20:37:23 [main] [findUserById] [60] ERROR edu.webstore.dao.impl.UserDaoImpl - findEntityById method was completed successfully. User with id 3 was found
+2022-05-17 20:37:37 [main] [main] [18] INFO  by.edu.webstore._MAIN_.main - text: 
+2022-05-17 20:37:37 [main] [<init>] [73] INFO  by.edu.webstore.connection.ConnectionPool - Connection pool was created
+2022-05-17 20:37:37 [main] [findUserById] [60] ERROR edu.webstore.dao.impl.UserDaoImpl - findEntityById method was completed successfully. User with id 3 was found

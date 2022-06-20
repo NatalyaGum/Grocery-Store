@@ -53,7 +53,7 @@ public class GoToCatalogCommand implements Command {
     }
 
 
-      void addToCardCommand(HttpServletRequest request)  {
+    void addToCardCommand(HttpServletRequest request) {
         HttpSession session = request.getSession();
         HashMap<Long, Integer> orderMap;
         int countProductsInCard = 0;

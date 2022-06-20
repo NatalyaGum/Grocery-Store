@@ -62,7 +62,7 @@
                             ${entry.key.price} <fmt:message key="rub"/>
                           </td><td>
                             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="post"
-                                  action="${pageContext.request.contextPath}/controller?command=go_to_card&productId=${entry.key.productId}">
+                                  action="${pageContext.request.contextPath}/controller?command=go_to_cart&productId=${entry.key.productId}">
                                 <input type="number" name="product_count" min="0" max="20" value=${entry.value} step="1" class="btn btn-sm btn-outline-secondary" >
                                 <button type="submit" class="btn btn-sm btn-outline-secondary"><fmt:message key="order.update_qty"/>
                             </form>

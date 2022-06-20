@@ -6,7 +6,9 @@ import by.edu.webstore.exception.DaoException;
 import java.util.List;
 import java.util.Optional;
 
-
+/**
+ * {@code AddressDao} class implements functional of {@link BaseDao}
+ */
 public interface AddressDao extends BaseDao<Address> {
 
     Optional<Address> findAddressById(long addressId) throws DaoException;

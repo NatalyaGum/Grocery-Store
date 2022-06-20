@@ -4,27 +4,44 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-
+/**
+ * {@code Room} class represent a order
+ *
+ * @see AbstractEntity
+ */
 
 public class Order extends AbstractEntity {
+
+    /**
+     * {@code OrderStatus} enum represent a order status
+     */
     public enum OrderStatus {
         REJECTED("rejected"),
         PREPARING("preparing"),
         DELIVERED("delivered"),
         ORDERED("ordered");
         private String status;
-        OrderStatus (String status){this.status=status;}
+
+        OrderStatus(String status) {
+            this.status = status;
+        }
+
         public String toString() {
             return status;
         }
 
 
     }
+
     public enum PaymentMethod {
         CASH("cash"),
         CARD("card");
         private String method;
-        PaymentMethod (String method){this.method=method;}
+
+        PaymentMethod(String method) {
+            this.method = method;
+        }
+
         public String toString() {
             return method;
         }
@@ -41,6 +58,7 @@ public class Order extends AbstractEntity {
 
     public Order() {
     }
+
     public Order(Map<Product, Integer> addedProducts, BigDecimal cost, OrderStatus status, LocalDateTime orderDate, PaymentMethod method, Address address) {
         this.addedProducts = addedProducts;
         this.cost = cost;
@@ -57,7 +75,7 @@ public class Order extends AbstractEntity {
         this.orderDate = orderDate;
         this.method = method;
         this.address = address;
-        this.user=user;
+        this.user = user;
     }
 
     public Map<Product, Integer> getProducts() {
@@ -67,6 +85,7 @@ public class Order extends AbstractEntity {
     public void setProducts(Map<Product, Integer> products) {
         this.addedProducts = products;
     }
+
     public long getOrderId() {
         return orderId;
     }
@@ -142,19 +161,19 @@ public class Order extends AbstractEntity {
     public int hashCode() {
         int first = 31;
         int result = 1;
-        result=result * first +(addedProducts != null ? addedProducts.hashCode() : 0);
+        result = result * first + (addedProducts != null ? addedProducts.hashCode() : 0);
         result = result * first + (int) orderId;
-        result = result * first + (user!=null ? user.hashCode() : 0);
-        result = result * first +  address.hashCode();
-        result = result * first + (addedProducts!=null ? addedProducts.hashCode() : 0);
-        result = result * first + (cost!=null ? cost.hashCode() : 0);
+        result = result * first + (user != null ? user.hashCode() : 0);
+        result = result * first + address.hashCode();
+        result = result * first + (addedProducts != null ? addedProducts.hashCode() : 0);
+        result = result * first + (cost != null ? cost.hashCode() : 0);
         result = result * first + (status != null ? status.hashCode() : 0);
         result = result * first + (orderDate != null ? orderDate.hashCode() : 0);
         result = result * first + (method != null ? method.hashCode() : 0);
         return result;
-}
+    }
 
-        @Override
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Order{ ");
