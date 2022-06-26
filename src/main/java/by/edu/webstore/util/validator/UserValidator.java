@@ -10,10 +10,10 @@ import static by.edu.webstore.controller.command.ParameterAndAttribute.*;
  */
 public class UserValidator {
     private static final String INCORRECT_VALUE_PARAMETER = " incorrect";
-    private static final String EMAIL_REGEX = "(([\\p{Alpha}\\d._]+){5,25}@([\\p{Lower}]+){3,10}\\.([\\p{Lower}]+){2,3})";
+    private static final String EMAIL_REGEX = "(([\\p{Alpha}\\d\\.\\-\\_]+){5,25}@([\\p{Lower}]+){3,10}\\.([\\p{Lower}]+){2,3})";
     private static final String PASSPORT_REGEX = "\\S{6,20}";
     private static final String NAME_REGEX = "[a-zA-Zа-яА-Я-\\s]{1,45}";
-    private static final String NUMBER_REGEX = "^\\+375\\d{9}$";
+    private static final String NUMBER_REGEX = "^\\+375(29|44|17|25|33)\\d{7}$";
 
     private static final UserValidator instance = new UserValidator();
 
