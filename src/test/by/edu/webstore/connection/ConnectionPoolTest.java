@@ -2,7 +2,6 @@ package by.edu.webstore.connection;
 
 import by.edu.webstore.exception.ConnectionPoolException;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
